@@ -1,0 +1,14 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Exportierte Builds
+build/
+exports/
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS, falls das Projekt irgendwann dort geöffnet wird
+.DS_Store
