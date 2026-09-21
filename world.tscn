@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dmxijtlfum30m" path="res://follow_camera.gd" id="1_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://boi7gxy644wh7" path="res://herb_plot.tscn" id="3_tlwt5"]
 [ext_resource type="Script" uid="uid://bsv0lyp5h2aye" path="res://hud.gd" id="4_aqk2v"]
+[ext_resource type="PackedScene" uid="uid://b6bu53qc6emod" path="res://tea_station.tscn" id="5_036b0"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_emwdv"]
 size = Vector3(12, 1, 12)
@@ -64,3 +65,13 @@ script = ExtResource("4_aqk2v")
 [node name="Mint Count" type="Label" parent="HUD" unique_id=1824821924]
 offset_right = 40.0
 offset_bottom = 23.0
+text = "Minze: 0	"
+
+[node name="Mint Tea Count" type="Label" parent="HUD" unique_id=774411260]
+offset_top = 24.0
+offset_right = 80.0
+offset_bottom = 47.0
+text = "Minztee: 0"
+
+[node name="TeaStation" parent="." unique_id=687408151 instance=ExtResource("5_036b0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.458988, 2.3841858e-07, -5.206325)

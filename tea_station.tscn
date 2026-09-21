@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://b6bu53qc6emod"]
+
+[ext_resource type="Script" uid="uid://ds2klikvuqiom" path="res://tea_station.gd" id="1_gyjxf"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_emwdv"]
+size = Vector3(1, 0.8, 0.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_m56b8"]
+size = Vector3(1.3, 0.8, 1.1)
+
+[node name="TeaStation" type="Area3D" unique_id=687408151]
+script = ExtResource("1_gyjxf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=442298837]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+mesh = SubResource("BoxMesh_emwdv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2032616114]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+shape = SubResource("BoxShape3D_m56b8")
+
+[node name="InteractionLabel" type="Label3D" parent="." unique_id=1309031013]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+text = "E – Tee zubereiten"
+font_size = 96
+
+[node name="BrewTimer" type="Timer" parent="." unique_id=714338307]
+wait_time = 5.0
+one_shot = true
