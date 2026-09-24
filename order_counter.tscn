@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://b3h5ehrd1covj"]
+
+[ext_resource type="Script" uid="uid://dgfrjb5noveit" path="res://order_counter.gd" id="1_odk8o"]
+[ext_resource type="PackedScene" path="res://assets/hd2d/scenes/order_tray.tscn" id="2_h6v4j"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_m56b8"]
+size = Vector3(1.3, 0.8, 1.1)
+
+[node name="OrderCounter" type="Area3D" unique_id=687408151]
+script = ExtResource("1_odk8o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2032616114]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+shape = SubResource("BoxShape3D_m56b8")
+
+[node name="InteractionLabel" type="Label3D" parent="." unique_id=1309031013]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+text = "E – Tee zubereiten"
+font_size = 96
+
+[node name="OrderTray" parent="." unique_id=2010443184 instance=ExtResource("2_h6v4j")]

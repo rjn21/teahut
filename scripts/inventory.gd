@@ -2,9 +2,11 @@ extends Node
 
 signal mint_changed(amount: int)
 signal mint_tea_changed(amont: int)
+signal money_changed(amount: int)
 
 var mint: int = 0
 var mint_tea: int = 0
+var money: int = 0
 
 
 # Called when the node enters the scene tree for the first time.
@@ -17,9 +19,19 @@ func _process(delta: float) -> void:
 	pass
 	
 func add_mint(amount: int) -> void:
+	if amount <= 0:
+		return
+		
 	mint += amount
 	mint_changed.emit(mint)
 	print("Minze im Inventar: ", mint)
+	
+func add_money(amount: int) -> void:
+	if amount <= 0:
+		return
+	
+	money += amount
+	money_changed.emit(money)
 	
 func try_take_mint(amount: int) -> bool:
 	if amount <= 0 or mint < amount:
@@ -27,6 +39,22 @@ func try_take_mint(amount: int) -> bool:
 	
 	mint -= amount
 	mint_changed.emit(mint)
+	return true
+	
+func try_spend_money(amount: int) -> bool:
+	if amount <= 0 or money < amount:
+		return false
+	
+	money -= amount
+	money_changed.emit(money)
+	return true
+	
+func try_take_mint_tea(amount: int) -> bool:
+	if amount <= 0 or mint_tea < amount:
+		return false
+	
+	mint_tea -= amount
+	mint_tea_changed.emit(mint_tea)
 	return true
 	
 func add_mint_tea(amount: int) -> void:

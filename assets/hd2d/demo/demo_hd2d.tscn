@@ -1,0 +1,1882 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/hd2d/scenes/hd2d_lighting.tscn" id="1_r"]
+[ext_resource type="Material" path="res://assets/hd2d/materials/terrain_demo.tres" id="2_r"]
+[ext_resource type="Material" path="res://assets/hd2d/materials/water_demo.tres" id="3_r"]
+[ext_resource type="PackedScene" path="res://assets/hd2d/scenes/hut.tscn" id="4_r"]
+[ext_resource type="PackedScene" path="res://assets/hd2d/scenes/garden_bed.tscn" id="5_r"]
+[ext_resource type="PackedScene" path="res://assets/hd2d/scenes/dock.tscn" id="6_r"]
+[ext_resource type="PackedScene" path="res://assets/hd2d/scenes/bench.tscn" id="7_r"]
+[ext_resource type="PackedScene" path="res://assets/hd2d/scenes/lantern.tscn" id="8_r"]
+[ext_resource type="PackedScene" path="res://assets/hd2d/scenes/order_board.tscn" id="9_r"]
+[ext_resource type="PackedScene" path="res://assets/hd2d/scenes/order_tray.tscn" id="10_r"]
+[ext_resource type="PackedScene" path="res://assets/hd2d/scenes/flowerpot.tscn" id="11_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/world/tree_oak.png" id="12_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/world/tree_oak_b.png" id="13_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/world/tree_birch.png" id="14_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/world/tree_pine.png" id="15_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/world/bush.png" id="16_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/world/bush_flowers_pink.png" id="17_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/world/bush_flowers_yellow.png" id="18_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/world/grass_tuft_b.png" id="19_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/world/grass_tuft_a.png" id="20_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/world/wildflowers_c.png" id="21_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/world/grass_tuft_c.png" id="22_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/world/wildflowers_b.png" id="23_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/world/wildflowers_a.png" id="24_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/world/rock_a.png" id="25_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/world/rock_b.png" id="26_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/world/reeds.png" id="27_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/world/lily_pad.png" id="28_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/world/lily_pad_flower.png" id="29_r"]
+[ext_resource type="Script" path="res://assets/hd2d/demo/demo_player.gd" id="30_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/demo/terrain_mask.png" id="31_r"]
+[ext_resource type="PackedScene" path="res://assets/hd2d/scenes/player_sprite.tscn" id="32_r"]
+[ext_resource type="PackedScene" path="res://assets/hd2d/scenes/rain.tscn" id="33_r"]
+[ext_resource type="PackedScene" path="res://assets/hd2d/scenes/hd2d_camera.tscn" id="34_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/ui/panel_9slice.png" id="35_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/ui/slot.png" id="36_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/ui/icons/herb_mint.png" id="37_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/ui/icons/herb_chamomile.png" id="38_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/ui/icons/herb_lavender.png" id="39_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/ui/icons/tea_mint.png" id="40_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/ui/icons/coin.png" id="41_r"]
+[ext_resource type="Script" path="res://assets/hd2d/demo/demo_controller.gd" id="42_r"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1"]
+size = Vector2(48.0, 48.0)
+subdivide_width = 191
+subdivide_depth = 191
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2"]
+size = Vector2(48.0, 48.0)
+
+[node name="DemoHD2D" type="Node3D"]
+
+[node name="Lighting" parent="." instance=ExtResource("1_r")]
+
+[node name="Terrain" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_1")
+material_override = ExtResource("2_r")
+
+[node name="Water" type="MeshInstance3D" parent="." groups=["hd2d_water"]]
+position = Vector3(0.0, -0.14, 0.0)
+mesh = SubResource("PlaneMesh_2")
+cast_shadow = 0
+material_override = ExtResource("3_r")
+
+[node name="TeaHut" parent="." instance=ExtResource("4_r")]
+position = Vector3(-6.0, 0.0, -6.0)
+
+[node name="Garden" type="Node3D" parent="."]
+
+[node name="Bed_mint" parent="Garden" instance=ExtResource("5_r")]
+position = Vector3(-7.6, 0.0, 0.1)
+herb = "mint"
+stage = 3
+wet = false
+
+[node name="Bed_chamomile" parent="Garden" instance=ExtResource("5_r")]
+position = Vector3(-5.85, 0.0, 0.1)
+herb = "chamomile"
+stage = 3
+wet = true
+
+[node name="Bed_lavender" parent="Garden" instance=ExtResource("5_r")]
+position = Vector3(-4.1, 0.0, 0.1)
+herb = "lavender"
+stage = 3
+wet = false
+
+[node name="Dock" parent="." instance=ExtResource("6_r")]
+position = Vector3(1.2, 0.0, -6.5)
+
+[node name="Bench" parent="." instance=ExtResource("7_r")]
+position = Vector3(4.0, 0.0, -1.6)
+rotation = Vector3(0.0, -0.87266, 0.0)
+
+[node name="Lantern" parent="." instance=ExtResource("8_r")]
+position = Vector3(-3.0, 0.0, -1.7)
+
+[node name="OrderBoard" parent="." instance=ExtResource("9_r")]
+position = Vector3(-2.6, 0.0, -4.9)
+
+[node name="OrderTray" parent="." instance=ExtResource("10_r")]
+position = Vector3(-1.5, 0.0, -4.4)
+
+[node name="Flowerpot" parent="." instance=ExtResource("11_r")]
+position = Vector3(-4.95, 0.0, -3.65)
+
+[node name="Nature" type="Node3D" parent="."]
+
+[node name="S1" type="Sprite3D" parent="Nature"]
+position = Vector3(-11.5, 0.0, -10.5)
+offset = Vector2(0.0, 40.0)
+pixel_size = 0.05
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("12_r")
+
+[node name="S2" type="Sprite3D" parent="Nature"]
+position = Vector3(-13.5, 0.0, -3.5)
+offset = Vector2(0.0, 40.0)
+pixel_size = 0.05
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("13_r")
+
+[node name="S3" type="Sprite3D" parent="Nature"]
+position = Vector3(-9.0, 0.0, -11.5)
+offset = Vector2(0.0, 44.0)
+pixel_size = 0.05
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("14_r")
+
+[node name="S4" type="Sprite3D" parent="Nature"]
+position = Vector3(-12.0, 0.0, -14.5)
+offset = Vector2(0.0, 48.0)
+pixel_size = 0.05
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("15_r")
+
+[node name="S5" type="Sprite3D" parent="Nature"]
+position = Vector3(-3.2, 0.0, -11.2)
+offset = Vector2(0.0, 44.0)
+pixel_size = 0.05
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("14_r")
+
+[node name="S6" type="Sprite3D" parent="Nature"]
+position = Vector3(-0.2, 0.0, -13.0)
+offset = Vector2(0.0, 48.0)
+pixel_size = 0.05
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("15_r")
+
+[node name="S7" type="Sprite3D" parent="Nature"]
+position = Vector3(-12.5, 0.0, 4.5)
+offset = Vector2(0.0, 40.0)
+pixel_size = 0.05
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("12_r")
+
+[node name="S8" type="Sprite3D" parent="Nature"]
+position = Vector3(-16.5, 0.0, -9.0)
+offset = Vector2(0.0, 48.0)
+pixel_size = 0.05
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("15_r")
+
+[node name="S9" type="Sprite3D" parent="Nature"]
+position = Vector3(-15.5, 0.0, 1.0)
+offset = Vector2(0.0, 44.0)
+pixel_size = 0.05
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("14_r")
+
+[node name="S10" type="Sprite3D" parent="Nature"]
+position = Vector3(22.0, 0.0, -1.0)
+offset = Vector2(0.0, 40.0)
+pixel_size = 0.05
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("13_r")
+
+[node name="S11" type="Sprite3D" parent="Nature"]
+position = Vector3(20.0, 0.0, 5.0)
+offset = Vector2(0.0, 48.0)
+pixel_size = 0.05
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("15_r")
+
+[node name="S12" type="Sprite3D" parent="Nature"]
+position = Vector3(16.0, 0.0, 6.5)
+offset = Vector2(0.0, 44.0)
+pixel_size = 0.05
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("14_r")
+
+[node name="S13" type="Sprite3D" parent="Nature"]
+position = Vector3(3.5, 0.0, -16.0)
+offset = Vector2(0.0, 48.0)
+pixel_size = 0.05
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("15_r")
+
+[node name="S14" type="Sprite3D" parent="Nature"]
+position = Vector3(9.0, 0.0, 5.5)
+offset = Vector2(0.0, 40.0)
+pixel_size = 0.05
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("12_r")
+
+[node name="S15" type="Sprite3D" parent="Nature"]
+position = Vector3(-10.0, 0.0, 10.5)
+offset = Vector2(0.0, 40.0)
+pixel_size = 0.05
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("13_r")
+
+[node name="S16" type="Sprite3D" parent="Nature"]
+position = Vector3(12.0, 0.0, 12.0)
+offset = Vector2(0.0, 48.0)
+pixel_size = 0.05
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("15_r")
+
+[node name="S17" type="Sprite3D" parent="Nature"]
+position = Vector3(5.5, 0.0, 11.5)
+offset = Vector2(0.0, 44.0)
+pixel_size = 0.05
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("14_r")
+
+[node name="S18" type="Sprite3D" parent="Nature"]
+position = Vector3(-19.0, 0.0, -16.0)
+offset = Vector2(0.0, 40.0)
+pixel_size = 0.05
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("12_r")
+
+[node name="S19" type="Sprite3D" parent="Nature"]
+position = Vector3(-20.0, 0.0, 8.0)
+offset = Vector2(0.0, 48.0)
+pixel_size = 0.05
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("15_r")
+
+[node name="S20" type="Sprite3D" parent="Nature"]
+position = Vector3(21.0, 0.0, -9.0)
+offset = Vector2(0.0, 44.0)
+pixel_size = 0.05
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("14_r")
+
+[node name="S21" type="Sprite3D" parent="Nature"]
+position = Vector3(23.0, 0.0, 12.0)
+offset = Vector2(0.0, 48.0)
+pixel_size = 0.05
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("15_r")
+
+[node name="S22" type="Sprite3D" parent="Nature"]
+position = Vector3(7.77478, 0.0, 12.33411)
+offset = Vector2(0.0, 12.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("16_r")
+
+[node name="S23" type="Sprite3D" parent="Nature"]
+position = Vector3(-12.37993, 0.0, -0.81792)
+offset = Vector2(0.0, 12.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("16_r")
+
+[node name="S24" type="Sprite3D" parent="Nature"]
+position = Vector3(2.69478, 0.0, 6.34467)
+offset = Vector2(0.0, 12.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("17_r")
+
+[node name="S25" type="Sprite3D" parent="Nature"]
+position = Vector3(-12.30061, 0.0, 2.03503)
+offset = Vector2(0.0, 12.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("16_r")
+
+[node name="S26" type="Sprite3D" parent="Nature"]
+position = Vector3(-7.02898, 0.0, -12.7137)
+offset = Vector2(0.0, 12.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("18_r")
+
+[node name="S27" type="Sprite3D" parent="Nature"]
+position = Vector3(-17.50275, 0.0, -5.08247)
+offset = Vector2(0.0, 12.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("18_r")
+
+[node name="S28" type="Sprite3D" parent="Nature"]
+position = Vector3(15.28975, 0.0, 2.52669)
+offset = Vector2(0.0, 12.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("16_r")
+
+[node name="S29" type="Sprite3D" parent="Nature"]
+position = Vector3(10.1082, 0.0, 0.23176)
+offset = Vector2(0.0, 12.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("17_r")
+
+[node name="S30" type="Sprite3D" parent="Nature"]
+position = Vector3(-18.53279, 0.0, -8.03194)
+offset = Vector2(0.0, 12.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("18_r")
+
+[node name="S31" type="Sprite3D" parent="Nature"]
+position = Vector3(7.09559, 0.0, 8.28432)
+offset = Vector2(0.0, 12.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("16_r")
+
+[node name="S32" type="Sprite3D" parent="Nature"]
+position = Vector3(15.63398, 0.0, 11.46044)
+offset = Vector2(0.0, 12.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("17_r")
+
+[node name="S33" type="Sprite3D" parent="Nature"]
+position = Vector3(-9.76916, 0.0, 3.61327)
+offset = Vector2(0.0, 12.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("18_r")
+
+[node name="S34" type="Sprite3D" parent="Nature"]
+position = Vector3(-14.84322, 0.0, -5.9208)
+offset = Vector2(0.0, 12.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("18_r")
+
+[node name="S35" type="Sprite3D" parent="Nature"]
+position = Vector3(-11.92188, 0.0, -16.90859)
+offset = Vector2(0.0, 12.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("18_r")
+
+[node name="S36" type="Sprite3D" parent="Nature"]
+position = Vector3(-4.34875, 0.0, -15.74959)
+offset = Vector2(0.0, 12.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("18_r")
+
+[node name="S37" type="Sprite3D" parent="Nature"]
+position = Vector3(-1.72822, 0.0, -9.46431)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("19_r")
+cast_shadow = 0
+
+[node name="S38" type="Sprite3D" parent="Nature"]
+position = Vector3(3.55261, 0.0, 13.32162)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("20_r")
+cast_shadow = 0
+
+[node name="S39" type="Sprite3D" parent="Nature"]
+position = Vector3(-5.79615, 0.0, 16.90373)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("19_r")
+cast_shadow = 0
+
+[node name="S40" type="Sprite3D" parent="Nature"]
+position = Vector3(0.4001, 0.0, -15.72726)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("20_r")
+cast_shadow = 0
+
+[node name="S41" type="Sprite3D" parent="Nature"]
+position = Vector3(1.2228, 0.0, 15.95882)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("21_r")
+cast_shadow = 0
+
+[node name="S42" type="Sprite3D" parent="Nature"]
+position = Vector3(7.63184, 0.0, 0.33093)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("22_r")
+cast_shadow = 0
+
+[node name="S43" type="Sprite3D" parent="Nature"]
+position = Vector3(-2.73986, 0.0, -2.66595)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("23_r")
+cast_shadow = 0
+
+[node name="S44" type="Sprite3D" parent="Nature"]
+position = Vector3(17.74223, 0.0, 14.06577)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("24_r")
+cast_shadow = 0
+
+[node name="S45" type="Sprite3D" parent="Nature"]
+position = Vector3(-7.38545, 0.0, -18.29884)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("22_r")
+cast_shadow = 0
+
+[node name="S46" type="Sprite3D" parent="Nature"]
+position = Vector3(13.27298, 0.0, 16.20744)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("24_r")
+cast_shadow = 0
+
+[node name="S47" type="Sprite3D" parent="Nature"]
+position = Vector3(18.76764, 0.0, -13.05543)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("24_r")
+cast_shadow = 0
+
+[node name="S48" type="Sprite3D" parent="Nature"]
+position = Vector3(18.01437, 0.0, 8.18955)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("23_r")
+cast_shadow = 0
+
+[node name="S49" type="Sprite3D" parent="Nature"]
+position = Vector3(-12.55166, 0.0, -7.77821)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("23_r")
+cast_shadow = 0
+
+[node name="S50" type="Sprite3D" parent="Nature"]
+position = Vector3(-9.30395, 0.0, -1.52508)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("24_r")
+cast_shadow = 0
+
+[node name="S51" type="Sprite3D" parent="Nature"]
+position = Vector3(-15.4429, 0.0, 14.67851)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("24_r")
+cast_shadow = 0
+
+[node name="S52" type="Sprite3D" parent="Nature"]
+position = Vector3(6.44513, 0.0, 4.26247)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("20_r")
+cast_shadow = 0
+
+[node name="S53" type="Sprite3D" parent="Nature"]
+position = Vector3(-16.4107, 0.0, -12.10276)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("24_r")
+cast_shadow = 0
+
+[node name="S54" type="Sprite3D" parent="Nature"]
+position = Vector3(-2.38851, 0.0, 12.00857)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("24_r")
+cast_shadow = 0
+
+[node name="S55" type="Sprite3D" parent="Nature"]
+position = Vector3(-16.88783, 0.0, 4.47722)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("24_r")
+cast_shadow = 0
+
+[node name="S56" type="Sprite3D" parent="Nature"]
+position = Vector3(14.11316, 0.0, 15.88387)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("21_r")
+cast_shadow = 0
+
+[node name="S57" type="Sprite3D" parent="Nature"]
+position = Vector3(-14.08524, 0.0, -18.92241)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("20_r")
+cast_shadow = 0
+
+[node name="S58" type="Sprite3D" parent="Nature"]
+position = Vector3(-9.01953, 0.0, 6.07729)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("23_r")
+cast_shadow = 0
+
+[node name="S59" type="Sprite3D" parent="Nature"]
+position = Vector3(20.80775, 0.0, 1.00766)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("23_r")
+cast_shadow = 0
+
+[node name="S60" type="Sprite3D" parent="Nature"]
+position = Vector3(19.68579, 0.0, 1.85049)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("24_r")
+cast_shadow = 0
+
+[node name="S61" type="Sprite3D" parent="Nature"]
+position = Vector3(1.3073, 0.0, -16.95234)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("24_r")
+cast_shadow = 0
+
+[node name="S62" type="Sprite3D" parent="Nature"]
+position = Vector3(-17.63532, 0.0, -12.3103)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("24_r")
+cast_shadow = 0
+
+[node name="S63" type="Sprite3D" parent="Nature"]
+position = Vector3(-18.14564, 0.0, 12.02549)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("20_r")
+cast_shadow = 0
+
+[node name="S64" type="Sprite3D" parent="Nature"]
+position = Vector3(-15.96476, 0.0, 13.05034)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("19_r")
+cast_shadow = 0
+
+[node name="S65" type="Sprite3D" parent="Nature"]
+position = Vector3(-7.71247, 0.0, -9.61243)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("23_r")
+cast_shadow = 0
+
+[node name="S66" type="Sprite3D" parent="Nature"]
+position = Vector3(-15.50311, 0.0, 4.23803)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("20_r")
+cast_shadow = 0
+
+[node name="S67" type="Sprite3D" parent="Nature"]
+position = Vector3(-7.72056, 0.0, 8.06712)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("20_r")
+cast_shadow = 0
+
+[node name="S68" type="Sprite3D" parent="Nature"]
+position = Vector3(-20.60875, 0.0, 3.36173)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("24_r")
+cast_shadow = 0
+
+[node name="S69" type="Sprite3D" parent="Nature"]
+position = Vector3(-9.03053, 0.0, -3.22536)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("24_r")
+cast_shadow = 0
+
+[node name="S70" type="Sprite3D" parent="Nature"]
+position = Vector3(8.54868, 0.0, 3.0204)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("21_r")
+cast_shadow = 0
+
+[node name="S71" type="Sprite3D" parent="Nature"]
+position = Vector3(2.2933, 0.0, 14.54322)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("20_r")
+cast_shadow = 0
+
+[node name="S72" type="Sprite3D" parent="Nature"]
+position = Vector3(18.43506, 0.0, -14.16552)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("20_r")
+cast_shadow = 0
+
+[node name="S73" type="Sprite3D" parent="Nature"]
+position = Vector3(-6.59903, 0.0, 5.7499)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("21_r")
+cast_shadow = 0
+
+[node name="S74" type="Sprite3D" parent="Nature"]
+position = Vector3(-18.86645, 0.0, 3.83424)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("21_r")
+cast_shadow = 0
+
+[node name="S75" type="Sprite3D" parent="Nature"]
+position = Vector3(-9.37943, 0.0, -18.87236)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("21_r")
+cast_shadow = 0
+
+[node name="S76" type="Sprite3D" parent="Nature"]
+position = Vector3(-15.50557, 0.0, 16.27273)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("19_r")
+cast_shadow = 0
+
+[node name="S77" type="Sprite3D" parent="Nature"]
+position = Vector3(16.965, 0.0, 0.64125)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("21_r")
+cast_shadow = 0
+
+[node name="S78" type="Sprite3D" parent="Nature"]
+position = Vector3(-3.93215, 0.0, 3.34381)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("19_r")
+cast_shadow = 0
+
+[node name="S79" type="Sprite3D" parent="Nature"]
+position = Vector3(20.00065, 0.0, 10.18778)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("20_r")
+cast_shadow = 0
+
+[node name="S80" type="Sprite3D" parent="Nature"]
+position = Vector3(-14.31369, 0.0, 6.24601)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("20_r")
+cast_shadow = 0
+
+[node name="S81" type="Sprite3D" parent="Nature"]
+position = Vector3(-12.61794, 0.0, 14.06427)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("22_r")
+cast_shadow = 0
+
+[node name="S82" type="Sprite3D" parent="Nature"]
+position = Vector3(-8.18198, 0.0, 9.63244)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("19_r")
+cast_shadow = 0
+
+[node name="S83" type="Sprite3D" parent="Nature"]
+position = Vector3(-7.213, 0.0, 12.11671)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("21_r")
+cast_shadow = 0
+
+[node name="S84" type="Sprite3D" parent="Nature"]
+position = Vector3(-13.50015, 0.0, 15.65124)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("22_r")
+cast_shadow = 0
+
+[node name="S85" type="Sprite3D" parent="Nature"]
+position = Vector3(-19.3932, 0.0, 2.47657)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("22_r")
+cast_shadow = 0
+
+[node name="S86" type="Sprite3D" parent="Nature"]
+position = Vector3(20.33791, 0.0, -14.83675)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("24_r")
+cast_shadow = 0
+
+[node name="S87" type="Sprite3D" parent="Nature"]
+position = Vector3(-20.92897, 0.0, 14.32071)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("24_r")
+cast_shadow = 0
+
+[node name="S88" type="Sprite3D" parent="Nature"]
+position = Vector3(7.848, 0.0, 14.84947)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("23_r")
+cast_shadow = 0
+
+[node name="S89" type="Sprite3D" parent="Nature"]
+position = Vector3(18.85273, 0.0, 14.14775)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("24_r")
+cast_shadow = 0
+
+[node name="S90" type="Sprite3D" parent="Nature"]
+position = Vector3(-7.81554, 0.0, 11.52855)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("23_r")
+cast_shadow = 0
+
+[node name="S91" type="Sprite3D" parent="Nature"]
+position = Vector3(16.80197, 0.0, -0.74359)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("23_r")
+cast_shadow = 0
+
+[node name="S92" type="Sprite3D" parent="Nature"]
+position = Vector3(2.28532, 0.0, -12.09376)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("23_r")
+cast_shadow = 0
+
+[node name="S93" type="Sprite3D" parent="Nature"]
+position = Vector3(18.49527, 0.0, 5.38345)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("19_r")
+cast_shadow = 0
+
+[node name="S94" type="Sprite3D" parent="Nature"]
+position = Vector3(0.64898, 0.0, 3.78587)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("22_r")
+cast_shadow = 0
+
+[node name="S95" type="Sprite3D" parent="Nature"]
+position = Vector3(-17.07774, 0.0, 15.27199)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("19_r")
+cast_shadow = 0
+
+[node name="S96" type="Sprite3D" parent="Nature"]
+position = Vector3(-14.81113, 0.0, -17.33631)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("20_r")
+cast_shadow = 0
+
+[node name="S97" type="Sprite3D" parent="Nature"]
+position = Vector3(4.67351, 0.0, 8.66562)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("20_r")
+cast_shadow = 0
+
+[node name="S98" type="Sprite3D" parent="Nature"]
+position = Vector3(-10.75265, 0.0, 4.61809)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("20_r")
+cast_shadow = 0
+
+[node name="S99" type="Sprite3D" parent="Nature"]
+position = Vector3(19.23457, 0.0, -0.35352)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.028
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("20_r")
+cast_shadow = 0
+
+[node name="S100" type="Sprite3D" parent="Nature"]
+position = Vector3(2.29623, 0.0, 11.35904)
+offset = Vector2(0.0, 7.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("25_r")
+
+[node name="S101" type="Sprite3D" parent="Nature"]
+position = Vector3(18.00158, 0.0, 10.52563)
+offset = Vector2(0.0, 7.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("26_r")
+
+[node name="S102" type="Sprite3D" parent="Nature"]
+position = Vector3(13.22277, 0.0, -0.4681)
+offset = Vector2(0.0, 7.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("25_r")
+
+[node name="S103" type="Sprite3D" parent="Nature"]
+position = Vector3(10.07107, 0.0, 8.87561)
+offset = Vector2(0.0, 7.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("26_r")
+
+[node name="S104" type="Sprite3D" parent="Nature"]
+position = Vector3(10.63255, 0.0, -1.31841)
+offset = Vector2(0.0, 7.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("25_r")
+
+[node name="S105" type="Sprite3D" parent="Nature"]
+position = Vector3(-9.0161, 0.0, -15.52053)
+offset = Vector2(0.0, 7.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("26_r")
+
+[node name="S106" type="Sprite3D" parent="Nature"]
+position = Vector3(-10.62026, 0.0, -7.25288)
+offset = Vector2(0.0, 7.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("25_r")
+
+[node name="S107" type="Sprite3D" parent="Nature"]
+position = Vector3(-14.46504, 0.0, -10.59963)
+offset = Vector2(0.0, 7.0)
+pixel_size = 0.04
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("25_r")
+
+[node name="S108" type="Sprite3D" parent="Nature"]
+position = Vector3(4.96403, -0.1, -13.91656)
+offset = Vector2(0.0, 20.0)
+pixel_size = 0.032
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("27_r")
+
+[node name="S109" type="Sprite3D" parent="Nature"]
+position = Vector3(16.29941, -0.1, -14.2964)
+offset = Vector2(0.0, 20.0)
+pixel_size = 0.032
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("27_r")
+
+[node name="S110" type="Sprite3D" parent="Nature"]
+position = Vector3(3.96107, -0.1, -12.78264)
+offset = Vector2(0.0, 20.0)
+pixel_size = 0.032
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("27_r")
+
+[node name="S111" type="Sprite3D" parent="Nature"]
+position = Vector3(1.96575, -0.1, -23.5348)
+offset = Vector2(0.0, 20.0)
+pixel_size = 0.032
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("27_r")
+
+[node name="S112" type="Sprite3D" parent="Nature"]
+position = Vector3(23.17137, -0.1, -17.51802)
+offset = Vector2(0.0, 20.0)
+pixel_size = 0.032
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("27_r")
+
+[node name="S113" type="Sprite3D" parent="Nature"]
+position = Vector3(17.28179, -0.1, -12.27413)
+offset = Vector2(0.0, 20.0)
+pixel_size = 0.032
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("27_r")
+
+[node name="S114" type="Sprite3D" parent="Nature"]
+position = Vector3(2.89574, -0.1, -19.37798)
+offset = Vector2(0.0, 20.0)
+pixel_size = 0.032
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("27_r")
+
+[node name="S115" type="Sprite3D" parent="Nature"]
+position = Vector3(2.86931, -0.1, -11.13926)
+offset = Vector2(0.0, 20.0)
+pixel_size = 0.032
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("27_r")
+
+[node name="S116" type="Sprite3D" parent="Nature"]
+position = Vector3(20.58559, -0.1, -16.08471)
+offset = Vector2(0.0, 20.0)
+pixel_size = 0.032
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("27_r")
+
+[node name="S117" type="Sprite3D" parent="Nature"]
+position = Vector3(12.19778, -0.1, -2.89617)
+offset = Vector2(0.0, 20.0)
+pixel_size = 0.032
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("27_r")
+
+[node name="S118" type="Sprite3D" parent="Nature"]
+position = Vector3(16.92547, -0.1, -4.52619)
+offset = Vector2(0.0, 20.0)
+pixel_size = 0.032
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("27_r")
+
+[node name="S119" type="Sprite3D" parent="Nature"]
+position = Vector3(15.20995, -0.1, -3.0581)
+offset = Vector2(0.0, 20.0)
+pixel_size = 0.032
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("27_r")
+
+[node name="S120" type="Sprite3D" parent="Nature"]
+position = Vector3(21.69973, -0.1, -17.13134)
+offset = Vector2(0.0, 20.0)
+pixel_size = 0.032
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("27_r")
+
+[node name="S121" type="Sprite3D" parent="Nature"]
+position = Vector3(19.17264, -0.1, -9.43044)
+offset = Vector2(0.0, 20.0)
+pixel_size = 0.032
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("27_r")
+
+[node name="S122" type="Sprite3D" parent="Nature"]
+position = Vector3(19.3101, -0.1, -15.2214)
+offset = Vector2(0.0, 20.0)
+pixel_size = 0.032
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("27_r")
+
+[node name="S123" type="Sprite3D" parent="Nature"]
+position = Vector3(22.71028, -0.1, -16.69525)
+offset = Vector2(0.0, 20.0)
+pixel_size = 0.032
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("27_r")
+
+[node name="S124" type="Sprite3D" parent="Nature"]
+position = Vector3(3.11981, -0.1, -17.9843)
+offset = Vector2(0.0, 20.0)
+pixel_size = 0.032
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("27_r")
+
+[node name="S125" type="Sprite3D" parent="Nature"]
+position = Vector3(1.76378, -0.1, -22.06103)
+offset = Vector2(0.0, 20.0)
+pixel_size = 0.032
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("27_r")
+
+[node name="S126" type="Sprite3D" parent="Nature"]
+position = Vector3(18.45511, -0.1, -6.69984)
+offset = Vector2(0.0, 20.0)
+pixel_size = 0.032
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("27_r")
+
+[node name="S127" type="Sprite3D" parent="Nature"]
+position = Vector3(5.48385, -0.1, -15.86564)
+offset = Vector2(0.0, 20.0)
+pixel_size = 0.032
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("27_r")
+
+[node name="S128" type="Sprite3D" parent="Nature"]
+position = Vector3(9.33848, -0.125, -15.19081)
+offset = Vector2(0.0, 0.0)
+pixel_size = 0.045
+billboard = 0
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("28_r")
+rotation = Vector3(-1.5708, 2.56837, 0.0)
+cast_shadow = 0
+
+[node name="S129" type="Sprite3D" parent="Nature"]
+position = Vector3(16.41686, -0.125, -8.99581)
+offset = Vector2(0.0, 0.0)
+pixel_size = 0.045
+billboard = 0
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("28_r")
+rotation = Vector3(-1.5708, 0.41414, 0.0)
+cast_shadow = 0
+
+[node name="S130" type="Sprite3D" parent="Nature"]
+position = Vector3(4.6066, -0.125, -8.46755)
+offset = Vector2(0.0, 0.0)
+pixel_size = 0.045
+billboard = 0
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("29_r")
+rotation = Vector3(-1.5708, 1.78535, 0.0)
+cast_shadow = 0
+
+[node name="S131" type="Sprite3D" parent="Nature"]
+position = Vector3(16.82414, -0.125, -8.60802)
+offset = Vector2(0.0, 0.0)
+pixel_size = 0.045
+billboard = 0
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("28_r")
+rotation = Vector3(-1.5708, 5.2085, 0.0)
+cast_shadow = 0
+
+[node name="S132" type="Sprite3D" parent="Nature"]
+position = Vector3(10.19791, -0.125, -13.84892)
+offset = Vector2(0.0, 0.0)
+pixel_size = 0.045
+billboard = 0
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("28_r")
+rotation = Vector3(-1.5708, 2.27827, 0.0)
+cast_shadow = 0
+
+[node name="S133" type="Sprite3D" parent="Nature"]
+position = Vector3(6.06447, -0.125, -16.35872)
+offset = Vector2(0.0, 0.0)
+pixel_size = 0.045
+billboard = 0
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("29_r")
+rotation = Vector3(-1.5708, 5.95438, 0.0)
+cast_shadow = 0
+
+[node name="S134" type="Sprite3D" parent="Nature"]
+position = Vector3(11.26661, -0.125, -16.14877)
+offset = Vector2(0.0, 0.0)
+pixel_size = 0.045
+billboard = 0
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("28_r")
+rotation = Vector3(-1.5708, 0.86435, 0.0)
+cast_shadow = 0
+
+[node name="S135" type="Sprite3D" parent="Nature"]
+position = Vector3(9.40424, -0.125, -17.2418)
+offset = Vector2(0.0, 0.0)
+pixel_size = 0.045
+billboard = 0
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("28_r")
+rotation = Vector3(-1.5708, 5.2235, 0.0)
+cast_shadow = 0
+
+[node name="S136" type="Sprite3D" parent="Nature"]
+position = Vector3(16.10866, -0.125, -6.24626)
+offset = Vector2(0.0, 0.0)
+pixel_size = 0.045
+billboard = 0
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("29_r")
+rotation = Vector3(-1.5708, 1.04011, 0.0)
+cast_shadow = 0
+
+[node name="S137" type="Sprite3D" parent="Nature"]
+position = Vector3(10.44045, -0.125, -13.0154)
+offset = Vector2(0.0, 0.0)
+pixel_size = 0.045
+billboard = 0
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("28_r")
+rotation = Vector3(-1.5708, 4.24971, 0.0)
+cast_shadow = 0
+
+[node name="S138" type="Sprite3D" parent="Nature"]
+position = Vector3(7.03801, -0.125, -12.44862)
+offset = Vector2(0.0, 0.0)
+pixel_size = 0.045
+billboard = 0
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("28_r")
+rotation = Vector3(-1.5708, 1.79025, 0.0)
+cast_shadow = 0
+
+[node name="Player" type="Node3D" parent="."]
+position = Vector3(-2.2, 0.0, 2.5)
+script = ExtResource("30_r")
+terrain_mask = ExtResource("31_r")
+
+[node name="PlayerSprite" parent="Player" instance=ExtResource("32_r")]
+position = Vector3(0.0, 0.0, 0.0)
+
+[node name="Rain" parent="Player" instance=ExtResource("33_r")]
+position = Vector3(0.0, 11.0, -2.0)
+
+[node name="Camera" parent="." instance=ExtResource("34_r") node_paths=PackedStringArray("target")]
+position = Vector3(0.0, 12.0, 20.0)
+target = NodePath("../Player")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Control" parent="UI"]
+texture_filter = 1
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 136.0
+offset_bottom = 48.0
+scale = Vector2(3.0, 3.0)
+mouse_filter = 2
+
+[node name="Panel" type="NinePatchRect" parent="UI/HUD"]
+offset_right = 128.0
+offset_bottom = 30.0
+texture = ExtResource("35_r")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="Slot0" type="TextureRect" parent="UI/HUD"]
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 25.0
+offset_bottom = 25.0
+texture = ExtResource("36_r")
+
+[node name="Icon" type="TextureRect" parent="UI/HUD/Slot0"]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 18.0
+offset_bottom = 18.0
+texture = ExtResource("37_r")
+
+[node name="Count" type="Label" parent="UI/HUD/Slot0"]
+offset_left = 8.0
+offset_top = 9.0
+offset_right = 19.0
+offset_bottom = 20.0
+theme_override_colors/font_color = Color(0.23, 0.16, 0.14, 1.0)
+theme_override_font_sizes/font_size = 6
+text = "2"
+horizontal_alignment = 2
+
+[node name="Slot1" type="TextureRect" parent="UI/HUD"]
+offset_left = 27.0
+offset_top = 5.0
+offset_right = 47.0
+offset_bottom = 25.0
+texture = ExtResource("36_r")
+
+[node name="Icon" type="TextureRect" parent="UI/HUD/Slot1"]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 18.0
+offset_bottom = 18.0
+texture = ExtResource("38_r")
+
+[node name="Count" type="Label" parent="UI/HUD/Slot1"]
+offset_left = 8.0
+offset_top = 9.0
+offset_right = 19.0
+offset_bottom = 20.0
+theme_override_colors/font_color = Color(0.23, 0.16, 0.14, 1.0)
+theme_override_font_sizes/font_size = 6
+text = "1"
+horizontal_alignment = 2
+
+[node name="Slot2" type="TextureRect" parent="UI/HUD"]
+offset_left = 49.0
+offset_top = 5.0
+offset_right = 69.0
+offset_bottom = 25.0
+texture = ExtResource("36_r")
+
+[node name="Icon" type="TextureRect" parent="UI/HUD/Slot2"]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 18.0
+offset_bottom = 18.0
+texture = ExtResource("39_r")
+
+[node name="Count" type="Label" parent="UI/HUD/Slot2"]
+offset_left = 8.0
+offset_top = 9.0
+offset_right = 19.0
+offset_bottom = 20.0
+theme_override_colors/font_color = Color(0.23, 0.16, 0.14, 1.0)
+theme_override_font_sizes/font_size = 6
+text = "3"
+horizontal_alignment = 2
+
+[node name="Slot3" type="TextureRect" parent="UI/HUD"]
+offset_left = 71.0
+offset_top = 5.0
+offset_right = 91.0
+offset_bottom = 25.0
+texture = ExtResource("36_r")
+
+[node name="Icon" type="TextureRect" parent="UI/HUD/Slot3"]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 18.0
+offset_bottom = 18.0
+texture = ExtResource("40_r")
+
+[node name="Count" type="Label" parent="UI/HUD/Slot3"]
+offset_left = 8.0
+offset_top = 9.0
+offset_right = 19.0
+offset_bottom = 20.0
+theme_override_colors/font_color = Color(0.23, 0.16, 0.14, 1.0)
+theme_override_font_sizes/font_size = 6
+text = "1"
+horizontal_alignment = 2
+
+[node name="Coin" type="TextureRect" parent="UI/HUD"]
+offset_left = 94.0
+offset_top = 7.0
+offset_right = 110.0
+offset_bottom = 23.0
+texture = ExtResource("41_r")
+
+[node name="Money" type="Label" parent="UI/HUD"]
+offset_left = 108.0
+offset_top = 8.0
+offset_right = 126.0
+offset_bottom = 22.0
+theme_override_colors/font_color = Color(0.23, 0.16, 0.14, 1.0)
+theme_override_font_sizes/font_size = 8
+text = "30"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Help" type="Label" parent="UI"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = -40.0
+offset_right = 900.0
+offset_bottom = -14.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(1.0, 0.97, 0.9, 1.0)
+theme_override_colors/font_shadow_color = Color(0.0, 0.0, 0.0, 0.6)
+theme_override_font_sizes/font_size = 16
+text = "WASD laufen · E Aktion · 1–4 Tageszeit · F Zeitraffer · R Regen · H Hilfe"
+
+[node name="DemoController" type="Node" parent="." node_paths=PackedStringArray("lighting", "rain", "help_label")]
+script = ExtResource("42_r")
+lighting = NodePath("../Lighting/TimeOfDay")
+rain = NodePath("../Player/Rain")
+help_label = NodePath("../UI/Help")

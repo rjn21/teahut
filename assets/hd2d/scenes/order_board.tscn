@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/interact/order_board.png" id="1_r"]
+
+[node name="OrderBoard" type="Node3D"]
+
+[node name="Sprite" type="Sprite3D" parent="."]
+position = Vector3(0.0, 0.0, 0.0)
+offset = Vector2(0.0, 24.0)
+pixel_size = 0.045
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("1_r")

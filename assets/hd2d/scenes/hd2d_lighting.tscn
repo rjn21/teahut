@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="Environment" path="res://assets/hd2d/env/hd2d_environment.tres" id="1_r"]
+[ext_resource type="Script" path="res://assets/hd2d/scripts/time_of_day_lighting.gd" id="2_r"]
+
+[node name="HD2DLighting" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("1_r")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.83776, 0.55851, 0.0)
+light_color = Color(1.0, 0.93, 0.8, 1.0)
+light_energy = 1.3
+shadow_enabled = true
+shadow_bias = 0.03
+shadow_normal_bias = 1.2
+shadow_blur = 1.2
+directional_shadow_max_distance = 60.0
+directional_shadow_blend_splits = true
+
+[node name="TimeOfDay" type="Node" parent="." node_paths=PackedStringArray("sun", "world_environment")]
+script = ExtResource("2_r")
+sun = NodePath("../Sun")
+world_environment = NodePath("../WorldEnvironment")
+hour = 15.0

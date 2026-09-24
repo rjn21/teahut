@@ -1,0 +1,27 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://assets/hd2d/scripts/hd2d_camera.gd" id="1_r"]
+[ext_resource type="CameraAttributesPractical" path="res://assets/hd2d/env/hd2d_camera_attributes.tres" id="2_r"]
+[ext_resource type="Shader" path="res://assets/hd2d/shaders/vignette.gdshader" id="3_r"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1"]
+shader = ExtResource("3_r")
+
+[node name="HD2DCamera" type="Camera3D"]
+script = ExtResource("1_r")
+attributes = ExtResource("2_r")
+fov = 28.0
+far = 200.0
+current = true
+
+[node name="Post" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Vignette" type="ColorRect" parent="Post"]
+material = SubResource("ShaderMaterial_1")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

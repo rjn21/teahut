@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://boi7gxy644wh7"]
 
 [ext_resource type="Script" uid="uid://deitih1yurewe" path="res://herb_plot.gd" id="1_2blrl"]
+[ext_resource type="PackedScene" uid="uid://csb4nklo0ixbw" path="res://assets/hd2d/scenes/garden_bed.tscn" id="2_fpprn"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_emwdv"]
 size = Vector3(1.5, 0.2, 1.5)
@@ -15,6 +16,7 @@ script = ExtResource("1_2blrl")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=106182256]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+visible = false
 mesh = SubResource("BoxMesh_emwdv")
 surface_material_override/0 = SubResource("StandardMaterial3D_2blrl")
 
@@ -31,3 +33,6 @@ outline_size = 2
 [node name="GrowthTimer" type="Timer" parent="." unique_id=570694821]
 wait_time = 5.0
 one_shot = true
+
+[node name="GardenBed" parent="." unique_id=2119039816 instance=ExtResource("2_fpprn")]
+planted = false

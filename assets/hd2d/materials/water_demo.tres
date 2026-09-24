@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/hd2d/shaders/water_hd2d.gdshader" id="1_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/demo/terrain_mask.png" id="2_r"]
+
+[resource]
+shader = ExtResource("1_r")
+shader_parameter/mask = ExtResource("2_r")
+shader_parameter/use_mask = true

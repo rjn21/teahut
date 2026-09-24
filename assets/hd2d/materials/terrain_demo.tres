@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/hd2d/shaders/terrain_hd2d.gdshader" id="1_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/textures/grass.png" id="2_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/textures/grass_dark.png" id="3_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/textures/dirt_path.png" id="4_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/textures/sand.png" id="5_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/demo/terrain_mask.png" id="6_r"]
+
+[resource]
+shader = ExtResource("1_r")
+shader_parameter/grass_a = ExtResource("2_r")
+shader_parameter/grass_b = ExtResource("3_r")
+shader_parameter/path_tex = ExtResource("4_r")
+shader_parameter/sand_tex = ExtResource("5_r")
+shader_parameter/mask = ExtResource("6_r")

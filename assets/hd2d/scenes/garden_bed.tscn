@@ -1,0 +1,117 @@
+[gd_scene format=3 uid="uid://csb4nklo0ixbw"]
+
+[ext_resource type="Script" uid="uid://b250608up15kq" path="res://assets/hd2d/scripts/herb_plant_visual.gd" id="1_r"]
+[ext_resource type="Material" path="res://assets/hd2d/materials/wood_dark.tres" id="2_r"]
+[ext_resource type="Material" path="res://assets/hd2d/materials/soil_dry.tres" id="3_r"]
+[ext_resource type="Texture2D" uid="uid://b1v4rm6ofibb0" path="res://assets/hd2d/sprites/plants/mint.png" id="4_r"]
+[ext_resource type="Texture2D" uid="uid://dqk5atvlv1f0p" path="res://assets/hd2d/sprites/fx/sparkle.png" id="5_r"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_1"]
+material = ExtResource("2_r")
+size = Vector3(1.3, 0.26, 0.12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2"]
+material = ExtResource("2_r")
+size = Vector3(1.3, 0.26, 0.12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3"]
+material = ExtResource("2_r")
+size = Vector3(0.12, 0.26, 1.06)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4"]
+material = ExtResource("2_r")
+size = Vector3(0.12, 0.26, 1.06)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5"]
+material = ExtResource("3_r")
+size = Vector3(1.06, 0.2, 1.06)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6"]
+atlas = ExtResource("5_r")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7"]
+atlas = ExtResource("5_r")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8"]
+atlas = ExtResource("5_r")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_9"]
+atlas = ExtResource("5_r")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_10"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_9")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 7.0
+}]
+
+[node name="GardenBed" type="Node3D" unique_id=1264372363]
+script = ExtResource("1_r")
+
+[node name="Frame" type="Node3D" parent="." unique_id=1869122982]
+
+[node name="Board0" type="MeshInstance3D" parent="Frame" unique_id=875173812]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13, 0.59)
+mesh = SubResource("BoxMesh_1")
+
+[node name="Board1" type="MeshInstance3D" parent="Frame" unique_id=243948596]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13, -0.59)
+mesh = SubResource("BoxMesh_2")
+
+[node name="Board2" type="MeshInstance3D" parent="Frame" unique_id=1984298123]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.59, 0.13, 0)
+mesh = SubResource("BoxMesh_3")
+
+[node name="Board3" type="MeshInstance3D" parent="Frame" unique_id=591882207]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.59, 0.13, 0)
+mesh = SubResource("BoxMesh_4")
+
+[node name="Soil" type="MeshInstance3D" parent="." unique_id=385988814]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+material_override = ExtResource("3_r")
+mesh = SubResource("BoxMesh_5")
+
+[node name="Plant" type="Sprite3D" parent="." unique_id=1288463264]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.19, 0.05)
+offset = Vector2(0, 14)
+pixel_size = 0.033
+billboard = 2
+shaded = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("4_r")
+hframes = 4
+frame = 3
+
+[node name="Sparkle" type="AnimatedSprite3D" parent="." unique_id=749186373]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28, 0.75, 0.2)
+cast_shadow = 0
+modulate = Color(1.6, 1.5, 1.1, 1)
+pixel_size = 0.028
+billboard = 1
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_10")
+autoplay = "default"

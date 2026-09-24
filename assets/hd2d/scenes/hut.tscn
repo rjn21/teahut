@@ -1,0 +1,383 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://assets/hd2d/scripts/hut.gd" id="1_r"]
+[ext_resource type="Material" path="res://assets/hd2d/materials/stone.tres" id="2_r"]
+[ext_resource type="Material" path="res://assets/hd2d/materials/wood_floor.tres" id="3_r"]
+[ext_resource type="Material" path="res://assets/hd2d/materials/wood_wall.tres" id="4_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/building/window.png" id="5_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/building/window_glow.png" id="6_r"]
+[ext_resource type="Material" path="res://assets/hd2d/materials/wood_dark.tres" id="7_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/interact/sign_teahouse.png" id="8_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/building/door.png" id="9_r"]
+[ext_resource type="Material" path="res://assets/hd2d/materials/roof.tres" id="10_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/fx/steam.png" id="11_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/deco/rug.png" id="12_r"]
+[ext_resource type="PackedScene" path="res://assets/hd2d/scenes/bed.tscn" id="13_r"]
+[ext_resource type="PackedScene" path="res://assets/hd2d/scenes/tea_station.tscn" id="14_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/deco/wall_picture.png" id="15_r"]
+[ext_resource type="Script" path="res://assets/hd2d/scripts/night_glow.gd" id="16_r"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_1"]
+size = Vector3(5.3, 0.12, 4.3)
+material = ExtResource("2_r")
+
+[sub_resource type="BoxMesh" id="BoxMesh_2"]
+size = Vector3(4.8, 0.04, 3.8)
+material = ExtResource("3_r")
+
+[sub_resource type="BoxMesh" id="BoxMesh_3"]
+size = Vector3(5.0, 2.4, 0.2)
+material = ExtResource("4_r")
+
+[sub_resource type="BoxMesh" id="BoxMesh_4"]
+size = Vector3(0.2, 2.4, 3.6)
+material = ExtResource("4_r")
+
+[sub_resource type="BoxMesh" id="BoxMesh_5"]
+size = Vector3(0.2, 2.4, 3.6)
+material = ExtResource("4_r")
+
+[sub_resource type="BoxMesh" id="BoxMesh_6"]
+size = Vector3(1.95, 2.4, 0.2)
+material = ExtResource("4_r")
+
+[sub_resource type="BoxMesh" id="BoxMesh_7"]
+size = Vector3(1.95, 2.4, 0.2)
+material = ExtResource("4_r")
+
+[sub_resource type="BoxMesh" id="BoxMesh_8"]
+size = Vector3(1.1, 0.65, 0.2)
+material = ExtResource("4_r")
+
+[sub_resource type="BoxMesh" id="BoxMesh_9"]
+size = Vector3(5.2, 0.14, 0.26)
+material = ExtResource("7_r")
+
+[sub_resource type="BoxMesh" id="BoxMesh_10"]
+size = Vector3(5.9, 0.14, 3.03412)
+material = ExtResource("10_r")
+
+[sub_resource type="BoxMesh" id="BoxMesh_11"]
+size = Vector3(5.9, 0.14, 3.03412)
+material = ExtResource("10_r")
+
+[sub_resource type="BoxMesh" id="BoxMesh_12"]
+size = Vector3(6.0, 0.14, 0.22)
+material = ExtResource("7_r")
+
+[sub_resource type="PrismMesh" id="PrismMesh_13"]
+size = Vector3(3.8, 1.55, 0.2)
+material = ExtResource("4_r")
+
+[sub_resource type="PrismMesh" id="PrismMesh_14"]
+size = Vector3(3.8, 1.55, 0.2)
+material = ExtResource("4_r")
+
+[sub_resource type="BoxMesh" id="BoxMesh_15"]
+size = Vector3(0.55, 1.5, 0.55)
+material = ExtResource("2_r")
+
+[sub_resource type="BoxMesh" id="BoxMesh_16"]
+size = Vector3(0.7, 0.1, 0.7)
+material = ExtResource("7_r")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_17"]
+atlas = ExtResource("11_r")
+region = Rect2(0, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_18"]
+atlas = ExtResource("11_r")
+region = Rect2(16, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_19"]
+atlas = ExtResource("11_r")
+region = Rect2(32, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_20"]
+atlas = ExtResource("11_r")
+region = Rect2(48, 0, 16, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_21"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_17")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_18")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_19")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_20")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="TeaHut" type="Node3D"]
+script = ExtResource("1_r")
+
+[node name="Foundation" type="MeshInstance3D" parent="."]
+position = Vector3(0.0, 0.06, 0.0)
+mesh = SubResource("BoxMesh_1")
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+position = Vector3(0.0, 0.14, 0.0)
+mesh = SubResource("BoxMesh_2")
+
+[node name="Walls" type="Node3D" parent="."]
+
+[node name="Back" type="MeshInstance3D" parent="Walls"]
+position = Vector3(0.0, 1.32, -1.9)
+mesh = SubResource("BoxMesh_3")
+
+[node name="Left" type="MeshInstance3D" parent="Walls"]
+position = Vector3(-2.4, 1.32, 0.0)
+mesh = SubResource("BoxMesh_4")
+
+[node name="Right" type="MeshInstance3D" parent="Walls"]
+position = Vector3(2.4, 1.32, 0.0)
+mesh = SubResource("BoxMesh_5")
+
+[node name="WindowL" type="Sprite3D" parent="Walls"]
+position = Vector3(-2.515, 1.1, 0.0)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.05
+billboard = 0
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("5_r")
+rotation = Vector3(0.0, -1.5708, 0.0)
+cast_shadow = 0
+
+[node name="GlowL" type="Sprite3D" parent="Walls"]
+position = Vector3(-2.53, 1.1, 0.0)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.05
+billboard = 0
+shaded = false
+double_sided = true
+alpha_cut = 0
+texture_filter = 0
+texture = ExtResource("6_r")
+rotation = Vector3(0.0, -1.5708, 0.0)
+cast_shadow = 0
+
+[node name="WindowR" type="Sprite3D" parent="Walls"]
+position = Vector3(2.515, 1.1, 0.0)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.05
+billboard = 0
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("5_r")
+rotation = Vector3(0.0, 1.5708, 0.0)
+cast_shadow = 0
+
+[node name="GlowR" type="Sprite3D" parent="Walls"]
+position = Vector3(2.53, 1.1, 0.0)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.05
+billboard = 0
+shaded = false
+double_sided = true
+alpha_cut = 0
+texture_filter = 0
+texture = ExtResource("6_r")
+rotation = Vector3(0.0, 1.5708, 0.0)
+cast_shadow = 0
+
+[node name="FrontWall" type="Node3D" parent="."]
+
+[node name="SegL" type="MeshInstance3D" parent="FrontWall"]
+position = Vector3(-1.525, 1.32, 1.9)
+mesh = SubResource("BoxMesh_6")
+
+[node name="SegR" type="MeshInstance3D" parent="FrontWall"]
+position = Vector3(1.525, 1.32, 1.9)
+mesh = SubResource("BoxMesh_7")
+
+[node name="Lintel" type="MeshInstance3D" parent="FrontWall"]
+position = Vector3(0.0, 2.195, 1.9)
+mesh = SubResource("BoxMesh_8")
+
+[node name="Beam" type="MeshInstance3D" parent="FrontWall"]
+position = Vector3(0.0, 2.54, 1.92)
+mesh = SubResource("BoxMesh_9")
+
+[node name="Window" type="Sprite3D" parent="FrontWall"]
+position = Vector3(1.45, 1.1, 2.005)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.05
+billboard = 0
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("5_r")
+cast_shadow = 0
+
+[node name="WindowGlow" type="Sprite3D" parent="FrontWall"]
+position = Vector3(1.45, 1.1, 2.012)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.05
+billboard = 0
+shaded = false
+double_sided = true
+alpha_cut = 0
+texture_filter = 0
+texture = ExtResource("6_r")
+cast_shadow = 0
+
+[node name="Window2" type="Sprite3D" parent="FrontWall"]
+position = Vector3(-1.45, 1.1, 2.005)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.05
+billboard = 0
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("5_r")
+cast_shadow = 0
+
+[node name="WindowGlow2" type="Sprite3D" parent="FrontWall"]
+position = Vector3(-1.45, 1.1, 2.012)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.05
+billboard = 0
+shaded = false
+double_sided = true
+alpha_cut = 0
+texture_filter = 0
+texture = ExtResource("6_r")
+cast_shadow = 0
+
+[node name="Sign" type="Sprite3D" parent="FrontWall"]
+position = Vector3(-0.95, 1.72, 2.03)
+offset = Vector2(0.0, 8.0)
+pixel_size = 0.03
+billboard = 0
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("8_r")
+cast_shadow = 0
+
+[node name="Door" type="Sprite3D" parent="FrontWall"]
+position = Vector3(-0.77399, 0.12, 2.48034)
+offset = Vector2(0.0, 20.0)
+pixel_size = 0.0437
+billboard = 0
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("9_r")
+rotation = Vector3(0.0, -2.00713, 0.0)
+
+[node name="Roof" type="Node3D" parent="."]
+
+[node name="SlopeFront" type="MeshInstance3D" parent="Roof"]
+position = Vector3(0.0, 3.345, 1.275)
+mesh = SubResource("BoxMesh_10")
+rotation = Vector3(0.54617, 0.0, 0.0)
+
+[node name="SlopeBack" type="MeshInstance3D" parent="Roof"]
+position = Vector3(0.0, 3.345, -1.275)
+mesh = SubResource("BoxMesh_11")
+rotation = Vector3(-0.54617, 0.0, 0.0)
+
+[node name="Ridge" type="MeshInstance3D" parent="Roof"]
+position = Vector3(0.0, 4.17, 0.0)
+mesh = SubResource("BoxMesh_12")
+
+[node name="GableL" type="MeshInstance3D" parent="Roof"]
+position = Vector3(-2.4, 3.295, 0.0)
+rotation = Vector3(0.0, 1.5708, 0.0)
+mesh = SubResource("PrismMesh_13")
+
+[node name="GableR" type="MeshInstance3D" parent="Roof"]
+position = Vector3(2.4, 3.295, 0.0)
+rotation = Vector3(0.0, 1.5708, 0.0)
+mesh = SubResource("PrismMesh_14")
+
+[node name="Chimney" type="MeshInstance3D" parent="Roof"]
+position = Vector3(1.4, 3.8, -0.9)
+mesh = SubResource("BoxMesh_15")
+
+[node name="ChimneyCap" type="MeshInstance3D" parent="Roof"]
+position = Vector3(1.4, 4.57, -0.9)
+mesh = SubResource("BoxMesh_16")
+
+[node name="Smoke" type="AnimatedSprite3D" parent="Roof"]
+position = Vector3(1.4, 4.65, -0.9)
+pixel_size = 0.07
+billboard = 2
+shaded = true
+texture_filter = 0
+cast_shadow = 0
+modulate = Color(1.0, 1.0, 1.0, 0.55)
+offset = Vector2(0.0, 12.0)
+sprite_frames = SubResource("SpriteFrames_21")
+autoplay = "default"
+
+[node name="Interior" type="Node3D" parent="."]
+
+[node name="Rug" type="Sprite3D" parent="Interior"]
+position = Vector3(-0.2, 0.165, 0.3)
+offset = Vector2(0.0, 0.0)
+pixel_size = 0.045
+billboard = 0
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("12_r")
+rotation = Vector3(-1.5708, 0.0, 0.0)
+cast_shadow = 0
+
+[node name="Bed" parent="Interior" instance=ExtResource("13_r")]
+position = Vector3(-1.75, 0.16, -0.75)
+
+[node name="TeaStation" parent="Interior" instance=ExtResource("14_r")]
+position = Vector3(1.2, 0.16, -1.45)
+
+[node name="WallPicture" type="Sprite3D" parent="Interior"]
+position = Vector3(-0.35, 1.25, -1.79)
+offset = Vector2(0.0, 11.0)
+pixel_size = 0.03
+billboard = 0
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("15_r")
+cast_shadow = 0
+
+[node name="Lamp" type="Node3D" parent="Interior" node_paths=PackedStringArray("light")]
+script = ExtResource("16_r")
+light = NodePath("Light")
+light_energy = 1.4
+flicker = false
+
+[node name="Light" type="OmniLight3D" parent="Interior/Lamp"]
+position = Vector3(0.0, 2.0, 0.9)
+light_color = Color(1.0, 0.76, 0.5, 1.0)
+light_energy = 1.4
+omni_range = 4.5
+shadow_enabled = true
+
+[node name="WindowLights" type="Node3D" parent="."]
+script = ExtResource("16_r")
+glow_sprites = Array[NodePath]([NodePath("../FrontWall/WindowGlow"), NodePath("../FrontWall/WindowGlow2"), NodePath("../Walls/GlowL"), NodePath("../Walls/GlowR")])
+flicker = false
+glow_strength = 1.5

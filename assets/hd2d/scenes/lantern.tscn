@@ -1,0 +1,42 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://assets/hd2d/scripts/night_glow.gd" id="1_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/deco/lantern.png" id="2_r"]
+[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/deco/lantern_glow.png" id="3_r"]
+
+[node name="Lantern" type="Node3D" node_paths=PackedStringArray("light")]
+script = ExtResource("1_r")
+glow_sprites = Array[NodePath]([NodePath("Glow")])
+light = NodePath("Light")
+light_energy = 1.8
+
+[node name="Sprite" type="Sprite3D" parent="."]
+position = Vector3(0.0, 0.0, 0.0)
+offset = Vector2(0.0, 24.0)
+pixel_size = 0.045
+billboard = 2
+shaded = true
+double_sided = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("2_r")
+
+[node name="Glow" type="Sprite3D" parent="."]
+position = Vector3(0.0, 0.0, 0.03)
+offset = Vector2(0.0, 24.0)
+pixel_size = 0.045
+billboard = 2
+shaded = false
+double_sided = true
+alpha_cut = 0
+texture_filter = 0
+texture = ExtResource("3_r")
+cast_shadow = 0
+
+[node name="Light" type="OmniLight3D" parent="."]
+position = Vector3(0.0, 1.75, 0.35)
+light_color = Color(1.0, 0.7, 0.4, 1.0)
+light_energy = 1.8
+omni_range = 7.0
+omni_attenuation = 1.4
+shadow_enabled = true
