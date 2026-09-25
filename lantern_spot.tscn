@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://booc3wwq4dgji"]
+
+[ext_resource type="Script" uid="uid://vcjy5bk34o6c" path="res://lantern_spot.gd" id="1_1fasy"]
+[ext_resource type="PackedScene" uid="uid://betrp3j0pdhx8" path="res://assets/hd2d/scenes/lantern.tscn" id="1_f4sy4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_emwdv"]
+size = Vector3(2, 1, 2)
+
+[node name="LanternSpot" type="Area3D" unique_id=587491313]
+script = ExtResource("1_1fasy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2027556874]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_emwdv")
+
+[node name="InteractionLabel" type="Label3D" parent="." unique_id=1481744557]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0)
+font_size = 96
+
+[node name="Lantern" parent="." unique_id=1061795100 instance=ExtResource("1_f4sy4")]
+always_on = true

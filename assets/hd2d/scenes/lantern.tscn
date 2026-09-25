@@ -1,42 +1,40 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://betrp3j0pdhx8"]
 
-[ext_resource type="Script" path="res://assets/hd2d/scripts/night_glow.gd" id="1_r"]
-[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/deco/lantern.png" id="2_r"]
-[ext_resource type="Texture2D" path="res://assets/hd2d/sprites/deco/lantern_glow.png" id="3_r"]
+[ext_resource type="Script" uid="uid://c5wxd1sm5yr1f" path="res://assets/hd2d/scripts/night_glow.gd" id="1_r"]
+[ext_resource type="Texture2D" uid="uid://ccv0mnktpsib4" path="res://assets/hd2d/sprites/deco/lantern.png" id="2_r"]
+[ext_resource type="Texture2D" uid="uid://dcmp5iest1cdg" path="res://assets/hd2d/sprites/deco/lantern_glow.png" id="3_r"]
 
-[node name="Lantern" type="Node3D" node_paths=PackedStringArray("light")]
+[node name="Lantern" type="Node3D" unique_id=1328352752 node_paths=PackedStringArray("light")]
 script = ExtResource("1_r")
 glow_sprites = Array[NodePath]([NodePath("Glow")])
 light = NodePath("Light")
 light_energy = 1.8
 
-[node name="Sprite" type="Sprite3D" parent="."]
-position = Vector3(0.0, 0.0, 0.0)
-offset = Vector2(0.0, 24.0)
+[node name="Sprite" type="Sprite3D" parent="." unique_id=585566665]
+offset = Vector2(0, 24)
 pixel_size = 0.045
 billboard = 2
 shaded = true
-double_sided = true
 alpha_cut = 1
 texture_filter = 0
 texture = ExtResource("2_r")
 
-[node name="Glow" type="Sprite3D" parent="."]
-position = Vector3(0.0, 0.0, 0.03)
-offset = Vector2(0.0, 24.0)
+[node name="Glow" type="Sprite3D" parent="." unique_id=1503214437]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.03)
+visible = false
+cast_shadow = 0
+offset = Vector2(0, 24)
+modulate = Color(1.6, 1.472, 1.28, 0)
 pixel_size = 0.045
 billboard = 2
-shaded = false
-double_sided = true
-alpha_cut = 0
 texture_filter = 0
 texture = ExtResource("3_r")
-cast_shadow = 0
 
-[node name="Light" type="OmniLight3D" parent="."]
-position = Vector3(0.0, 1.75, 0.35)
-light_color = Color(1.0, 0.7, 0.4, 1.0)
-light_energy = 1.8
+[node name="Light" type="OmniLight3D" parent="." unique_id=614936677]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0.35)
+visible = false
+light_color = Color(1, 0.7, 0.4, 1)
+light_energy = 0.0
+shadow_enabled = true
 omni_range = 7.0
 omni_attenuation = 1.4
-shadow_enabled = true

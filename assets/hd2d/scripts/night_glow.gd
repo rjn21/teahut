@@ -1,5 +1,6 @@
 @tool
 extends Node3D
+class_name NightGlow
 ## Lässt Leuchtobjekte (Laterne, Fenster) abends angehen.
 ## Wird von TimeOfDayLighting über die Gruppe "night_light" aufgerufen.
 ## Du kannst `lit` auch direkt setzen, z. B. wenn die Laterne gekauft wurde.

@@ -14,8 +14,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 shape = SubResource("BoxShape3D_m56b8")
 
 [node name="InteractionLabel" type="Label3D" parent="." unique_id=1309031013]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-text = "E – Tee zubereiten"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0)
 font_size = 96
 
 [node name="BrewTimer" type="Timer" parent="." unique_id=714338307]

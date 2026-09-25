@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bsv0lyp5h2aye" path="res://hud.gd" id="4_aqk2v"]
 [ext_resource type="PackedScene" uid="uid://b6bu53qc6emod" path="res://tea_station.tscn" id="5_036b0"]
 [ext_resource type="PackedScene" uid="uid://b3h5ehrd1covj" path="res://order_counter.tscn" id="6_pkg7o"]
+[ext_resource type="PackedScene" uid="uid://booc3wwq4dgji" path="res://lantern_spot.tscn" id="7_pkg7o"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_emwdv"]
 size = Vector3(12, 1, 12)
@@ -85,3 +86,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.458988, 2.3841858e-07, -5.2
 
 [node name="OrderCounter" parent="." unique_id=1655903272 instance=ExtResource("6_pkg7o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.16785932, 4.7683716e-07, -5.274448)
+
+[node name="LanternSpot" parent="." unique_id=587491313 instance=ExtResource("7_pkg7o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.195948, 0, -4.930006)

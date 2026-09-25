@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://diwew0hegnoph"]
 
 [ext_resource type="Script" uid="uid://64w5buob6pv2" path="res://player.gd" id="1_4flbx"]
+[ext_resource type="PackedScene" path="res://assets/hd2d/scenes/player_sprite.tscn" id="2_onrkg"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_emwdv"]
 radius = 0.35
@@ -15,8 +16,11 @@ script = ExtResource("1_4flbx")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=17529379]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+visible = false
 mesh = SubResource("CapsuleMesh_emwdv")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=831952913]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("CapsuleShape3D_m56b8")
+
+[node name="PlayerSprite" parent="." unique_id=944193490 instance=ExtResource("2_onrkg")]

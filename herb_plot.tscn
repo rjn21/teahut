@@ -25,8 +25,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_emwdv")
 
 [node name="InteractionLabel" type="Label3D" parent="." unique_id=790710017]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.083938, 0)
-text = "E - Interagieren"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0)
 font_size = 96
 outline_size = 2
 
