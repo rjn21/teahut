@@ -16,14 +16,15 @@ var remaining: float = 0.0
 @onready var interaction_label: Label3D = $InteractionLabel
 
 func _ready() -> void:
+	add_to_group("persist")
 	interaction_label.visible = false
 	update_interaction_label()
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)	
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if state == TeaState.BREWING:
-		remaining -= _delta
+		remaining -= delta
 		if remaining <= 0.0:
 			_on_brew_finished()
 	if player_in_range and Input.is_action_just_pressed("interact"):
@@ -82,4 +83,22 @@ func update_interaction_label() -> void:
 			interaction_label.text = "Tee wird zubereitet"
 		TeaState.READY:
 			interaction_label.text = "E - Minztee abholen"
+			
+#	--- Spielstand ---
+func get_save_data() -> Dictionary:
+	return {
+		"state": TeaState.keys()[state],
+		"remaining": remaining
+	}
+	
+func load_save_data(data: Dictionary) -> void:
+	var state_name = data.get("state")
+	state = TeaState.get(state_name, "IDLE")
+	
+	var remaining_float = float(data.get("remaining"))
+	remaining = clampf(remaining_float, 0.0, brew_duration)
+	
+	update_interaction_label()
+	
+	
 	

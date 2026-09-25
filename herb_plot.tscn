@@ -29,9 +29,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0)
 font_size = 96
 outline_size = 2
 
-[node name="GrowthTimer" type="Timer" parent="." unique_id=570694821]
-wait_time = 5.0
-one_shot = true
-
 [node name="GardenBed" parent="." unique_id=2119039816 instance=ExtResource("2_fpprn")]
 planted = false

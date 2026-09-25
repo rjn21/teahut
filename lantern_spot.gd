@@ -12,6 +12,7 @@ var bought: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	add_to_group("persist")
 	interaction_label.visible = false
 	show_as_preview(true)
 	body_entered.connect(_on_body_entered)
@@ -60,4 +61,15 @@ func show_as_preview(preview: bool) -> void:
 		lantern_sprite.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
 		lantern_sprite.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 	lantern.lit = not preview
+	
+#	--- Spielstand ---
+func get_save_data() -> Dictionary:
+	return {
+		"bought": bought
+	}
+
+func load_save_data(data: Dictionary) -> void:
+	bought = bool(data.get("bought", false))
+	show_as_preview(not bought)
+	update_interaction_label()
 		
