@@ -17,8 +17,4 @@ shape = SubResource("BoxShape3D_m56b8")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0)
 font_size = 96
 
-[node name="BrewTimer" type="Timer" parent="." unique_id=714338307]
-wait_time = 5.0
-one_shot = true
-
 [node name="TeaStation" parent="." unique_id=2093850905 instance=ExtResource("2_ww68b")]

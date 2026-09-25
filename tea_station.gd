@@ -1,7 +1,5 @@
 extends Area3D
 
-var player_in_range: bool = false
-var state: TeaState = TeaState.IDLE
 
 enum TeaState {
 	IDLE,
@@ -9,20 +7,28 @@ enum TeaState {
 	READY
 }
 
+@export var brew_duration: float = 5.0
+
+var state: TeaState = TeaState.IDLE
+var player_in_range: bool = false
+var remaining: float = 0.0
+
 @onready var interaction_label: Label3D = $InteractionLabel
-@onready var brew_timer: Timer = $BrewTimer
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	interaction_label.visible = false
 	update_interaction_label()
-	
 	body_entered.connect(_on_body_entered)
-	body_exited.connect(_on_body_exited)
-	brew_timer.timeout.connect(_on_brew_finished)
-	
-	
+	body_exited.connect(_on_body_exited)	
+
+func _process(_delta: float) -> void:
+	if state == TeaState.BREWING:
+		remaining -= _delta
+		if remaining <= 0.0:
+			_on_brew_finished()
+	if player_in_range and Input.is_action_just_pressed("interact"):
+		interact()
+
 func _on_body_entered(body: Node3D) -> void:
 	if body is CharacterBody3D:
 		player_in_range = true
@@ -34,12 +40,6 @@ func _on_body_exited(body: Node3D) -> void:
 		player_in_range = false
 		interaction_label.visible = false
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	if player_in_range and Input.is_action_just_pressed("interact"):
-		interact()
-
-# Lässt User interagieren abhängig vom Status
 func interact() -> void:
 	match state:
 		TeaState.IDLE:
@@ -49,21 +49,20 @@ func interact() -> void:
 		TeaState.READY:
 			collect_tea()
 
-# 
 func start_brewing() -> void:
 	if not Inventory.try_take_mint(1):
 		interaction_label.text = "Keine Minze vorhanden"
 		return
 	
 	state = TeaState.BREWING
-	brew_timer.start()
+	remaining = brew_duration
 	update_interaction_label()
 	
 func _on_brew_finished() -> void:
 	if state != TeaState.BREWING:
 		return
-	
 	state = TeaState.READY
+	remaining = 0.0
 	update_interaction_label()
 	
 func collect_tea() -> void:
