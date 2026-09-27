@@ -101,10 +101,10 @@ func get_save_data() -> Dictionary:
 	}
 
 func load_save_data(data: Dictionary) -> void:
-	var state_name = data.get("state")
+	var state_name: String = str(data.get("state", "EMPTY"))
 	state = PlotState.get(state_name, PlotState.EMPTY)
 	
-	var remaining_float = float(data.get("remaining"))
+	var remaining_float: float = float(data.get("remaining", growth_duration))
 	remaining = clampf(remaining_float, 0.0, growth_duration)
 	update_interaction_label()
 	update_visual()
