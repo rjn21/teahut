@@ -1,15 +1,15 @@
 # Teehütte am See – Spec-Sheet für Version 0.1
 
-Stand: 24. September 2026 · Zielversion: 0.1 · Arbeitstitel · Plattform: Windows-PC · Einzelspieler
+Stand: 28. September 2026 · Zielversion: 0.1 · Arbeitstitel · Plattform: Windows-PC · Einzelspieler
 
 
 ## Aktueller Entwicklungsstand
 
-**M1 bis M4 sind nach den zuletzt bestätigten Spieltests umgesetzt. Als Nächstes folgt M5: den bisherigen Spielablauf speichern und laden.** Die Zielversion bleibt 0.1; das Datum bezeichnet die Aktualisierung dieses Dokuments.
+**M1 bis M5 sind nach den zuletzt bestätigten Spieltests umgesetzt. Als Nächstes folgt M6: drei Kräuter und Rezepte, alle Handgriffe der Teestation und fünf Dekorationen.** Die Zielversion bleibt 0.1; das Datum bezeichnet die Aktualisierung dieses Dokuments.
 
 ### Grundlage der Statusangaben
 
-Diese Fortschrittsübersicht basiert auf den Rückmeldungen im Projektverlauf bis einschließlich 24. September 2026. An diesem Tag wurden die Skripte für Beet, Teestation, Bestellablage, Inventar und HUD im Projektordner eingesehen. Das Skript für den Laternen-Stellplatz entstand nach Anleitung und wurde danach nicht erneut eingesehen. Der Code wurde dabei nicht von Claude ausgeführt. „Umgesetzt“ bedeutet hier: im gemeinsamen Verlauf erarbeitet und vom Entwickler als funktionierend bestätigt. Eine vollständige technische Abnahme aller Sonderfälle ist damit nicht verbunden.
+Diese Fortschrittsübersicht basiert auf den Rückmeldungen im Projektverlauf bis einschließlich 28. September 2026. An diesem Tag wurden alle Gameplay-Skripte im Branch `M5` eingesehen: Spielstand (`scripts/save_game.gd`), Pausenmenü, Inventar, Beet, Teestation, Bestellablage, Laternen-Stellplatz, Spielfigur und HUD. Der Code wurde dabei nicht von Claude ausgeführt; den Spieltest für M5 hat der Entwickler am 28. September 2026 als erfolgreich bestätigt. „Umgesetzt“ bedeutet hier: im gemeinsamen Verlauf erarbeitet und vom Entwickler als funktionierend bestätigt. Eine vollständige technische Abnahme aller Sonderfälle ist damit nicht verbunden.
 
 ### Bereits spielbar
 
@@ -17,14 +17,15 @@ Diese Fortschrittsübersicht basiert auf den Rückmeldungen im Projektverlauf bi
 - **M2 – Erster Anbau:** Minze pflanzen, Wachstum abwarten und aktiv ernten. Das Beet verwendet die Zustände `EMPTY`, `GROWING` und `READY`. Inventar und HUD bilden die Grundlage für Bestände und deren Anzeige. Die HD-2D-Beetgrafik (`garden_bed.tscn`) ist angebunden und zeigt leeres Beet, Wachstumsstufen und erntereife Pflanze.
 - **M3 – Erste Tasse:** Eine vereinfachte Teestation verarbeitet Minze zu Tee. Auf ausdrücklichen Wunsch wird fertiger Tee **nicht automatisch ins Inventar gelegt**: Er bleibt an der Station bereit und muss durch eine weitere Interaktion abgeholt werden. Erst die Abholung überträgt die Tasse ins Inventar und gibt die Station wieder frei.
 - **M4 – Erster vollständiger Prototyp:** Eine Bestellablage nimmt genau eine Tasse Minztee an und zahlt einmalig 10 Münzen aus; ohne Tee ändern sich weder Inventar noch Geld. Das HUD zeigt Minze, Minztee und Münzen. Ein fester Laternen-Stellplatz verkauft die Laterne für 10 Münzen. Sie erscheint nach dem Kauf; ein zweiter Kauf ist nicht möglich, und das Guthaben fällt nicht unter null.
-- **Entwicklungsgrundlage:** Godot Standard ohne .NET und GDScript sind gewählt. Git wurde eingerichtet; das Repository heißt `teahut`. Die Anbindung der Beetgrafik wurde laut Rückmeldung committet.
+- **M5 – Spielstand:** Ein lokaler Spielstand (`user://savegame.json`) speichert Geld, Minze, Minztee, Figurposition, Beetzustand samt Restwachstumszeit, Teestation samt Restzeit bzw. abholbereiter Tasse und den Laternenkauf. Er wird beim Start der Welt automatisch geladen; es gibt keinen Offline-Fortschritt. Gespeichert wird manuell im Pausenmenü, automatisch nach Verkauf und Laternenkauf sowie beim Schließen des Fensters. Das Speichern ist ausfallsicher: Es schreibt zuerst eine temporäre Datei und behält den vorherigen Stand als Sicherung (`savegame.bak`), die bei beschädigter Hauptdatei geladen wird. Objekte mit Spielstand gehören zur Gruppe `persist` und liefern `get_save_data()` bzw. `load_save_data(data)`. Das Pausenmenü (Escape) hält die Simulation an und bietet Fortsetzen, Speichern, „Neues Spiel“ mit Bestätigung und Beenden mit Speichern. Ein kurzer HUD-Hinweis meldet erfolgreiches oder fehlgeschlagenes Speichern.
+- **Entwicklungsgrundlage:** Godot Standard ohne .NET und GDScript sind gewählt. Git wurde eingerichtet; das Repository heißt `teahut` und liegt auf GitHub. Die Anbindung der Beetgrafik wurde laut Rückmeldung committet.
 
-Der derzeitige spielbare Ablauf lautet damit: **Minze pflanzen → wachsen lassen → ernten → Tee zubereiten → fertigen Tee abholen → an der Ablage abgeben → Münzen erhalten → Laterne kaufen.**
+Der derzeitige spielbare Ablauf lautet damit: **Minze pflanzen → wachsen lassen → ernten → Tee zubereiten → fertigen Tee abholen → an der Ablage abgeben → Münzen erhalten → Laterne kaufen**, jederzeit speicherbar und nach einem Neustart verlustfrei fortsetzbar.
 
 ### Noch offen oder nicht als fertig bestätigt
 
 - **Aus M4 bewusst vereinfacht:** Bestellbrett mit je einer Bestellung pro Sorte, Wahl der aktiven Bestellung, sichtbares Abstellen und Bestätigen an der Ablage (Abschnitt 8) sowie der Einrichtungskatalog (Abschnitt 9) sind noch nicht umgesetzt. Sie folgen spätestens mit M6.
-- **M5:** Speichern und Laden des bisherigen Spielablaufs.
+- **Aus M5 bewusst vereinfacht:** Hauptmenü mit „Neues Spiel“, „Fortsetzen“ und „Beenden“ (folgt mit M8; bis dahin lädt die Welt beim Start automatisch). Der Spielstand wird mit jedem neuen System erweitert: aktive Bestellung, reservierte Zutaten, Feuchtigkeit, Uhrzeit, Wetter, Schlafbonus und Sichtbarkeit der Dekorationen (Abschnitt 12). Die Versionsnummer im Spielstand wird beim Laden noch nicht ausgewertet; das wird nötig, sobald sich das Speicherformat ändert.
 - **M6:** Drei Kräuterarten und Rezepte, vollständige Teezubereitung mit Nahansicht und einzelnen Handgriffen sowie insgesamt fünf Dekorationen.
 - **M7:** Tag/Nacht, Regen, Gießen beziehungsweise Feuchtigkeit, freiwilliges Schlafen und Schlafbonus; die genaue Einordnung des Gießens wird bei der Umsetzung festgelegt.
 - **M8:** Abschließende Menüs, Audioeinstellungen, Prüfung der Sonderfälle und Windows-Export.
@@ -34,9 +35,15 @@ Die zuvor offene Mengenprüfung ist geklärt: Die Bedingungen `amount <= 0` in `
 
 ### Nächster kleiner Umsetzungsschritt
 
-Einen ersten lokalen Spielstand anlegen, der Geld, Minze, Minztee, den Beetzustand samt verbleibender Wachstumszeit, den Zustand der Teestation und den Laternenkauf speichert und beim Start wieder lädt. Für den M5-Abschluss muss der bisherige Ablauf gespeichert, die Anwendung geschlossen und anschließend verlustfrei fortgesetzt werden können.
+M6 ist der bisher größte Block. Vorgeschlagen ist, ihn in kleine, jeweils spielbare und speicherbare Teilschritte aufzuteilen (Reihenfolge ist ein Vorschlag, keine Festlegung):
 
-Die folgenden Abschnitte beschreiben den **Zielumfang von Version 0.1**. Nicht ausdrücklich als umgesetzt markierte Funktionen sind weiterhin Anforderungen und keine Beschreibung des bereits vorhandenen Codes. Die Zahlen in Abschnitt 11 bleiben Arbeitswerte; tatsächlich im Prototyp verwendete Werte wurden hier nicht nachgeprüft.
+1. **M6a – Inventar verallgemeinern:** Mengen nach Art in einem Dictionary statt fester Variablen `mint`/`mint_tea`; Kräuter und Rezepte als Daten (Godot-`Resource`). Das Speicherformat verwendet bereits `"items": {...}` und kann weiterverwendet werden. Sichtbares Ergebnis: Der bisherige Minze-Ablauf funktioniert unverändert, alte Spielstände laden weiterhin.
+2. **M6b – Kamille und Lavendel:** Am leeren Beet die Kräuterart wählen; die Teestation macht aus jeder Art den passenden Tee.
+3. **M6c – Bestellbrett:** je eine Bestellung pro Sorte, aktive Bestellung wählen, Ablage prüft die Sorte (Abschnitt 8).
+4. **M6d – Einrichtungskatalog:** fünf Dekorationen mit festen Stellplätzen, Kauf, Ein-/Ausblenden und Spielstand; die Laterne wird die erste davon (Abschnitt 9).
+5. **M6e – Nahansicht der Teestation** mit den einzelnen Handgriffen (Abschnitt 7).
+
+Die folgenden Abschnitte beschreiben den **Zielumfang von Version 0.1**. Nicht ausdrücklich als umgesetzt markierte Funktionen sind weiterhin Anforderungen und keine Beschreibung des bereits vorhandenen Codes. Die Zahlen in Abschnitt 11 bleiben Arbeitswerte. Im Prototyp sind derzeit kürzere Testwerte eingestellt (Stand 28.09.2026, Standardwerte der Skripte ohne Überschreibung in den Szenen): Wachstum 5 Sekunden, Zubereitung 5 Sekunden, Auszahlung 10 Münzen, Laterne 10 Münzen.
 
 ## 1. Zweck und Verbindlichkeit
 
@@ -218,7 +225,7 @@ Beim Schlafen entspricht eine übersprungene Spielminute einer Sekunde reguläre
 
 ## 13. Technischer Rahmen und Lernziele
 
-- Engine: Godot 4 Standard ohne .NET. Zu Projektbeginn wurde vom Entwickler „4.7.2“ genannt; diese genaue Versionsangabe wurde hier nicht am Projekt oder Editor verifiziert. Vor versionsabhängigen Anleitungen die tatsächlich installierte Version prüfen. Keine unnötigen Versionswechsel während Version 0.1.
+- Engine: Godot 4 Standard ohne .NET. Zu Projektbeginn wurde vom Entwickler „4.7.2“ genannt. Die Projektdatei `project.godot` weist Godot 4.7 mit dem Renderer „GL Compatibility“ und Jolt Physics aus; die Patch-Version im Editor wurde nicht geprüft. Vor versionsabhängigen Anleitungen die tatsächlich installierte Version prüfen. Keine unnötigen Versionswechsel während Version 0.1.
 - Sprache: GDScript mit Typangaben; bereits für die Gameplay-Skripte im Einsatz.
 - 3D-Welt mit fester Kamera; stationäre Teezubereitung darf als eigene Oberfläche umgesetzt werden.
 - Fertige, stilistisch zusammenpassende Low-Poly-Modelle bevorzugen. Für den Prototyp genügen einfache Platzhalter.
@@ -232,14 +239,14 @@ Lernziele sind Godot-Szenen und Nodes, Eingaben und Kollisionen, Signale, Benutz
 
 ## 14. Entwicklungsreihenfolge
 
-| Meilenstein | Überprüfbares Ergebnis | Stand am 24.09.2026 |
+| Meilenstein | Überprüfbares Ergebnis | Stand am 28.09.2026 |
 | --- | --- | --- |
 | M1 – Bewegen und interagieren | Figur läuft auf einer kleinen Fläche und erkennt ein benutzbares Beet. | Umgesetzt; Funktion bestätigt. |
 | M2 – Erster Anbau | Minze pflanzen, kurz wachsen lassen und als Inventarmenge ernten. | Umgesetzt; Funktion bestätigt. Beetgrafik angebunden. |
 | M3 – Erste Tasse | Vereinfachte Teestation verarbeitet eine Portion Minze zu genau einer Tasse, die aktiv abgeholt wird. | Umgesetzt; Abholung bestätigt. Code am 24.09. eingesehen. |
 | M4 – Erster vollständiger Prototyp | Eine Bestellung abgeben, Geld erhalten und eine sichtbare Laterne kaufen. | Umgesetzt; Testlauf am 24.09. bestätigt. Vereinfacht mit fester Ablage für Minztee und festem Laternen-Stellplatz. |
-| M5 – Spielstand | Diesen Ablauf speichern, Anwendung schließen und verlustfrei fortsetzen. | Nächster Meilenstein. |
-| M6 – Inhalt und Ritual | Drei Kräuter/Rezepte, alle Handgriffe der Teestation, fünf Dekorationen. | Offen. |
+| M5 – Spielstand | Diesen Ablauf speichern, Anwendung schließen und verlustfrei fortsetzen. | Umgesetzt; Spieltest am 28.09. bestätigt. Autosave, Sicherungsdatei und Pausenmenü; Hauptmenü folgt mit M8. |
+| M6 – Inhalt und Ritual | Drei Kräuter/Rezepte, alle Handgriffe der Teestation, fünf Dekorationen. | Nächster Meilenstein; Aufteilung in M6a–M6e vorgeschlagen. |
 | M7 – Atmosphäre und Tagesablauf | Tag/Nacht, Regen, freiwilliges Schlafen und kleiner Bonus. | Offen. |
 | M8 – Version 0.1 abschließen | Menü, Audioeinstellungen, Sonderfälle prüfen und Windows-Version exportieren. | Offen. |
 
@@ -274,7 +281,7 @@ Spätere Erweiterungen sollen vorzugsweise einzeln erfolgen: freies Dekorieren, 
 Du begleitest mich bei der Entwicklung von „Teehütte am See“ gemäß diesem Spec-Sheet. Ich habe Programmiererfahrung, bin aber Anfänger in Spieleentwicklung. Ziel ist, das Spiel selbst zu verstehen und schrittweise zu entwickeln.
 
 - Verwende dieses Dokument als gemeinsamen Ausgangspunkt und unterscheide festgelegte Wünsche von vorgeschlagenen Arbeitswerten.
-- Setze am dokumentierten Entwicklungsstand an: M1 bis M4 sind bestätigt, M5 folgt als Nächstes. Erkläre Godot-Begriffe bei ihrer ersten Verwendung in einfacher Sprache.
+- Setze am dokumentierten Entwicklungsstand an: M1 bis M5 sind bestätigt, M6 folgt als Nächstes. Erkläre Godot-Begriffe bei ihrer ersten Verwendung in einfacher Sprache.
 - Gib mir kleine, ausführbare Schritte mit einem sichtbaren Ergebnis und einer kurzen Prüfanweisung.
 - Erkläre bei Code, welche Aufgabe er erfüllt und an welche Szene beziehungsweise welches Objekt er gehört.
 - Liefere Code passend zur tatsächlich verwendeten Godot-Version und zur einmal gewählten Sprache.
@@ -286,4 +293,4 @@ Du begleitest mich bei der Entwicklung von „Teehütte am See“ gemäß diesem
 
 **Fortsetzungsauftrag:**
 
-> Dieses Spec-Sheet ist die Grundlage meines Spiels. Hilf mir, Version 0.1 selbst schrittweise in Godot mit GDScript zu entwickeln. M1 bis M4 funktionieren laut meinen bisherigen Spieltests: Minze anbauen, Tee zubereiten und aktiv abholen, an der Ablage abgeben und mit dem Geld die Laterne kaufen. Fahre mit M5 fort: diesen Ablauf speichern und nach einem Neustart verlustfrei fortsetzen. Verwende den aktuellen Projektcode für konkrete Änderungen und gib mir kleine, verständliche Schritte mit jeweils einem sichtbaren Ergebnis.
+> Dieses Spec-Sheet ist die Grundlage meines Spiels. Hilf mir, Version 0.1 selbst schrittweise in Godot mit GDScript zu entwickeln. M1 bis M5 funktionieren laut meinen bisherigen Spieltests: Minze anbauen, Tee zubereiten und aktiv abholen, an der Ablage abgeben, mit dem Geld die Laterne kaufen und den Ablauf speichern und nach einem Neustart verlustfrei fortsetzen. Fahre mit M6 fort, beginnend mit M6a: das Inventar so verallgemeinern, dass weitere Kräuter und Teesorten als Daten ergänzt werden können, ohne bestehende Spielstände zu verlieren. Verwende den aktuellen Projektcode für konkrete Änderungen und gib mir kleine, verständliche Schritte mit jeweils einem sichtbaren Ergebnis.
