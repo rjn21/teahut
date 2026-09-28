@@ -10,23 +10,21 @@ var _save_message_id: int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	Inventory.mint_changed.connect(_on_mint_changed)
-	Inventory.mint_tea_changed.connect(_on_mint_tea_changed)
+	Inventory.item_changed.connect(_on_item_changed)
 	Inventory.money_changed.connect(_on_money_changed)
 	SaveGame.saved.connect(_on_saved)
 	save_label.visible = false
 	
-	
-	_on_mint_changed(Inventory.mint)
-	_on_mint_tea_changed(Inventory.mint_tea)
+	_on_item_changed("mint", Inventory.get_count("mint"))
+	_on_item_changed("mint_tea", Inventory.get_count("mint_tea"))
 	_on_money_changed(Inventory.money)
 	
-func _on_mint_changed(amount: int) -> void:
-	mint_label.text = "Minze: %d" % amount
-	
-
-func _on_mint_tea_changed(amount: int) -> void:
-	mint_tea_label.text = "Minztee: %d" % amount
+func _on_item_changed(id: String, amount: int) -> void:
+	match id:
+		"mint":
+			mint_label.text = "Minze: %d" % amount
+		"mint_tea":
+			mint_tea_label.text = "Minztee: %d" % amount
 	
 func _on_money_changed(amount: int) -> void:
 	money_label.text = "Münzen: %d" % amount

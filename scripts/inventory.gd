@@ -1,78 +1,77 @@
 extends Node
 
-signal mint_changed(amount: int)
-signal mint_tea_changed(amount: int)
+signal item_changed(id: String, amount: int)
 signal money_changed(amount: int)
 
-var mint: int = 0
-var mint_tea: int = 0
+var items: Dictionary[String, int] = {}
 var money: int = 0
 
-func add_mint(amount: int) -> void:
+func get_count(id: String) -> int:
+	return items.get(id, 0)
+	
+func add_item(id: String, amount: int) -> void:
 	if amount <= 0:
 		return
-	mint += amount
-	mint_changed.emit(mint)
-	print("Minze im Inventar: ", mint)
+	_set_count(id, get_count(id) + amount)
 	
-func add_mint_tea(amount: int) -> void:
-	if amount <= 0:
-		return	
-	mint_tea += amount
-	mint_tea_changed.emit(mint_tea)
-	print("Minztee im Inventar: ", mint_tea)
-	
+func try_take_item(id: String, amount: int) -> bool:
+	if amount <= 0 or get_count(id) < amount:
+		return false
+	_set_count(id, get_count(id) - amount)
+	return true
+
 func add_money(amount: int) -> void:
 	if amount <= 0:
 		return
 	money += amount
 	money_changed.emit(money)
 
-func try_take_mint(amount: int) -> bool:
-	if amount <= 0 or mint < amount:
-		return false
-	mint -= amount
-	mint_changed.emit(mint)
-	return true
-	
-func try_take_mint_tea(amount: int) -> bool:
-	if amount <= 0 or mint_tea < amount:
-		return false
-
-	mint_tea -= amount
-	mint_tea_changed.emit(mint_tea)
-	return true
-	
 func try_spend_money(amount: int) -> bool:
 	if amount <= 0 or money < amount:
 		return false
 	money -= amount
 	money_changed.emit(money)
 	return true
+
+func add_mint(amount: int) -> void:
+	add_item("mint", amount)
+	
+func add_mint_tea(amount: int) -> void:
+	add_item("mint_tea", amount)
+	
+func try_take_mint(amount: int) -> bool:
+	return try_take_item("mint", amount)
+	
+func try_take_mint_tea(amount: int) -> bool:
+	return try_take_item("mint_tea", amount)
 	
 func reset() -> void:
-	mint = 0
-	mint_tea = 0
+	for id in items.keys():
+		items[id] = 0
 	money = 0
 	_emit_all()
-	
+
 func to_dict() -> Dictionary:
 	return {
 		"money": money,
-		"items": {
-			"mint": mint,
-			"mint_tea": mint_tea
-		}
+		"items": items.duplicate()
 	}
-	
+
 func from_dict(data: Dictionary) -> void:
-	var items: Dictionary = data.get("items", {})
-	mint = maxi(0, int(items.get("mint", 0)))
-	mint_tea = maxi(0, int(items.get("mint_tea", 0)))
+	for id in items.keys():
+		items[id] = 0
+	var saved_items: Dictionary = data.get("items", {})
+	for id in saved_items:
+		items[str(id)] = maxi(0, int(saved_items[id]))
 	money = maxi(0, int(data.get("money", 0)))
 	_emit_all()
 	
+func _set_count(id: String, amount: int) -> void:
+	items[id] = amount
+	item_changed.emit(id, amount)
+
 func _emit_all() -> void:
-	mint_changed.emit(mint)
-	mint_tea_changed.emit(mint_tea)
+	for id in items:
+		item_changed.emit(id, items[id])
 	money_changed.emit(money)
+		
