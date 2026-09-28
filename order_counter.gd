@@ -31,7 +31,7 @@ func _process(_delta: float) -> void:
 		deliver_tea()
 	
 func deliver_tea() -> void:
-	if not Inventory.try_take_mint_tea(1):
+	if not Inventory.try_take_item("mint_tea", 1):
 		interaction_label.text = "Kein Minztee dabei"
 		return
 	

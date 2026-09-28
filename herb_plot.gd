@@ -58,7 +58,7 @@ func plant_mint() -> void:
 func harvest_mint() -> void:
 	state =PlotState.EMPTY
 	remaining = 0.0
-	Inventory.add_mint(2)
+	Inventory.add_item("mint", 2)
 	print("Minze geerntet.")
 	update_interaction_label()
 	update_visual()

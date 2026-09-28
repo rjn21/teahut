@@ -32,18 +32,6 @@ func try_spend_money(amount: int) -> bool:
 	money -= amount
 	money_changed.emit(money)
 	return true
-
-func add_mint(amount: int) -> void:
-	add_item("mint", amount)
-	
-func add_mint_tea(amount: int) -> void:
-	add_item("mint_tea", amount)
-	
-func try_take_mint(amount: int) -> bool:
-	return try_take_item("mint", amount)
-	
-func try_take_mint_tea(amount: int) -> bool:
-	return try_take_item("mint_tea", amount)
 	
 func reset() -> void:
 	for id in items.keys():

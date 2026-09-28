@@ -51,7 +51,7 @@ func interact() -> void:
 			collect_tea()
 
 func start_brewing() -> void:
-	if not Inventory.try_take_mint(1):
+	if not Inventory.try_take_item("mint", 1):
 		interaction_label.text = "Keine Minze vorhanden"
 		return
 	
@@ -71,7 +71,7 @@ func collect_tea() -> void:
 		return
 	
 	state = TeaState.IDLE
-	Inventory.add_mint_tea(1)
+	Inventory.add_item("mint_tea", 1)
 	update_interaction_label()
 	
 # Aktualisiert die Label anhängig vom Status
