@@ -26,7 +26,7 @@ func _on_body_exited(body: Node3D) -> void:
 		interaction_label.visible = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if player_in_range and Input.is_action_just_pressed("interact"):
 		deliver_tea()
 	
@@ -37,6 +37,7 @@ func deliver_tea() -> void:
 	
 	Inventory.add_money(payout)
 	update_interaction_label()
+	SaveGame.save_game()
 	
 func update_interaction_label() -> void:
 	interaction_label.text = "E - Minztee abgeben (+%d Münzen)" % payout
