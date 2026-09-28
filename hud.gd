@@ -16,11 +16,6 @@ func _ready() -> void:
 	_on_mint_tea_changed(Inventory.mint_tea)
 	_on_money_changed(Inventory.money)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-	
 func _on_mint_changed(amount: int) -> void:
 	mint_label.text = "Minze: %d" % amount
 	

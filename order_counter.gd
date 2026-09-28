@@ -26,7 +26,7 @@ func _on_body_exited(body: Node3D) -> void:
 		interaction_label.visible = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if player_in_range and Input.is_action_just_pressed("interact"):
 		deliver_tea()
 	

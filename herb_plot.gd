@@ -32,7 +32,7 @@ func _process(delta: float) -> void:
 			update_visual()
 	
 	if player_in_range and Input.is_action_just_pressed("interact"):
-		interact()#
+		interact()
 
 func _on_body_entered(body: Node3D) -> void:
 	if body is CharacterBody3D:
@@ -69,7 +69,6 @@ func _on_growth_finished() -> void:
 	update_interaction_label()
 	update_visual()
 		
-# Called when the node enters the scene tree for the first time.
 
 		
 func _on_body_exited(body: Node3D) -> void:
@@ -108,7 +107,3 @@ func load_save_data(data: Dictionary) -> void:
 	remaining = clampf(remaining_float, 0.0, growth_duration)
 	update_interaction_label()
 	update_visual()
-		
-
-		
-# Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -10,11 +10,11 @@ var offset: Vector3
 func _ready() -> void:
 	if target == null:
 		push_error("Der Kamera fehlt eine Zielfigur.")
-		set_physics_process(false)
+		set_process(false)
 		return
 		
 	offset = global_position - target.global_position
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	global_position = target.global_position + offset

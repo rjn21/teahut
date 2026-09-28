@@ -49,7 +49,3 @@ func _on_new_game_confirmed() -> void:
 	Inventory.reset()
 	get_tree().paused = false
 	get_tree().reload_current_scene()
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass

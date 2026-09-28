@@ -1,7 +1,7 @@
 extends Node
 
 signal mint_changed(amount: int)
-signal mint_tea_changed(amont: int)
+signal mint_tea_changed(amount: int)
 signal money_changed(amount: int)
 
 var mint: int = 0
@@ -76,20 +76,3 @@ func _emit_all() -> void:
 	mint_changed.emit(mint)
 	mint_tea_changed.emit(mint_tea)
 	money_changed.emit(money)
-
-func _ready() -> void:
-	pass # Replace with function body.
-
-func _process(delta: float) -> void:
-	pass
-	
-
-	
-
-	
-
-	
-
-	
-
-	
