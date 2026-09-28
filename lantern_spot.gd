@@ -44,6 +44,7 @@ func buy_lantern() -> void:
 	bought = true
 	show_as_preview(false)
 	update_interaction_label()
+	SaveGame.save_game()
 	
 func update_interaction_label() -> void:
 	if bought:

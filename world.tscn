@@ -84,6 +84,12 @@ offset_right = 80.0
 offset_bottom = 59.0
 text = "Münzen: 0"
 
+[node name="Save Message" type="Label" parent="HUD" unique_id=362045386]
+offset_top = 60.0
+offset_right = 132.0
+offset_bottom = 83.00014
+text = "Spiel gespeichert"
+
 [node name="TeaStation" parent="." unique_id=687408151 instance=ExtResource("5_036b0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.005533, 2.3841858e-07, -5.417753)
 

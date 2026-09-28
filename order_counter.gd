@@ -37,6 +37,7 @@ func deliver_tea() -> void:
 	
 	Inventory.add_money(payout)
 	update_interaction_label()
+	SaveGame.save_game()
 	
 func update_interaction_label() -> void:
 	interaction_label.text = "E - Minztee abgeben (+%d Münzen)" % payout
