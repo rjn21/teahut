@@ -74,9 +74,12 @@ herbs = Array[ExtResource("6_jhx03")]([ExtResource("7_o8fc1")])
 teas = Array[ExtResource("8_xo05s")]([ExtResource("9_dss4m")])
 
 [node name="Save Message" type="Label" parent="HUD" unique_id=362045386]
-offset_top = 60.0
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.000122
 offset_right = 132.0
-offset_bottom = 83.00014
+grow_vertical = 0
 text = "Spiel gespeichert"
 
 [node name="Stats" type="VBoxContainer" parent="HUD" unique_id=806380144]
