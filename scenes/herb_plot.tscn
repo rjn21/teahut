@@ -1,8 +1,11 @@
 [gd_scene format=3 uid="uid://boi7gxy644wh7"]
 
 [ext_resource type="Script" uid="uid://deitih1yurewe" path="res://scripts/herb_plot.gd" id="1_2blrl"]
+[ext_resource type="Script" uid="uid://dyecvq1bh10yy" path="res://data_scripts/herb_data.gd" id="2_7jr1v"]
 [ext_resource type="Resource" uid="uid://do48fw3gfqcmg" path="res://data/mint.tres" id="2_b4dnx"]
 [ext_resource type="PackedScene" uid="uid://csb4nklo0ixbw" path="res://assets/hd2d/scenes/garden_bed.tscn" id="2_fpprn"]
+[ext_resource type="Resource" uid="uid://cf0hxx0k1sfgw" path="res://data/chamomile.tres" id="4_7g7wd"]
+[ext_resource type="Resource" uid="uid://curvp72qi0fuf" path="res://data/lavender.tres" id="5_q4e7a"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_emwdv"]
 size = Vector3(1.5, 0.2, 1.5)
@@ -10,11 +13,11 @@ size = Vector3(1.5, 0.2, 1.5)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2blrl"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_emwdv"]
-size = Vector3(3, 2, 3)
+size = Vector3(1.5, 1, 1.5)
 
 [node name="HerbPlot" type="Area3D" unique_id=492106281]
 script = ExtResource("1_2blrl")
-herb = ExtResource("2_b4dnx")
+herbs = Array[ExtResource("2_7jr1v")]([ExtResource("2_b4dnx"), ExtResource("4_7g7wd"), ExtResource("5_q4e7a")])
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=106182256]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
@@ -23,7 +26,7 @@ mesh = SubResource("BoxMesh_emwdv")
 surface_material_override/0 = SubResource("StandardMaterial3D_2blrl")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1803423362]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_emwdv")
 
 [node name="InteractionLabel" type="Label3D" parent="." unique_id=790710017]

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TeaData" format=3 uid="uid://c8ok2x2pfq355"]
+
+[ext_resource type="Resource" uid="uid://cf0hxx0k1sfgw" path="res://data/chamomile.tres" id="1_15uvi"]
+[ext_resource type="Script" uid="uid://c4glokguw7hmq" path="res://data_scripts/tea_data.gd" id="2_wsi0j"]
+
+[resource]
+script = ExtResource("2_wsi0j")
+id = "chamomile_tea"
+display_name = "Kamillentee"
+herb = ExtResource("1_15uvi")
+metadata/_custom_type_script = "uid://c4glokguw7hmq"
