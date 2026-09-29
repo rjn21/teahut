@@ -50,7 +50,7 @@ Autoloads: `Inventory` (`scripts/inventory.gd`), `SaveGame` (`scripts/save_game.
 ## Architektur-Konventionen
 
 - **Inventar:** Mengen in `items: Dictionary[String, int]`, Schlüssel ist die `id` der Resource. API: `get_count`, `add_item`, `try_take_item`, `add_money`, `try_spend_money`. Signale `item_changed(id, amount)` und `money_changed(amount)`. Mengen ≤ 0 werden abgewiesen.
-- **Inhalte als Daten:** `HerbData` (id, display_name, growth_duration, harvest_amount) und `TeaData` (id, display_name, herb, herb_amount, brew_duration, price) werden per `@export` an Beet, Teestation und Ablage zugewiesen.
+- **Inhalte als Daten:** `HerbData` (id, display_name, growth_duration, harvest_amount) und `TeaData` (id, display_name, herb, herb_amount, brew_duration, price) werden per `@export` an Beet, Teestation und Ablage zugewiesen. Neue Sorte = neue `.tres` in `data/` und im HUD (`world.tscn` → `HUD`, Listen `herbs`/`teas`) eintragen.
 - **Interaktionsobjekte:** `Area3D` mit `InteractionLabel` (Label3D), `player_in_range` über `body_entered/exited`, Aktion `interact` (E). Zustände als `enum` (`EMPTY/GROWING/READY`, `IDLE/BREWING/READY`).
 - **Spielstand:** `user://savegame.json`, sicheres Schreiben über `.tmp`, vorheriger Stand als `.bak` (Fallback beim Laden). Nodes mit Zustand gehören zur Gruppe `persist` und liefern `get_save_data()` / `load_save_data(data)`. Der Schlüssel ist der Node-Pfad ab der Weltszene (z. B. `HerbPlot`) → Nodes in `world.tscn` nicht umbenennen, ohne an alte Spielstände zu denken. Zustände als Enum-Namen speichern, Werte beim Laden begrenzen (`clampf`). `SAVE_VERSION` wird noch nicht ausgewertet.
 - **Autosave:** nach Verkauf, nach Laternenkauf, beim Schließen des Fensters. Kein Offline-Fortschritt.
@@ -59,7 +59,7 @@ Autoloads: `Inventory` (`scripts/inventory.gd`), `SaveGame` (`scripts/save_game.
 
 ## Aktueller Stand
 
-Stand: 29.09.2026 · Branch `M6a`
+Stand: 29.09.2026 · Branch `M6a` (PR nach `main` offen)
 
 | Meilenstein | Ergebnis | Stand |
 | --- | --- | --- |
@@ -68,21 +68,20 @@ Stand: 29.09.2026 · Branch `M6a`
 | M3 – Erste Tasse | Vereinfachte Teestation; fertiger Tee wird **aktiv abgeholt** (nicht automatisch ins Inventar) | bestätigt |
 | M4 – Erster Prototyp | Ablage nimmt Minztee an (+10 Münzen); Laterne für 10 Münzen kaufbar | bestätigt |
 | M5 – Spielstand | Speichern/Laden, Autosave, `.bak`-Fallback, Pausenmenü | bestätigt (28.09.) |
-| M6 – Inhalt und Ritual | 3 Kräuter/Rezepte, Handgriffe der Teestation, 5 Dekorationen | **in Arbeit (M6a)** |
+| M6 – Inhalt und Ritual | 3 Kräuter/Rezepte, Handgriffe der Teestation, 5 Dekorationen | **in Arbeit** (M6a fertig, M6b als Nächstes) |
 | M7 – Atmosphäre | Tag/Nacht, Regen, Gießen/Feuchtigkeit, Schlafen, Schlafbonus | offen |
 | M8 – Abschluss 0.1 | Hauptmenü, Audioeinstellungen, Sonderfälle, Windows-Export | offen |
 
 **M6-Aufteilung** (Vorschlag, jeder Schritt spielbar und speicherbar):
-1. **M6a – Inventar verallgemeinern** (in Arbeit)
-2. M6b – Kamille und Lavendel: Kräuterart am leeren Beet wählen; Station macht passenden Tee
+1. M6a – Inventar verallgemeinern (abgeschlossen)
+2. **M6b** – Kamille und Lavendel: Kräuterart am leeren Beet wählen; Station macht passenden Tee
 3. M6c – Bestellbrett: je eine Bestellung pro Sorte, aktive Bestellung wählen, Ablage prüft Sorte (Spec 8)
 4. M6d – Einrichtungskatalog: fünf Dekorationen, Laterne wird die erste (Spec 9)
 5. M6e – Nahansicht der Teestation mit Handgriffen (Spec 7)
 
-**M6a im Detail:**
-- Erledigt (committet): Inventar als Dictionary; Aufrufer nutzen `add_item`/`try_take_item`.
-- Erledigt (Spieltest bestätigt, committet): Dateien in `scenes/`/`scripts/` verschoben; `HerbData`/`TeaData` mit `mint.tres`/`mint_tea.tres`, von Beet, Station und Ablage verwendet. Minze-Ablauf unverändert, alter Spielstand lädt weiter. Ungenutzte `item_data.gd` entfernt.
-- Offen: `scripts/hud.gd` fragt noch fest `"mint"`/`"mint_tea"` ab und sollte die Anzeige aus Daten erzeugen, damit M6b nur neue `.tres`-Dateien braucht.
+**M6a – abgeschlossen (29.09.2026):** Inventar als Dictionary mit `add_item`/`try_take_item`; Dateien in `scenes/`/`scripts/`; `HerbData`/`TeaData` mit `mint.tres`/`mint_tea.tres` für Beet, Station und Ablage; HUD erzeugt seine Zeilen aus den Listen `herbs`/`teas`, Speicherhinweis sitzt unten links. Minze-Ablauf, HUD und alte Spielstände per Spieltest bestätigt.
+
+**Nächster Schritt: M6b – Kamille und Lavendel.**
 
 **Bewusst vereinfacht, kommt später:** Hauptmenü (M8; bis dahin lädt die Welt automatisch). Spielstand wächst mit jedem System (aktive Bestellung, reservierte Zutaten, Feuchtigkeit, Uhrzeit, Wetter, Schlafbonus, Deko-Sichtbarkeit).
 
