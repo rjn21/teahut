@@ -81,7 +81,11 @@ Stand: 29.09.2026 · Branch `M6a` (PR nach `main` offen)
 
 **M6a – abgeschlossen (29.09.2026):** Inventar als Dictionary mit `add_item`/`try_take_item`; Dateien in `scenes/`/`scripts/`; `HerbData`/`TeaData` mit `mint.tres`/`mint_tea.tres` für Beet, Station und Ablage; HUD erzeugt seine Zeilen aus den Listen `herbs`/`teas`, Speicherhinweis sitzt unten links. Minze-Ablauf, HUD und alte Spielstände per Spieltest bestätigt.
 
-**Nächster Schritt: M6b – Kamille und Lavendel.**
+**M6b – Kamille und Lavendel (in Arbeit, Branch `M6b`).** Festgelegt am 29.09.2026:
+- Sortenwahl am leeren Beet und an der freien Teestation mit neuer Eingabeaktion `cycle` (Q); ein Auswahlmenü folgt erst mit der Nahansicht (M6e).
+- Drei Beete (Spec 4). Beet und Station speichern die gewählte Sorte als `id`; fehlt sie (alter Spielstand), gilt die erste Sorte der Liste (Minze bzw. Minztee).
+- Übergang bis M6c: Die Ablage nimmt jede Teesorte an (erste vorhandene aus ihrer Liste).
+- Schritte: 1. Daten (`chamomile`, `lavender`, `chamomile_tea`, `lavender_tea`) + HUD · 2. Beet mit Sortenwahl · 3. drei Beete · 4. Teestation mit Sortenwahl · 5. Ablage für alle Sorten.
 
 **Bewusst vereinfacht, kommt später:** Hauptmenü (M8; bis dahin lädt die Welt automatisch). Spielstand wächst mit jedem System (aktive Bestellung, reservierte Zutaten, Feuchtigkeit, Uhrzeit, Wetter, Schlafbonus, Deko-Sichtbarkeit).
 
