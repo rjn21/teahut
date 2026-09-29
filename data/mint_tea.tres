@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TeaData" format=3 uid="uid://b7xwupln72ir"]
+
+[ext_resource type="Script" uid="uid://c4glokguw7hmq" path="res://data_scripts/tea_data.gd" id="1_0jdw4"]
+[ext_resource type="Resource" uid="uid://do48fw3gfqcmg" path="res://data/mint.tres" id="1_4khaq"]
+
+[resource]
+script = ExtResource("1_0jdw4")
+id = "mint_tea"
+display_name = "Minztee"
+herb = ExtResource("1_4khaq")
+metadata/_custom_type_script = "uid://c4glokguw7hmq"

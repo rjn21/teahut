@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b6bu53qc6emod"]
 
 [ext_resource type="Script" uid="uid://ds2klikvuqiom" path="res://scripts/tea_station.gd" id="1_gyjxf"]
+[ext_resource type="Resource" uid="uid://b7xwupln72ir" path="res://data/mint_tea.tres" id="2_23ep5"]
 [ext_resource type="PackedScene" path="res://assets/hd2d/scenes/tea_station.tscn" id="2_ww68b"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_m56b8"]
@@ -8,6 +9,7 @@ size = Vector3(1.3, 0.8, 1.1)
 
 [node name="TeaStation" type="Area3D" unique_id=687408151]
 script = ExtResource("1_gyjxf")
+tea = ExtResource("2_23ep5")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2032616114]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
