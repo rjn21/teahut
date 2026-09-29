@@ -1,13 +1,13 @@
 extends Area3D
 
-@export var tea: TeaData
+@export var teas: Array[TeaData] = []
 
 var player_in_range: bool = false
 
 @onready var interaction_label: Label3D = $InteractionLabel
 
 func _ready() -> void:
-	assert(tea != null, "Ablage: keine TeaData zugewiesen")
+	assert(not teas.is_empty(), "Ablage: keine TeaData zugewiesen")
 	interaction_label.visible = false
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
@@ -29,13 +29,14 @@ func _process(_delta: float) -> void:
 		deliver_tea()
 
 func deliver_tea() -> void:
-	if not Inventory.try_take_item(tea.id, 1):
-		interaction_label.text = "Kein %s dabei" % tea.display_name
-		return
-
-	Inventory.add_money(tea.price)
-	update_interaction_label()
-	SaveGame.save_game()
+	for tea in teas:
+		if Inventory.try_take_item(tea.id, 1):
+			Inventory.add_money(tea.price)
+			SaveGame.save_game()
+			interaction_label.text = "%s abgegeben (+%d Münzen)" % [tea.display_name, tea.price]
+			return
+			
+	interaction_label.text = "Kein Tee dabei"
 
 func update_interaction_label() -> void:
-	interaction_label.text = "E - %s abgeben (+%d Münzen)" % [tea.display_name, tea.price]
+	interaction_label.text = "E - Tee abgeben"
