@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="HerbData" format=3 uid="uid://cf0hxx0k1sfgw"]
+
+[ext_resource type="Script" uid="uid://dyecvq1bh10yy" path="res://data_scripts/herb_data.gd" id="1_ykon4"]
+
+[resource]
+script = ExtResource("1_ykon4")
+id = "chamomile"
+display_name = "Kamille"
+metadata/_custom_type_script = "uid://dyecvq1bh10yy"

@@ -9,10 +9,14 @@
 [ext_resource type="PackedScene" uid="uid://b6bu53qc6emod" path="res://scenes/tea_station.tscn" id="6_o8fc1"]
 [ext_resource type="Resource" uid="uid://do48fw3gfqcmg" path="res://data/mint.tres" id="7_o8fc1"]
 [ext_resource type="PackedScene" uid="uid://b3h5ehrd1covj" path="res://scenes/order_counter.tscn" id="7_xo05s"]
+[ext_resource type="Resource" uid="uid://cf0hxx0k1sfgw" path="res://data/chamomile.tres" id="8_7t5mc"]
 [ext_resource type="PackedScene" uid="uid://booc3wwq4dgji" path="res://scenes/lantern_spot.tscn" id="8_dss4m"]
 [ext_resource type="Script" uid="uid://c4glokguw7hmq" path="res://data_scripts/tea_data.gd" id="8_xo05s"]
 [ext_resource type="PackedScene" uid="uid://c4le1hjcaw118" path="res://scenes/pause_menu.tscn" id="9_7t5mc"]
 [ext_resource type="Resource" uid="uid://b7xwupln72ir" path="res://data/mint_tea.tres" id="9_dss4m"]
+[ext_resource type="Resource" uid="uid://curvp72qi0fuf" path="res://data/lavender.tres" id="9_lakw3"]
+[ext_resource type="Resource" uid="uid://c8ok2x2pfq355" path="res://data/chamomile_tea.tres" id="12_pm21f"]
+[ext_resource type="Resource" uid="uid://doioydfxaftrv" path="res://data/lavender_tea.tres" id="13_2lf6f"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_emwdv"]
 size = Vector3(12, 1, 12)
@@ -70,8 +74,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=242657120]
 script = ExtResource("5_jhx03")
-herbs = Array[ExtResource("6_jhx03")]([ExtResource("7_o8fc1")])
-teas = Array[ExtResource("8_xo05s")]([ExtResource("9_dss4m")])
+herbs = Array[ExtResource("6_jhx03")]([ExtResource("7_o8fc1"), ExtResource("8_7t5mc"), ExtResource("9_lakw3")])
+teas = Array[ExtResource("8_xo05s")]([ExtResource("9_dss4m"), ExtResource("12_pm21f"), ExtResource("13_2lf6f")])
 
 [node name="Save Message" type="Label" parent="HUD" unique_id=362045386]
 anchors_preset = 2

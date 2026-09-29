@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="HerbData" format=3 uid="uid://curvp72qi0fuf"]
+
+[ext_resource type="Script" uid="uid://dyecvq1bh10yy" path="res://data_scripts/herb_data.gd" id="1_1dqba"]
+
+[resource]
+script = ExtResource("1_1dqba")
+id = "lavender"
+display_name = "Lavendel"
+metadata/_custom_type_script = "uid://dyecvq1bh10yy"
