@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b6bu53qc6emod"]
 
-[ext_resource type="Script" uid="uid://ds2klikvuqiom" path="res://tea_station.gd" id="1_gyjxf"]
+[ext_resource type="Script" uid="uid://ds2klikvuqiom" path="res://scripts/tea_station.gd" id="1_gyjxf"]
 [ext_resource type="PackedScene" path="res://assets/hd2d/scenes/tea_station.tscn" id="2_ww68b"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_m56b8"]

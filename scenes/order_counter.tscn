@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b3h5ehrd1covj"]
 
-[ext_resource type="Script" uid="uid://dgfrjb5noveit" path="res://order_counter.gd" id="1_odk8o"]
+[ext_resource type="Script" uid="uid://dgfrjb5noveit" path="res://scripts/order_counter.gd" id="1_odk8o"]
 [ext_resource type="PackedScene" path="res://assets/hd2d/scenes/order_tray.tscn" id="2_h6v4j"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_m56b8"]

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://boi7gxy644wh7"]
 
-[ext_resource type="Script" uid="uid://deitih1yurewe" path="res://herb_plot.gd" id="1_2blrl"]
+[ext_resource type="Script" uid="uid://deitih1yurewe" path="res://scripts/herb_plot.gd" id="1_2blrl"]
 [ext_resource type="PackedScene" uid="uid://csb4nklo0ixbw" path="res://assets/hd2d/scenes/garden_bed.tscn" id="2_fpprn"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_emwdv"]

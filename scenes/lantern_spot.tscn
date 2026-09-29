@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://booc3wwq4dgji"]
 
-[ext_resource type="Script" uid="uid://vcjy5bk34o6c" path="res://lantern_spot.gd" id="1_1fasy"]
+[ext_resource type="Script" uid="uid://vcjy5bk34o6c" path="res://scripts/lantern_spot.gd" id="1_1fasy"]
 [ext_resource type="PackedScene" uid="uid://betrp3j0pdhx8" path="res://assets/hd2d/scenes/lantern.tscn" id="1_f4sy4"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_emwdv"]
