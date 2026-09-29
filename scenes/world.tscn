@@ -33,6 +33,12 @@ script = ExtResource("1_7r4gi")
 [node name="HerbPlot" parent="." unique_id=492106281 instance=ExtResource("2_w7kh3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1304631, 0, -1.6460199)
 
+[node name="HerbPlot2" parent="." unique_id=2115243705 instance=ExtResource("2_w7kh3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0963662, 0, 0.27590466)
+
+[node name="HerbPlot3" parent="." unique_id=1706115341 instance=ExtResource("2_w7kh3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1286175, 0, -3.4173865)
+
 [node name="Ground" type="StaticBody3D" parent="." unique_id=865304845]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
