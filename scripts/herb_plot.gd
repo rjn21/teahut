@@ -6,7 +6,12 @@ enum  PlotState {
 	READY
 }
 
-@export var herb: HerbData
+@export var herbs: Array[HerbData] = []
+
+var herb_index: int = 0
+var herb: HerbData:
+	get:
+		return herbs[herb_index]
 
 var state: PlotState = PlotState.EMPTY
 var player_in_range: bool = false
@@ -16,7 +21,7 @@ var remaining: float = 0.0
 @onready var bed_visual: HerbPlantVisual = $GardenBed
 
 func _ready() -> void:
-	assert(herb != null, "Beet: keine HerbData zugewiesen")
+	assert(not herbs.is_empty(), "Beet: keine Kräuter zugewiesen")
 	add_to_group("persist")
 	interaction_label.visible = false
 	bed_visual.herb = herb.id
@@ -35,6 +40,16 @@ func _process(delta: float) -> void:
 	
 	if player_in_range and Input.is_action_just_pressed("interact"):
 		interact()
+		
+	if player_in_range and Input.is_action_just_pressed("cycle"):
+		select_next_herb()
+
+func select_next_herb() -> void:
+	if state != PlotState.EMPTY:
+		return
+	herb_index = (herb_index + 1) % herbs.size()
+	bed_visual.herb = herb.id
+	update_interaction_label()
 
 func _on_body_entered(body: Node3D) -> void:
 	if body is CharacterBody3D:
@@ -77,7 +92,7 @@ func _on_growth_finished() -> void:
 func update_interaction_label() -> void:
 	match state:
 		PlotState.EMPTY:
-			interaction_label.text = "E - %s pflanzen" % herb.display_name
+			interaction_label.text = "E - %s pflanzen · Q - Sorte wechseln" % herb.display_name
 		PlotState.GROWING:
 			interaction_label.text = "%s wächst" % herb.display_name
 		PlotState.READY:
@@ -94,14 +109,24 @@ func update_visual() -> void:
 func get_save_data() -> Dictionary:
 	return {
 		"state": PlotState.keys()[state],
-		"remaining": remaining
+		"remaining": remaining,
+		"herb": herb.id
 	}
 
 func load_save_data(data: Dictionary) -> void:
 	var state_name: String = str(data.get("state", "EMPTY"))
 	state = PlotState.get(state_name, PlotState.EMPTY)
 	
+	herb_index = _find_herb_index(str(data.get("herb", "")))
+	bed_visual.herb = herb.id
+	
 	var remaining_float: float = float(data.get("remaining", herb.growth_duration))
 	remaining = clampf(remaining_float, 0.0, herb.growth_duration)
 	update_interaction_label()
 	update_visual()
+	
+func _find_herb_index(id: String) -> int:
+	for i in herbs.size():
+		if herbs[i].id == id:
+			return i
+	return 0
