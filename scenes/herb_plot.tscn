@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://boi7gxy644wh7"]
 
-[ext_resource type="Script" uid="uid://deitih1yurewe" path="res://herb_plot.gd" id="1_2blrl"]
+[ext_resource type="Script" uid="uid://deitih1yurewe" path="res://scripts/herb_plot.gd" id="1_2blrl"]
+[ext_resource type="Resource" uid="uid://do48fw3gfqcmg" path="res://data/mint.tres" id="2_b4dnx"]
 [ext_resource type="PackedScene" uid="uid://csb4nklo0ixbw" path="res://assets/hd2d/scenes/garden_bed.tscn" id="2_fpprn"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_emwdv"]
@@ -13,6 +14,7 @@ size = Vector3(3, 2, 3)
 
 [node name="HerbPlot" type="Area3D" unique_id=492106281]
 script = ExtResource("1_2blrl")
+herb = ExtResource("2_b4dnx")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=106182256]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)

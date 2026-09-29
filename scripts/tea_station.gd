@@ -1,13 +1,12 @@
 extends Area3D
 
-
 enum TeaState {
 	IDLE,
 	BREWING,
 	READY
 }
 
-@export var brew_duration: float = 5.0
+@export var tea: TeaData
 
 var state: TeaState = TeaState.IDLE
 var player_in_range: bool = false
@@ -16,11 +15,12 @@ var remaining: float = 0.0
 @onready var interaction_label: Label3D = $InteractionLabel
 
 func _ready() -> void:
+	assert(tea != null, "Teestation: keine TeaData zugewiesen")
 	add_to_group("persist")
 	interaction_label.visible = false
 	update_interaction_label()
 	body_entered.connect(_on_body_entered)
-	body_exited.connect(_on_body_exited)	
+	body_exited.connect(_on_body_exited)
 
 func _process(delta: float) -> void:
 	if state == TeaState.BREWING:
@@ -35,7 +35,7 @@ func _on_body_entered(body: Node3D) -> void:
 		player_in_range = true
 		update_interaction_label()
 		interaction_label.visible = true
-		
+
 func _on_body_exited(body: Node3D) -> void:
 	if body is CharacterBody3D:
 		player_in_range = false
@@ -51,54 +51,50 @@ func interact() -> void:
 			collect_tea()
 
 func start_brewing() -> void:
-	if not Inventory.try_take_mint(1):
-		interaction_label.text = "Keine Minze vorhanden"
+	if not Inventory.try_take_item(tea.herb.id, tea.herb_amount):
+		interaction_label.text = "Keine %s vorhanden" % tea.herb.display_name
 		return
-	
+
 	state = TeaState.BREWING
-	remaining = brew_duration
+	remaining = tea.brew_duration
 	update_interaction_label()
-	
+
 func _on_brew_finished() -> void:
 	if state != TeaState.BREWING:
 		return
 	state = TeaState.READY
 	remaining = 0.0
 	update_interaction_label()
-	
+
 func collect_tea() -> void:
 	if state != TeaState.READY:
 		return
-	
+
 	state = TeaState.IDLE
-	Inventory.add_mint_tea(1)
+	Inventory.add_item(tea.id, 1)
 	update_interaction_label()
-	
-# Aktualisiert die Label anhängig vom Status
+
 func update_interaction_label() -> void:
 	match state:
 		TeaState.IDLE:
-			interaction_label.text="E - Tee zubereiten"
+			interaction_label.text = "E - %s zubereiten" % tea.display_name
 		TeaState.BREWING:
-			interaction_label.text = "Tee wird zubereitet"
+			interaction_label.text = "%s wird zubereitet" % tea.display_name
 		TeaState.READY:
-			interaction_label.text = "E - Minztee abholen"
-			
+			interaction_label.text = "E - %s abholen" % tea.display_name
+
 #	--- Spielstand ---
+
 func get_save_data() -> Dictionary:
 	return {
 		"state": TeaState.keys()[state],
 		"remaining": remaining
 	}
-	
+
 func load_save_data(data: Dictionary) -> void:
 	var state_name: String = str(data.get("state", "IDLE"))
 	state = TeaState.get(state_name, TeaState.IDLE)
-	
-	var remaining_float: float = float(data.get("remaining", brew_duration))
-	remaining = clampf(remaining_float, 0.0, brew_duration)
-	
+
+	var remaining_float: float = float(data.get("remaining", tea.brew_duration))
+	remaining = clampf(remaining_float, 0.0, tea.brew_duration)
 	update_interaction_label()
-	
-	
-	

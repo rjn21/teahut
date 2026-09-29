@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="HerbData" format=3 uid="uid://do48fw3gfqcmg"]
+
+[ext_resource type="Script" uid="uid://dyecvq1bh10yy" path="res://data_scripts/herb_data.gd" id="1_g1pyl"]
+
+[resource]
+script = ExtResource("1_g1pyl")
+id = "mint"
+display_name = "Minze"
+metadata/_custom_type_script = "uid://dyecvq1bh10yy"

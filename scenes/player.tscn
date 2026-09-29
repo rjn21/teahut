@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://diwew0hegnoph"]
 
-[ext_resource type="Script" uid="uid://64w5buob6pv2" path="res://player.gd" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://64w5buob6pv2" path="res://scripts/player.gd" id="1_4flbx"]
 [ext_resource type="PackedScene" path="res://assets/hd2d/scenes/player_sprite.tscn" id="2_onrkg"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_emwdv"]
