@@ -84,10 +84,9 @@ Stand: 29.09.2026 · Branch `M6b` (PR nach `main` offen)
 
 **M6b – abgeschlossen (29.09.2026):** Kamille und Lavendel samt Tees als Daten; drei Beete (`HerbPlot`, `HerbPlot2`, `HerbPlot3`) mit Sortenwahl per Q; Teestation mit Sortenwahl per Q; beide speichern die Sorte. Übergangslösung bis M6c: Die Ablage nimmt die erste vorhandene Teesorte an. Gesamtablauf mit allen drei Sorten, Speichern/Laden mitten in Wachstum und Zubereitung per Spieltest bestätigt.
 
-**Nächster Schritt: M6c – Bestellbrett** (Spec 8). Ersetzt die Übergangslösung der Ablage.
+**Nächster Schritt – vor M6c zu beheben (Entscheidung des Entwicklers, 29.09.2026):** Die Interaktionsbereiche der Beete (1,5 × 1,5) liegen dicht beieinander; steht die Figur genau zwischen zwei Beeten, können E/Q beide auslösen. Zuerst prüfen und beheben, sodass immer nur ein Objekt reagiert. Erst danach geht es weiter.
 
-**Offene Kleinigkeiten:**
-- Die Interaktionsbereiche der Beete (1,5 × 1,5) liegen dicht beieinander; steht die Figur genau zwischen zwei Beeten, könnten E/Q beide auslösen. Nicht gezielt geprüft. Saubere Lösung (nur das nächste Objekt reagiert) wäre ein eigener Schritt.
+**Danach: M6c – Bestellbrett** (Spec 8). Ersetzt die Übergangslösung der Ablage.
 
 **Bewusst vereinfacht, kommt später:** Hauptmenü (M8; bis dahin lädt die Welt automatisch). Spielstand wächst mit jedem System (aktive Bestellung, reservierte Zutaten, Feuchtigkeit, Uhrzeit, Wetter, Schlafbonus, Deko-Sichtbarkeit).
 
