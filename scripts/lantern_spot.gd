@@ -1,40 +1,20 @@
-extends Area3D
+extends Interactable
 
 @export var price: int = 10
 
-var player_in_range: bool = false
-var bought: bool = false
-
-@onready var interaction_label: Label3D = $InteractionLabel
 @onready var lantern: NightGlow = $Lantern
 @onready var lantern_sprite: Sprite3D = $Lantern/Sprite
 
+var bought: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	add_to_group("persist")
 	interaction_label.visible = false
 	show_as_preview(true)
-	body_entered.connect(_on_body_entered)
-	body_exited.connect(_on_body_exited)
 	update_interaction_label()
-	
-func _on_body_entered(body: Node3D) -> void:
-	if body is CharacterBody3D:
-		player_in_range = true
-		update_interaction_label()
-		interaction_label.visible = true
-		
-func _on_body_exited(body: Node3D) -> void:
-	if body is CharacterBody3D:
-		player_in_range = false
-		interaction_label.visible = false
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	if player_in_range and Input.is_action_just_pressed("interact"):
-		buy_lantern()
-	
+# Called every frame. 'delta' is the elapsed time since the previous frame.	
 func buy_lantern() -> void:
 	if bought:
 		return
@@ -62,6 +42,9 @@ func show_as_preview(preview: bool) -> void:
 		lantern_sprite.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
 		lantern_sprite.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 	lantern.lit = not preview
+	
+func interact() -> void:
+	buy_lantern()
 	
 #	--- Spielstand ---
 func get_save_data() -> Dictionary:

@@ -1,4 +1,4 @@
-extends Area3D
+extends Interactable
 
 enum TeaState {
 	IDLE,
@@ -14,40 +14,19 @@ var tea: TeaData:
 		return teas[tea_index]
 
 var state: TeaState = TeaState.IDLE
-var player_in_range: bool = false
 var remaining: float = 0.0
-
-@onready var interaction_label: Label3D = $InteractionLabel
 
 func _ready() -> void:
 	assert(not teas.is_empty(), "Teestation: keine TeaData zugewiesen")
 	add_to_group("persist")
 	interaction_label.visible = false
 	update_interaction_label()
-	body_entered.connect(_on_body_entered)
-	body_exited.connect(_on_body_exited)
 
 func _process(delta: float) -> void:
 	if state == TeaState.BREWING:
 		remaining -= delta
 		if remaining <= 0.0:
 			_on_brew_finished()
-	if player_in_range and Input.is_action_just_pressed("interact"):
-		interact()
-	
-	if player_in_range and Input.is_action_just_pressed("cycle"):
-		select_next_tea()
-
-func _on_body_entered(body: Node3D) -> void:
-	if body is CharacterBody3D:
-		player_in_range = true
-		update_interaction_label()
-		interaction_label.visible = true
-
-func _on_body_exited(body: Node3D) -> void:
-	if body is CharacterBody3D:
-		player_in_range = false
-		interaction_label.visible = false
 
 func interact() -> void:
 	match state:
@@ -97,6 +76,9 @@ func select_next_tea() -> void:
 		
 	tea_index = (tea_index + 1) % teas.size()
 	update_interaction_label()
+	
+func cycle() -> void:
+	select_next_tea()
 
 #	--- Spielstand ---
 
