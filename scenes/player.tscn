@@ -11,6 +11,9 @@ height = 1.8
 radius = 0.35
 height = 1.8
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_emwdv"]
+radius = 0.35
+
 [node name="Player" type="CharacterBody3D" unique_id=1657315162]
 script = ExtResource("1_4flbx")
 
@@ -24,3 +27,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("CapsuleShape3D_m56b8")
 
 [node name="PlayerSprite" parent="." unique_id=944193490 instance=ExtResource("2_onrkg")]
+
+[node name="InteractionArea" type="Area3D" parent="." unique_id=67532329]
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea" unique_id=247272800]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("SphereShape3D_emwdv")

@@ -1,4 +1,4 @@
-extends Area3D
+extends Interactable
 
 enum  PlotState {
 	EMPTY,
@@ -14,10 +14,8 @@ var herb: HerbData:
 		return herbs[herb_index]
 
 var state: PlotState = PlotState.EMPTY
-var player_in_range: bool = false
 var remaining: float = 0.0
 
-@onready var interaction_label: Label3D = $InteractionLabel
 @onready var bed_visual: HerbPlantVisual = $GardenBed
 
 func _ready() -> void:
@@ -25,8 +23,6 @@ func _ready() -> void:
 	add_to_group("persist")
 	interaction_label.visible = false
 	bed_visual.herb = herb.id
-	body_entered.connect(_on_body_entered)
-	body_exited.connect(_on_body_exited)
 	update_interaction_label()
 	update_visual()	
 
@@ -37,12 +33,6 @@ func _process(delta: float) -> void:
 			_on_growth_finished()
 		else:
 			update_visual()
-	
-	if player_in_range and Input.is_action_just_pressed("interact"):
-		interact()
-		
-	if player_in_range and Input.is_action_just_pressed("cycle"):
-		select_next_herb()
 
 func select_next_herb() -> void:
 	if state != PlotState.EMPTY:
@@ -50,17 +40,7 @@ func select_next_herb() -> void:
 	herb_index = (herb_index + 1) % herbs.size()
 	bed_visual.herb = herb.id
 	update_interaction_label()
-
-func _on_body_entered(body: Node3D) -> void:
-	if body is CharacterBody3D:
-		player_in_range = true
-		interaction_label.visible = true
-		
-func _on_body_exited(body: Node3D) -> void:
-	if body is CharacterBody3D:
-		player_in_range = false
-		interaction_label.visible = false
-		
+	
 func interact() -> void:
 	match state:
 		PlotState.EMPTY:
@@ -103,6 +83,9 @@ func update_visual() -> void:
 	if state == PlotState.GROWING and herb.growth_duration > 0.0:
 		progress = 1.0 - remaining / herb.growth_duration
 	bed_visual.set_from_state(state, progress)
+	
+func cycle() -> void:
+	select_next_herb()
 
 #	--- Spielstand ---
 	
