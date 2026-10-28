@@ -2,10 +2,10 @@ extends Interactable
 
 @export var price: int = 10
 
+var bought: bool = false
+
 @onready var lantern: NightGlow = $Lantern
 @onready var lantern_sprite: Sprite3D = $Lantern/Sprite
-
-var bought: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

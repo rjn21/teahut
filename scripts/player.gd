@@ -2,9 +2,9 @@ extends CharacterBody3D
 
 @export var move_speed: float = 4.0
 
-@onready var interaction_area: Area3D = $InteractionArea
-
 var current_target: Interactable = null
+
+@onready var interaction_area: Area3D = $InteractionArea
 
 func _ready() -> void:
 	add_to_group("persist")

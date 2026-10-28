@@ -3,14 +3,13 @@ extends CanvasLayer
 @export var herbs: Array[HerbData] = []
 @export var teas: Array[TeaData] = []
 
+var _item_labels: Dictionary[String, Label] = {}
+var _item_names: Dictionary[String, String] = {}
+var _save_message_id: int = 0
 
 @onready var stats: VBoxContainer = $Stats
 @onready var money_label: Label = $"Stats/Money Count"
 @onready var save_label: Label = $"Save Message"
-
-var _item_labels: Dictionary[String, Label] = {}
-var _item_names: Dictionary[String, String] = {}
-var _save_message_id: int = 0
 
 
 # Called when the node enters the scene tree for the first time.

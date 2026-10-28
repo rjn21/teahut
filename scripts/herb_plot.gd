@@ -1,6 +1,6 @@
 extends Interactable
 
-enum  PlotState {
+enum PlotState {
 	EMPTY,
 	GROWING,
 	READY
@@ -40,6 +40,9 @@ func select_next_herb() -> void:
 	herb_index = (herb_index + 1) % herbs.size()
 	bed_visual.herb = herb.id
 	update_interaction_label()
+	
+func cycle() -> void:
+	select_next_herb()
 	
 func interact() -> void:
 	match state:
@@ -83,9 +86,6 @@ func update_visual() -> void:
 	if state == PlotState.GROWING and herb.growth_duration > 0.0:
 		progress = 1.0 - remaining / herb.growth_duration
 	bed_visual.set_from_state(state, progress)
-	
-func cycle() -> void:
-	select_next_herb()
 
 #	--- Spielstand ---
 	

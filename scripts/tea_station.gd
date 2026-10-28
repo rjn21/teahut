@@ -76,7 +76,7 @@ func select_next_tea() -> void:
 		
 	tea_index = (tea_index + 1) % teas.size()
 	update_interaction_label()
-	
+
 func cycle() -> void:
 	select_next_tea()
 
@@ -88,13 +88,6 @@ func get_save_data() -> Dictionary:
 		"remaining": remaining,
 		"tea": tea.id
 	}
-	
-func _find_tea_index(id: String) -> int:
-	for i in teas.size():
-		if teas[i].id == id:
-			return i
-	return 0
-			
 
 func load_save_data(data: Dictionary) -> void:
 	var state_name: String = str(data.get("state", "IDLE"))
@@ -105,3 +98,9 @@ func load_save_data(data: Dictionary) -> void:
 	var remaining_float: float = float(data.get("remaining", tea.brew_duration))
 	remaining = clampf(remaining_float, 0.0, tea.brew_duration)
 	update_interaction_label()
+	
+func _find_tea_index(id: String) -> int:
+	for i in teas.size():
+		if teas[i].id == id:
+			return i
+	return 0
