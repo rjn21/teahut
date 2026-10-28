@@ -13,11 +13,11 @@ func deliver_tea() -> void:
 			SaveGame.save_game()
 			interaction_label.text = "%s abgegeben (+%d Münzen)" % [tea.display_name, tea.price]
 			return
-			
+
 	interaction_label.text = "Kein Tee dabei"
 
 func update_interaction_label() -> void:
 	interaction_label.text = "E - Tee abgeben"
-	
+
 func interact() -> void:
 	deliver_tea()

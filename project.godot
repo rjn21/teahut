@@ -20,6 +20,10 @@ config/icon="res://icon.svg"
 Inventory="*uid://42g4x18ij3wk"
 SaveGame="*uid://b3dxp54156v87"
 
+[debug]
+
+gdscript/warnings/untyped_declaration=1
+
 [display]
 
 window/stretch/mode="canvas_items"
