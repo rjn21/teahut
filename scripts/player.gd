@@ -1,5 +1,9 @@
 extends CharacterBody3D
 
+## Die Hütte (assets/hd2d/scripts/hut.gd) erkennt die Figur über diese Gruppe
+## und blendet dann Dach und Vorderwand aus.
+const PLAYER_GROUP := "player"
+
 @export var move_speed: float = 4.0
 
 var current_target: Interactable = null
@@ -8,6 +12,7 @@ var current_target: Interactable = null
 
 func _ready() -> void:
 	add_to_group("persist")
+	add_to_group(PLAYER_GROUP)
 
 func _process(_delta: float) -> void:
 	_set_target(_find_nearest_interactable())
