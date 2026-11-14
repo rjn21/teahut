@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody3D
 
 ## Die Hütte (assets/hd2d/scripts/hut.gd) erkennt die Figur über diese Gruppe
@@ -7,6 +8,9 @@ const PLAYER_GROUP := "player"
 @export var move_speed: float = 4.0
 
 var current_target: Interactable = null
+## false, solange ein Fenster wie der Einrichtungskatalog offen ist:
+## Die Figur steht dann still und reagiert nicht auf E/Q.
+var input_enabled: bool = true
 
 @onready var interaction_area: Area3D = $InteractionArea
 
@@ -15,6 +19,9 @@ func _ready() -> void:
 	add_to_group(PLAYER_GROUP)
 
 func _process(_delta: float) -> void:
+	if not input_enabled:
+		_set_target(null)
+		return
 	_set_target(_find_nearest_interactable())
 	if current_target == null:
 		return
@@ -53,6 +60,8 @@ func _physics_process(delta: float) -> void:
 		"move_forward",
 		"move_back"
 	)
+	if not input_enabled:
+		input_direction = Vector2.ZERO
 
 	velocity.x = input_direction.x * move_speed
 	velocity.z = input_direction.y * move_speed

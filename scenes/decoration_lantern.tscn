@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/decoration_spot.gd" id="1_spot"]
+[ext_resource type="Resource" path="res://data/lantern.tres" id="2_data"]
+[ext_resource type="PackedScene" uid="uid://betrp3j0pdhx8" path="res://assets/hd2d/scenes/lantern.tscn" id="3_graphic"]
+
+[node name="LanternSpot" type="Node3D"]
+script = ExtResource("1_spot")
+decoration = ExtResource("2_data")
+
+[node name="Graphic" parent="." instance=ExtResource("3_graphic")]
+unique_name_in_owner = true
+always_on = true

@@ -10,7 +10,12 @@
 [ext_resource type="Resource" uid="uid://do48fw3gfqcmg" path="res://data/mint.tres" id="7_o8fc1"]
 [ext_resource type="PackedScene" uid="uid://b3h5ehrd1covj" path="res://scenes/order_counter.tscn" id="7_xo05s"]
 [ext_resource type="Resource" uid="uid://cf0hxx0k1sfgw" path="res://data/chamomile.tres" id="8_7t5mc"]
-[ext_resource type="PackedScene" uid="uid://booc3wwq4dgji" path="res://scenes/lantern_spot.tscn" id="8_dss4m"]
+[ext_resource type="PackedScene" path="res://scenes/decoration_lantern.tscn" id="8_dss4m"]
+[ext_resource type="PackedScene" path="res://scenes/decoration_flowerpot.tscn" id="20_flowerpot"]
+[ext_resource type="PackedScene" path="res://scenes/decoration_rug.tscn" id="21_rug"]
+[ext_resource type="PackedScene" path="res://scenes/decoration_bench.tscn" id="22_bench"]
+[ext_resource type="PackedScene" path="res://scenes/decoration_wall_picture.tscn" id="23_wall_picture"]
+[ext_resource type="PackedScene" path="res://scenes/decoration_catalog.tscn" id="24_catalog"]
 [ext_resource type="Script" uid="uid://c4glokguw7hmq" path="res://data_scripts/tea_data.gd" id="8_xo05s"]
 [ext_resource type="PackedScene" uid="uid://c4le1hjcaw118" path="res://scenes/pause_menu.tscn" id="9_7t5mc"]
 [ext_resource type="Resource" uid="uid://b7xwupln72ir" path="res://data/mint_tea.tres" id="9_dss4m"]
@@ -175,6 +180,22 @@ text = "Keine Bestellung"
 layout_mode = 2
 text = "Münzen: 0"
 
+[node name="Catalog Hint" type="Label" parent="HUD" unique_id=1188430257]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -160.0
+offset_top = -31.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+horizontal_alignment = 2
+modulate = Color(1, 1, 1, 0.7)
+text = "C – Einrichtung"
+
 [node name="TeaStation" parent="." unique_id=687408151 instance=ExtResource("6_o8fc1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.8, 0.01, -7.45)
 
@@ -188,4 +209,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6, 0, -4.9)
 [node name="LanternSpot" parent="." unique_id=587491313 instance=ExtResource("8_dss4m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -1.7)
 
+[node name="FlowerpotSpot" parent="." unique_id=1371024858 instance=ExtResource("20_flowerpot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.95, 0, -3.65)
+
+[node name="RugSpot" parent="." unique_id=1655027413 instance=ExtResource("21_rug")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2, 0.02, -5.7)
+
+[node name="BenchSpot" parent="." unique_id=1902218374 instance=ExtResource("22_bench")]
+transform = Transform3D(0.6427876, 0, 0.76604444, 0, 1, 0, -0.76604444, 0, 0.6427876, 4, 0, -1.6)
+
+[node name="WallPictureSpot" parent="." unique_id=1246681905 instance=ExtResource("23_wall_picture")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.35, 1.1, -7.79)
+
 [node name="PauseMenu" parent="." unique_id=679147107 instance=ExtResource("9_7t5mc")]
+
+[node name="DecorationCatalog" parent="." unique_id=1563300971 node_paths=PackedStringArray("spots") instance=ExtResource("24_catalog")]
+spots = [NodePath("../LanternSpot"), NodePath("../FlowerpotSpot"), NodePath("../RugSpot"), NodePath("../BenchSpot"), NodePath("../WallPictureSpot")]
