@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/order_board.gd" id="1_board"]
+[ext_resource type="Script" uid="uid://c4glokguw7hmq" path="res://data_scripts/tea_data.gd" id="2_teadata"]
+[ext_resource type="Resource" uid="uid://b7xwupln72ir" path="res://data/mint_tea.tres" id="3_mint"]
+[ext_resource type="Resource" uid="uid://c8ok2x2pfq355" path="res://data/chamomile_tea.tres" id="4_chamomile"]
+[ext_resource type="Resource" uid="uid://doioydfxaftrv" path="res://data/lavender_tea.tres" id="5_lavender"]
+[ext_resource type="PackedScene" path="res://assets/hd2d/scenes/order_board.tscn" id="6_graphic"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_board"]
+size = Vector3(1.2, 1, 1)
+
+[node name="OrderBoard" type="Area3D"]
+script = ExtResource("1_board")
+teas = Array[ExtResource("2_teadata")]([ExtResource("3_mint"), ExtResource("4_chamomile"), ExtResource("5_lavender")])
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_board")
+
+[node name="InteractionLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0)
+font_size = 96
+
+[node name="BoardGraphic" parent="." instance=ExtResource("6_graphic")]

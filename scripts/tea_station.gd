@@ -73,7 +73,7 @@ func update_interaction_label() -> void:
 func select_next_tea() -> void:
 	if state != TeaState.IDLE:
 		return
-		
+
 	tea_index = (tea_index + 1) % teas.size()
 	update_interaction_label()
 
@@ -94,11 +94,11 @@ func load_save_data(data: Dictionary) -> void:
 	state = TeaState.get(state_name, TeaState.IDLE)
 
 	tea_index = _find_tea_index(str(data.get("tea", "")))
-	
+
 	var remaining_float: float = float(data.get("remaining", tea.brew_duration))
 	remaining = clampf(remaining_float, 0.0, tea.brew_duration)
 	update_interaction_label()
-	
+
 func _find_tea_index(id: String) -> int:
 	for i in teas.size():
 		if teas[i].id == id:
