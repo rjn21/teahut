@@ -7,3 +7,5 @@ extends Resource
 @export var herb_amount: int = 1
 @export var brew_duration: float = 5.0
 @export var price: int = 10
+## Bild der fertigen Tasse, z. B. auf der Ablage.
+@export var cup_texture: Texture2D

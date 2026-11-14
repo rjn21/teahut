@@ -8,8 +8,16 @@ signal saved(ok: bool)
 const SAVE_PATH := "user://savegame.json"
 const TEMP_PATH := "user://savegame.tmp"
 const BACKUP_PATH := "user://savegame.bak"
-const SAVE_VERSION := 1
+const SAVE_VERSION := 2
 const PERSIST_GROUP := "persist"
+## Gespeicherte Einträge, die in älteren Spielständen nicht mehr zur Welt passen.
+## Schlüssel: erste Version, ab der ein Eintrag wieder gültig ist.
+## Fehlt ein Eintrag, behält der Node einfach seinen Startzustand aus der Szene.
+const OUTDATED_ENTRIES_BEFORE_VERSION := {
+	# Version 2 (M6d): neue, größere Welt mit Hütte und See.
+	# Die alte Figurposition könnte jetzt im See oder in einer Wand liegen.
+	2: ["Player"],
+}
 
 
 func _notification(what: int) -> void:
@@ -59,8 +67,10 @@ func load_game() -> bool:
 			return false
 		push_warning("Spielstand fehlt oder ist beschädigt – die Sicherung wird geladen.")
 
+	var nodes_data: Dictionary = data.get("nodes", {})
+	_drop_outdated_entries(nodes_data, int(data.get("version", 1)))
 	Inventory.from_dict(data.get("Inventory", {}))
-	_apply_node_data(data.get("nodes", {}))
+	_apply_node_data(nodes_data)
 	print("Spielstand geladen")
 	return true
 
@@ -77,6 +87,14 @@ func _collect_node_data() -> Dictionary:
 	for node in get_tree().get_nodes_in_group(PERSIST_GROUP):
 		result[_key_for(node)] = node.call("get_save_data")
 	return result
+
+
+# Entfernt Einträge, die aus einer älteren Spielstandversion stammen und nicht mehr passen.
+func _drop_outdated_entries(nodes_data: Dictionary, saved_version: int) -> void:
+	for valid_from_version: int in OUTDATED_ENTRIES_BEFORE_VERSION:
+		if saved_version < valid_from_version:
+			for key: String in OUTDATED_ENTRIES_BEFORE_VERSION[valid_from_version]:
+				nodes_data.erase(key)
 
 
 # Gibt jedem Node in der Gruppe "persist" seine gespeicherten Daten zurück.
