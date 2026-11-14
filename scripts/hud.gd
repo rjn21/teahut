@@ -4,6 +4,7 @@ const SAVE_MESSAGE_DURATION := 2.0
 
 @export var herbs: Array[HerbData] = []
 @export var teas: Array[TeaData] = []
+@export var order_board: OrderBoard
 
 var _item_labels: Dictionary[String, Label] = {}
 var _item_names: Dictionary[String, String] = {}
@@ -11,10 +12,14 @@ var _save_message_id: int = 0
 
 @onready var stats: VBoxContainer = $Stats
 @onready var money_label: Label = $"Stats/Money Count"
+@onready var active_order_label: Label = $"Stats/Active Order"
 @onready var save_label: Label = $"Save Message"
 
 
 func _ready() -> void:
+	order_board.active_order_changed.connect(_on_active_order_changed)
+	_on_active_order_changed(order_board.active_order)
+
 	for herb in herbs:
 		_add_item_row(herb.id, herb.display_name)
 	for tea in teas:
@@ -40,6 +45,12 @@ func _on_item_changed(id: String, amount: int) -> void:
 
 func _on_money_changed(amount: int) -> void:
 	money_label.text = "Münzen: %d" % amount
+
+func _on_active_order_changed(order: TeaData) -> void:
+	if order == null:
+		active_order_label.text = "Keine Bestellung"
+	else:
+		active_order_label.text = "Bestellung: %s (+%d)" % [order.display_name, order.price]
 
 func _on_saved(ok: bool) -> void:
 	save_label.text = "Spiel gespeichert" if ok else "Speichern fehlgeschlagen"
