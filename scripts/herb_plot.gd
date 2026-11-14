@@ -24,7 +24,7 @@ func _ready() -> void:
 	interaction_label.visible = false
 	bed_visual.herb = herb.id
 	update_interaction_label()
-	update_visual()	
+	update_visual()
 
 func _process(delta: float) -> void:
 	if state == PlotState.GROWING:
@@ -40,10 +40,10 @@ func select_next_herb() -> void:
 	herb_index = (herb_index + 1) % herbs.size()
 	bed_visual.herb = herb.id
 	update_interaction_label()
-	
+
 func cycle() -> void:
 	select_next_herb()
-	
+
 func interact() -> void:
 	match state:
 		PlotState.EMPTY:
@@ -58,20 +58,20 @@ func plant() -> void:
 	remaining = herb.growth_duration
 	update_interaction_label()
 	update_visual()
-	
+
 func harvest() -> void:
-	state =PlotState.EMPTY
+	state = PlotState.EMPTY
 	remaining = 0.0
 	Inventory.add_item(herb.id, herb.harvest_amount)
 	update_interaction_label()
 	update_visual()
-	
+
 func _on_growth_finished() -> void:
 	state = PlotState.READY
 	remaining = 0.0
 	update_interaction_label()
 	update_visual()
-	
+
 func update_interaction_label() -> void:
 	match state:
 		PlotState.EMPTY:
@@ -80,15 +80,15 @@ func update_interaction_label() -> void:
 			interaction_label.text = "%s wächst" % herb.display_name
 		PlotState.READY:
 			interaction_label.text = "E - %s ernten" % herb.display_name
-			
+
 func update_visual() -> void:
-	var progress:= 0.0
+	var progress := 0.0
 	if state == PlotState.GROWING and herb.growth_duration > 0.0:
 		progress = 1.0 - remaining / herb.growth_duration
 	bed_visual.set_from_state(state, progress)
 
 #	--- Spielstand ---
-	
+
 func get_save_data() -> Dictionary:
 	return {
 		"state": PlotState.keys()[state],
@@ -99,15 +99,15 @@ func get_save_data() -> Dictionary:
 func load_save_data(data: Dictionary) -> void:
 	var state_name: String = str(data.get("state", "EMPTY"))
 	state = PlotState.get(state_name, PlotState.EMPTY)
-	
+
 	herb_index = _find_herb_index(str(data.get("herb", "")))
 	bed_visual.herb = herb.id
-	
+
 	var remaining_float: float = float(data.get("remaining", herb.growth_duration))
 	remaining = clampf(remaining_float, 0.0, herb.growth_duration)
 	update_interaction_label()
 	update_visual()
-	
+
 func _find_herb_index(id: String) -> int:
 	for i in herbs.size():
 		if herbs[i].id == id:
