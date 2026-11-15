@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" path="res://scenes/decoration_bench.tscn" id="22_bench"]
 [ext_resource type="PackedScene" path="res://scenes/decoration_wall_picture.tscn" id="23_wall_picture"]
 [ext_resource type="PackedScene" path="res://scenes/decoration_catalog.tscn" id="24_catalog"]
+[ext_resource type="PackedScene" path="res://scenes/tea_station_close_up.tscn" id="25_tea_close_up"]
 [ext_resource type="Script" uid="uid://c4glokguw7hmq" path="res://data_scripts/tea_data.gd" id="8_xo05s"]
 [ext_resource type="PackedScene" uid="uid://c4le1hjcaw118" path="res://scenes/pause_menu.tscn" id="9_7t5mc"]
 [ext_resource type="Resource" uid="uid://b7xwupln72ir" path="res://data/mint_tea.tres" id="9_dss4m"]
@@ -153,13 +154,14 @@ target = NodePath("../Player")
 [node name="Player" parent="." unique_id=1657315162 instance=ExtResource("4_q5onr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2, 0.1, 2.5)
 
-[node name="HUD" type="CanvasLayer" parent="." unique_id=242657120 node_paths=PackedStringArray("order_board")]
+[node name="HUD" type="CanvasLayer" parent="." unique_id=242657120 node_paths=PackedStringArray("order_board", "tea_station")]
 script = ExtResource("5_jhx03")
 order_board = NodePath("../OrderBoard")
+tea_station = NodePath("../TeaStation")
 herbs = Array[ExtResource("6_jhx03")]([ExtResource("7_o8fc1"), ExtResource("8_7t5mc"), ExtResource("9_lakw3")])
 teas = Array[ExtResource("8_xo05s")]([ExtResource("9_dss4m"), ExtResource("12_pm21f"), ExtResource("13_2lf6f")])
 
-[node name="Save Message" type="Label" parent="HUD" unique_id=362045386]
+[node name="Message" type="Label" parent="HUD" unique_id=362045386]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -225,3 +227,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.35, 1.1, -7.79)
 
 [node name="DecorationCatalog" parent="." unique_id=1563300971 node_paths=PackedStringArray("spots") instance=ExtResource("24_catalog")]
 spots = [NodePath("../LanternSpot"), NodePath("../FlowerpotSpot"), NodePath("../RugSpot"), NodePath("../BenchSpot"), NodePath("../WallPictureSpot")]
+
+[node name="TeaStationCloseUp" parent="." node_paths=PackedStringArray("station") instance=ExtResource("25_tea_close_up")]
+station = NodePath("../TeaStation")

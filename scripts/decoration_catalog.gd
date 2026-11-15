@@ -1,15 +1,11 @@
 class_name DecorationCatalog
-extends CanvasLayer
+extends GameWindow
 ## Einrichtungskatalog (Spec 9): Taste C öffnet und schließt, Escape schließt.
 ## Zeigt alle Dekorationsplätze mit Preis und Status; Kauf mit Bestätigung,
 ## gekaufte Dekorationen lassen sich ein- und ausblenden.
 ## Die Simulation läuft weiter; die Welt sperrt nur die Figur, solange der Katalog offen ist.
 
-signal opened
-signal closed
-
 const CATALOG_ACTION := "catalog"
-const CLOSE_ACTION := "pause"
 
 @export var spots: Array[DecorationSpot] = []
 
@@ -28,7 +24,7 @@ func _ready() -> void:
 		_add_row(spot)
 		spot.state_changed.connect(_refresh_rows)
 	Inventory.money_changed.connect(_on_money_changed)
-	close_button.pressed.connect(close_catalog)
+	close_button.pressed.connect(close_window)
 	confirm_purchase.confirmed.connect(_on_purchase_confirmed)
 	confirm_purchase.canceled.connect(_on_purchase_canceled)
 	_refresh_rows()
@@ -37,26 +33,21 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(CATALOG_ACTION):
 		if visible:
-			close_catalog()
+			close_window()
 		else:
-			open_catalog()
+			open_window()
 		get_viewport().set_input_as_handled()
-	elif visible and event.is_action_pressed(CLOSE_ACTION):
-		close_catalog()
-		get_viewport().set_input_as_handled()
+		return
+	super(event)
 
 
-func open_catalog() -> void:
+func _on_window_opening() -> void:
 	_refresh_rows()
-	visible = true
-	opened.emit()
 
 
-func close_catalog() -> void:
+func _on_window_closing() -> void:
 	confirm_purchase.hide()
 	_pending_purchase = null
-	visible = false
-	closed.emit()
 
 
 func _add_row(spot: DecorationSpot) -> void:

@@ -3,6 +3,7 @@
 [ext_resource type="Resource" uid="uid://curvp72qi0fuf" path="res://data/lavender.tres" id="1_qc2sk"]
 [ext_resource type="Script" uid="uid://c4glokguw7hmq" path="res://data_scripts/tea_data.gd" id="2_wxyeo"]
 [ext_resource type="Texture2D" uid="uid://j4ru48pr0ku6" path="res://assets/hd2d/sprites/station/cup_lavender.png" id="3_cup"]
+[ext_resource type="Texture2D" uid="uid://dc2pv4hj301ip" path="res://assets/hd2d/sprites/station/cup_water_strainer_lavender.png" id="4_steeping"]
 
 [resource]
 script = ExtResource("2_wxyeo")
@@ -10,4 +11,6 @@ id = "lavender_tea"
 display_name = "Lavendeltee"
 herb = ExtResource("1_qc2sk")
 cup_texture = ExtResource("3_cup")
+recommended_temperature = 80
+steeping_cup_texture = ExtResource("4_steeping")
 metadata/_custom_type_script = "uid://c4glokguw7hmq"

@@ -1,0 +1,221 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/tea_station_close_up.gd" id="1_close_up"]
+[ext_resource type="Texture2D" uid="uid://me6c70m0uch" path="res://assets/hd2d/sprites/station/cup_empty.png" id="2_cup_empty"]
+[ext_resource type="Texture2D" uid="uid://d1x030tbxhi7n" path="res://assets/hd2d/sprites/station/cup_water.png" id="3_cup_water"]
+[ext_resource type="Texture2D" uid="uid://dyt7hbgejotc4" path="res://assets/hd2d/sprites/station/strainer_empty.png" id="4_strainer_empty"]
+[ext_resource type="Texture2D" uid="uid://ds3j4pp6hihsp" path="res://assets/hd2d/sprites/station/jar_empty.png" id="5_jar_empty"]
+[ext_resource type="Texture2D" uid="uid://rw3qmbxkm3ln" path="res://assets/hd2d/sprites/station/kettle.png" id="6_kettle"]
+[ext_resource type="Texture2D" uid="uid://c7ysb64e1nxyg" path="res://assets/hd2d/sprites/station/kettle_hot.png" id="7_kettle_hot"]
+[ext_resource type="Texture2D" uid="uid://o02tsgglubvo" path="res://assets/hd2d/sprites/fx/steam.png" id="8_steam"]
+[ext_resource type="Texture2D" uid="uid://sk71u7i28phe" path="res://assets/hd2d/sprites/station/hourglass.png" id="9_hourglass"]
+
+[node name="TeaStationCloseUp" type="CanvasLayer"]
+layer = 5
+script = ExtResource("1_close_up")
+cup_empty_texture = ExtResource("2_cup_empty")
+cup_water_texture = ExtResource("3_cup_water")
+strainer_empty_texture = ExtResource("4_strainer_empty")
+jar_empty_texture = ExtResource("5_jar_empty")
+kettle_cold_texture = ExtResource("6_kettle")
+kettle_hot_texture = ExtResource("7_kettle_hot")
+steam_sheet = ExtResource("8_steam")
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.45)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="CenterContainer/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 16
+
+[node name="Content" type="VBoxContainer" parent="CenterContainer/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Title" type="Label" parent="CenterContainer/Panel/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Teestation"
+horizontal_alignment = 1
+
+[node name="StepHint" type="Label" parent="CenterContainer/Panel/Margin/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(680, 0)
+layout_mode = 2
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Shelf" type="HBoxContainer" parent="CenterContainer/Panel/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/Panel/Margin/Content"]
+layout_mode = 2
+
+[node name="Workbench" type="HBoxContainer" parent="CenterContainer/Panel/Margin/Content"]
+layout_mode = 2
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="StrainerSlot" type="VBoxContainer" parent="CenterContainer/Panel/Margin/Content/Workbench"]
+layout_mode = 2
+alignment = 2
+
+[node name="StrainerButton" type="TextureButton" parent="CenterContainer/Panel/Margin/Content/Workbench/StrainerSlot"]
+unique_name_in_owner = true
+texture_filter = 1
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+tooltip_text = "Teesieb"
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="StrainerLabel" type="Label" parent="CenterContainer/Panel/Margin/Content/Workbench/StrainerSlot"]
+layout_mode = 2
+text = "Sieb"
+horizontal_alignment = 1
+
+[node name="CupSlot" type="VBoxContainer" parent="CenterContainer/Panel/Margin/Content/Workbench"]
+layout_mode = 2
+alignment = 2
+
+[node name="CupButton" type="TextureButton" parent="CenterContainer/Panel/Margin/Content/Workbench/CupSlot"]
+unique_name_in_owner = true
+texture_filter = 1
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+tooltip_text = "Tasse"
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="TeaInCup" type="TextureRect" parent="CenterContainer/Panel/Margin/Content/Workbench/CupSlot/CupButton"]
+unique_name_in_owner = true
+visible = false
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StrainerInCup" type="TextureRect" parent="CenterContainer/Panel/Margin/Content/Workbench/CupSlot/CupButton"]
+unique_name_in_owner = true
+visible = false
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -36.0
+offset_bottom = -36.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ProgressBar" type="ProgressBar" parent="CenterContainer/Panel/Margin/Content/Workbench/CupSlot"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 10)
+layout_mode = 2
+max_value = 1.0
+step = 0.0
+show_percentage = false
+
+[node name="KettleSlot" type="VBoxContainer" parent="CenterContainer/Panel/Margin/Content/Workbench"]
+layout_mode = 2
+alignment = 2
+
+[node name="Steam" type="TextureRect" parent="CenterContainer/Panel/Margin/Content/Workbench/KettleSlot"]
+unique_name_in_owner = true
+texture_filter = 1
+custom_minimum_size = Vector2(48, 72)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="KettleButton" type="TextureButton" parent="CenterContainer/Panel/Margin/Content/Workbench/KettleSlot"]
+unique_name_in_owner = true
+texture_filter = 1
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Wasserkocher"
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="TemperatureButtons" type="HBoxContainer" parent="CenterContainer/Panel/Margin/Content/Workbench/KettleSlot"]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 1
+
+[node name="TimerSlot" type="VBoxContainer" parent="CenterContainer/Panel/Margin/Content/Workbench"]
+layout_mode = 2
+alignment = 2
+
+[node name="TimerButton" type="TextureButton" parent="CenterContainer/Panel/Margin/Content/Workbench/TimerSlot"]
+unique_name_in_owner = true
+texture_filter = 1
+custom_minimum_size = Vector2(48, 72)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Timer: meldet sich einmal, wenn der Tee fertig ist"
+texture_normal = ExtResource("9_hourglass")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="TimerLabel" type="Label" parent="CenterContainer/Panel/Margin/Content/Workbench/TimerSlot"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Timer aus"
+horizontal_alignment = 1
+
+[node name="TemperatureNote" type="Label" parent="CenterContainer/Panel/Margin/Content"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.75)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+horizontal_alignment = 1
+
+[node name="Buttons" type="HBoxContainer" parent="CenterContainer/Panel/Margin/Content"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="ResetButton" type="Button" parent="CenterContainer/Panel/Margin/Content/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Bricht ab und legt die Kräuter zurück ins Regal."
+text = "Zurücksetzen"
+
+[node name="CloseButton" type="Button" parent="CenterContainer/Panel/Margin/Content/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Schließen (E)"

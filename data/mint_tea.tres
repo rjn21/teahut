@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c4glokguw7hmq" path="res://data_scripts/tea_data.gd" id="1_0jdw4"]
 [ext_resource type="Resource" uid="uid://do48fw3gfqcmg" path="res://data/mint.tres" id="1_4khaq"]
 [ext_resource type="Texture2D" uid="uid://c7bsnie65k2vx" path="res://assets/hd2d/sprites/station/cup_mint.png" id="3_cup"]
+[ext_resource type="Texture2D" uid="uid://dyvw8qj4an3kr" path="res://assets/hd2d/sprites/station/cup_water_strainer_mint.png" id="4_steeping"]
 
 [resource]
 script = ExtResource("1_0jdw4")
@@ -10,4 +11,6 @@ id = "mint_tea"
 display_name = "Minztee"
 herb = ExtResource("1_4khaq")
 cup_texture = ExtResource("3_cup")
+recommended_temperature = 100
+steeping_cup_texture = ExtResource("4_steeping")
 metadata/_custom_type_script = "uid://c4glokguw7hmq"

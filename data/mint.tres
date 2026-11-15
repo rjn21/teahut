@@ -1,9 +1,13 @@
 [gd_resource type="Resource" script_class="HerbData" format=3 uid="uid://do48fw3gfqcmg"]
 
 [ext_resource type="Script" uid="uid://dyecvq1bh10yy" path="res://data_scripts/herb_data.gd" id="1_g1pyl"]
+[ext_resource type="Texture2D" uid="uid://ceamsatvlkeus" path="res://assets/hd2d/sprites/station/jar_mint.png" id="4_jar"]
+[ext_resource type="Texture2D" uid="uid://cnrkmf6dvs1q0" path="res://assets/hd2d/sprites/station/strainer_mint.png" id="5_strainer"]
 
 [resource]
 script = ExtResource("1_g1pyl")
 id = "mint"
 display_name = "Minze"
+jar_texture = ExtResource("4_jar")
+strainer_texture = ExtResource("5_strainer")
 metadata/_custom_type_script = "uid://dyecvq1bh10yy"

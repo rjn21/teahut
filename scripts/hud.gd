@@ -1,19 +1,22 @@
 extends CanvasLayer
 
 const SAVE_MESSAGE_DURATION := 2.0
+const TIMER_MESSAGE_DURATION := 5.0
 
 @export var herbs: Array[HerbData] = []
 @export var teas: Array[TeaData] = []
 @export var order_board: OrderBoard
+@export var tea_station: TeaStation
 
 var _item_labels: Dictionary[String, Label] = {}
 var _item_names: Dictionary[String, String] = {}
-var _save_message_id: int = 0
+## Zählt Meldungen hoch, damit eine ältere Meldung eine neuere nicht vorzeitig ausblendet.
+var _message_id: int = 0
 
 @onready var stats: VBoxContainer = $Stats
 @onready var money_label: Label = $"Stats/Money Count"
 @onready var active_order_label: Label = $"Stats/Active Order"
-@onready var save_label: Label = $"Save Message"
+@onready var message_label: Label = $Message
 
 
 func _ready() -> void:
@@ -28,7 +31,8 @@ func _ready() -> void:
 	Inventory.item_changed.connect(_on_item_changed)
 	Inventory.money_changed.connect(_on_money_changed)
 	SaveGame.saved.connect(_on_saved)
-	save_label.visible = false
+	tea_station.timer_rang.connect(_on_tea_station_timer_rang)
+	message_label.visible = false
 	_on_money_changed(Inventory.money)
 
 func _add_item_row(id: String, display_name: String) -> void:
@@ -53,11 +57,18 @@ func _on_active_order_changed(order: TeaData) -> void:
 		active_order_label.text = "Bestellung: %s (+%d)" % [order.display_name, order.price]
 
 func _on_saved(ok: bool) -> void:
-	save_label.text = "Spiel gespeichert" if ok else "Speichern fehlgeschlagen"
-	save_label.visible = true
-	_save_message_id += 1
-	var my_id := _save_message_id
-	await get_tree().create_timer(SAVE_MESSAGE_DURATION).timeout
-	if my_id == _save_message_id:
-		save_label.visible = false
+	_show_message("Spiel gespeichert" if ok else "Speichern fehlgeschlagen", SAVE_MESSAGE_DURATION)
 
+
+func _on_tea_station_timer_rang(tea: TeaData) -> void:
+	_show_message("Der Timer klingelt: %s ist fertig. Nimm das Sieb heraus." % tea.display_name, TIMER_MESSAGE_DURATION)
+
+
+func _show_message(text: String, duration: float) -> void:
+	message_label.text = text
+	message_label.visible = true
+	_message_id += 1
+	var my_id := _message_id
+	await get_tree().create_timer(duration).timeout
+	if my_id == _message_id:
+		message_label.visible = false
