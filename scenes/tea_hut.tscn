@@ -1,0 +1,79 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/hd2d/scenes/hut.tscn" id="1_hut"]
+[ext_resource type="Material" path="res://assets/world/hut_floor.tres" id="2_floor"]
+[ext_resource type="Material" path="res://assets/hd2d/materials/wood_wall.tres" id="3_wall"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_back"]
+size = Vector3(5, 2.4, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_side"]
+size = Vector3(0.2, 2.4, 3.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_front"]
+size = Vector3(1.95, 2.4, 0.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_front_base"]
+material = ExtResource("3_wall")
+size = Vector3(1.95, 0.18, 0.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_front_upper"]
+material = ExtResource("3_wall")
+size = Vector3(1.95, 2.22, 0.2)
+
+[node name="TeaHut" instance=ExtResource("1_hut")]
+
+[node name="Floor" parent="."]
+material_override = ExtResource("2_floor")
+
+[node name="SegL" parent="FrontWall"]
+position = Vector3(-1.525, 1.41, 1.9)
+mesh = SubResource("BoxMesh_front_upper")
+
+[node name="SegR" parent="FrontWall"]
+position = Vector3(1.525, 1.41, 1.9)
+mesh = SubResource("BoxMesh_front_upper")
+
+[node name="Door" parent="FrontWall"]
+shaded = false
+
+[node name="Rug" parent="Interior"]
+visible = false
+
+[node name="TeaStation" parent="Interior"]
+visible = false
+
+[node name="WallPicture" parent="Interior"]
+visible = false
+
+[node name="WallCollision" type="StaticBody3D" parent="."]
+
+[node name="Back" type="CollisionShape3D" parent="WallCollision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.32, -1.9)
+shape = SubResource("BoxShape3D_back")
+
+[node name="Left" type="CollisionShape3D" parent="WallCollision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4, 1.32, 0)
+shape = SubResource("BoxShape3D_side")
+
+[node name="Right" type="CollisionShape3D" parent="WallCollision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4, 1.32, 0)
+shape = SubResource("BoxShape3D_side")
+
+[node name="FrontLeft" type="CollisionShape3D" parent="WallCollision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.525, 1.32, 1.9)
+shape = SubResource("BoxShape3D_front")
+
+[node name="FrontRight" type="CollisionShape3D" parent="WallCollision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.525, 1.32, 1.9)
+shape = SubResource("BoxShape3D_front")
+
+[node name="FrontWallBase" type="Node3D" parent="."]
+
+[node name="Left" type="MeshInstance3D" parent="FrontWallBase"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.525, 0.21, 1.9)
+mesh = SubResource("BoxMesh_front_base")
+
+[node name="Right" type="MeshInstance3D" parent="FrontWallBase"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.525, 0.21, 1.9)
+mesh = SubResource("BoxMesh_front_base")

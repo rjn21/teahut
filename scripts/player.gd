@@ -1,15 +1,27 @@
+class_name Player
 extends CharacterBody3D
+
+## Die Hütte (assets/hd2d/scripts/hut.gd) erkennt die Figur über diese Gruppe
+## und blendet dann Dach und Vorderwand aus.
+const PLAYER_GROUP := "player"
 
 @export var move_speed: float = 4.0
 
 var current_target: Interactable = null
+## false, solange ein Fenster wie der Einrichtungskatalog offen ist:
+## Die Figur steht dann still und reagiert nicht auf E/Q.
+var input_enabled: bool = true
 
 @onready var interaction_area: Area3D = $InteractionArea
 
 func _ready() -> void:
 	add_to_group("persist")
-	
+	add_to_group(PLAYER_GROUP)
+
 func _process(_delta: float) -> void:
+	if not input_enabled:
+		_set_target(null)
+		return
 	_set_target(_find_nearest_interactable())
 	if current_target == null:
 		return
@@ -17,8 +29,8 @@ func _process(_delta: float) -> void:
 		current_target.interact()
 	elif Input.is_action_just_pressed("cycle"):
 		current_target.cycle()
-		
-		
+
+
 func _find_nearest_interactable() -> Interactable:
 	var nearest: Interactable = null
 	var best_distance: float = INF
@@ -29,7 +41,7 @@ func _find_nearest_interactable() -> Interactable:
 				best_distance = distance
 				nearest = area as Interactable
 	return nearest
-	
+
 
 func _set_target(new_target: Interactable) -> void:
 	if new_target == current_target:
@@ -48,22 +60,24 @@ func _physics_process(delta: float) -> void:
 		"move_forward",
 		"move_back"
 	)
-	
+	if not input_enabled:
+		input_direction = Vector2.ZERO
+
 	velocity.x = input_direction.x * move_speed
 	velocity.z = input_direction.y * move_speed
-	
+
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-		
+
 	move_and_slide()
-	
+
 # --- Spielstand ---
 
 func get_save_data() -> Dictionary:
 	return {
 		"position": [global_position.x, global_position.y, global_position.z]
 	}
-	
+
 func load_save_data(data: Dictionary) -> void:
 	var pos: Array = data.get("position", [])
 	if pos.size() == 3:

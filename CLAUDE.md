@@ -15,21 +15,21 @@ Gestaltungsgrundsätze:
 
 ## Arbeitsweise
 
-**Der Entwickler programmiert selbst in Godot.** Lernziel ist, das Spiel selbst zu verstehen und zu bauen.
+**Rollen (seit 14.11.2026):** Der Entwickler ist **Spieldesigner**. Er verantwortet das Gesamtkonzept, das Spielgefühl und den Umfang, trifft die Designentscheidungen und testet im Editor. **Claude implementiert alles:** Skripte (`.gd`), Szenen (`.tscn`), Resources (`.tres`), `project.godot` und die Einbindung von Assets.
 
-- Claude ändert **keine Spieldateien** (`.gd`, `.tscn`, `.tres`, `project.godot`, Assets). Claude erklärt, schlägt Schritte vor und prüft den Code des Entwicklers. Eigene Änderungen an Spieldateien nur auf ausdrückliche Bitte.
-- **Denkanstöße statt fertiger Code** (sokratisch, seit 22.10.2026): Der Entwickler soll die Lösung selbst finden, nicht abtippen. Pro Schritt: Ziel, sichtbares Ergebnis, Prüfanweisung und 1–3 Leitfragen. Mehr Hilfe nur auf Nachfrage („Tipp“, „mehr Hilfe“), stufenweise:
-  1. Leitfrage / Denkanstoß
-  2. Begriff, Konzept oder Name der Godot-API, mit Verweis auf die Doku
-  3. Struktur oder Pseudocode, kein fertiges GDScript
-  4. Kurzes Schnipsel (wenige Zeilen), nur wenn ausdrücklich erbeten
-
-  Keine ganzen Dateien oder Funktionen, außer auf ausdrückliche Bitte. Direkt beantworten statt fragen: Editor-Bedienung (Klickwege), reine Syntax, Tippfehler. Im Review Fehler als Frage oder Szenario zeigen („Was passiert, wenn du im Zustand READY Q drückst?“); bei echten Bugs Zeile und Ursache klar nennen, die Korrektur schreibt der Entwickler.
-- **Erst Plan, dann warten:** Vor jedem Schritt schlägt Claude einen kurzen Plan vor (Ziel, betroffene Szenen/Nodes/Dateien, sichtbares Ergebnis, Prüfung) und wartet auf den Entwickler. Ein Feature pro Durchgang.
-- Bei Unsicherheit über die Godot-API: sagen, in der Doku zu 4.7 nachsehen und verlinken, nicht raten.
+- **Wartbarkeit ist das wichtigste Qualitätsziel.** Alles wird so gebaut, dass es sich gut erweitern und pflegen lässt:
+  - sprechende Namen für Klassen, Nodes, Dateien, Funktionen und Signale; kein Kürzel, das man erst entschlüsseln muss
+  - kleine Klassen und Funktionen mit genau einer Aufgabe
+  - Inhalte als Daten (`.tres`), nicht im Code
+  - bestehende Muster weiterverwenden statt neue erfinden (`Interactable`, Gruppe `persist`, `HerbData`/`TeaData`, Inventar-API)
+  - keine voreilige Abstraktion: Ein neues Muster kommt erst, wenn es mindestens zwei Nutzer hat
+- **Erst Plan, dann warten:** Vor jedem Feature legt Claude einen kurzen Plan vor: was sich im Spiel ändert, offene Designfragen, betroffene Szenen und Dateien, Spieltest. Danach wartet Claude auf das Go. Ein Feature pro Durchgang.
+- **Entscheidungen:** Technische Details entscheidet Claude selbst. Gefragt wird nur bei Fragen zum Spieldesign, zum Spielgefühl oder zum Umfang.
+- **Nach der Umsetzung:** kurz in Spielersprache zusammenfassen, was sich geändert hat, und eine konkrete Spieltest-Anleitung geben: was tun, was sollte passieren.
+- **Szenendateien:** `.tscn`/`.tres` als Text sorgfältig bearbeiten, ExtResource-IDs und `uid` beachten. Wo eine Einstellung nur im Editor zuverlässig geht, gibt Claude einen kurzen Klickweg.
+- Bei Unsicherheit über die Godot-API: in der Doku zu 4.7 nachsehen und verlinken, nicht raten.
 - Projekt-Doku (`CLAUDE.md`, `specsheet.md`) ändert Claude nur auf ausdrückliche Bitte. Commits nur auf Nachfrage.
-- Kommunikation auf Deutsch. Der Entwickler hat Programmiererfahrung, ist aber Anfänger in der Spieleentwicklung: Godot-Begriffe beim ersten Auftreten kurz und einfach erklären.
-- Kleine, ausführbare Schritte mit sichtbarem Ergebnis und kurzer Prüfanweisung. Bei jedem Schritt sagen, welche Szene bzw. welcher Node betroffen ist.
+- Kommunikation auf Deutsch, ohne Godot-Lehrstunde. Fachbegriffe nur kurz erklären, wenn sie für eine Designentscheidung nötig sind.
 - Ungetesteten Code und Annahmen ehrlich kennzeichnen. Claude führt das Spiel nicht aus; geprüft wird per Spieltest im Editor durch den Entwickler.
 - Als „bestätigt“ gilt nur, was der Entwickler per Spieltest bestätigt hat.
 - Umfang nicht beiläufig erweitern. Neue Ideen als spätere Option festhalten.
@@ -49,11 +49,12 @@ Git: ein Branch pro (Teil-)Meilenstein, PR nach `main`. Kleine Commits, Nachrich
 
 | Pfad | Inhalt |
 | --- | --- |
-| `scenes/` | Eine Szene pro Spielobjekt (Beet, Teestation, Ablage, Laterne, Figur …); Hauptszene `scenes/world.tscn` |
+| `scenes/` | Eine Szene pro Spielobjekt (Beet, Teestation, Bestellbrett, Ablage, Dekorationsplätze `decoration_*.tscn`, Einrichtungskatalog, Nahansicht `tea_station_close_up.tscn`, Figur, Hütte `tea_hut.tscn`, Natur `nature.tscn` …); Hauptszene `scenes/world.tscn` |
 | `scripts/` | Skripte, gleicher Name wie ihre Szene (`herb_plot.tscn` ↔ `herb_plot.gd`); auch die Autoloads |
-| `data/` | Inhalte als Resources (`.tres`), nie hartcodiert: Kräuter `mint`, `chamomile`, `lavender`; Tees `mint_tea`, `chamomile_tea`, `lavender_tea` |
-| `data_scripts/` | Resource-Klassen (`HerbData`, `TeaData`) |
-| `assets/hd2d/` | HD-2D-Asset-Paket, nur teilweise eingebunden (Beet, Laterne, Ablage, Teestation-Grafik, Spielfigur). Siehe `assets/hd2d/README_HD2D.md`. Vorhandene Assets sind nicht automatisch fertiger Spielinhalt. |
+| `data/` | Inhalte als Resources (`.tres`), nie hartcodiert: Kräuter `mint`, `chamomile`, `lavender`; Tees `mint_tea`, `chamomile_tea`, `lavender_tea`; Dekorationen `lantern`, `flowerpot`, `rug`, `bench`, `wall_picture` |
+| `data_scripts/` | Resource-Klassen (`HerbData`, `TeaData`, `DecorationData`) |
+| `assets/hd2d/` | HD-2D-Asset-Paket, nur teilweise eingebunden (Beet, Laterne, Bestellbrett, Ablage, Teestation-Grafik, Tassenbilder, Spielfigur). Siehe `assets/hd2d/README_HD2D.md`. Vorhandene Assets sind nicht automatisch fertiger Spielinhalt. Unverändert lassen; Anpassungen in eigenen Szenen (z. B. `tea_hut.tscn` erbt von der Hütte). |
+| `assets/world/` | Eigene Weltdaten: Geländekarte `terrain_mask.png` (R = Weg, G = Sand, B = Wasser; 48 × 48 m um den Ursprung) und die Materialien `terrain.tres`, `lake_water.tres`; eigene Holztöne, damit Boden, Wand und Teestation unterscheidbar sind: `hut_floor.tres` (helle Dielen, Bild `hut_floor.png`) und `tea_station_body.tres` (dunkles Holz). Ändert sich das Ufer in der Karte, müssen die Kollisionsboxen `LakeShore` in `world.tscn` mitwandern. |
 
 Autoloads: nur `Inventory` (`scripts/inventory.gd`) und `SaveGame` (`scripts/save_game.gd`), später `AudioManager` (M8). Ein neuer Autoload nur nach Absprache.
 
@@ -71,17 +72,21 @@ Autoloads: nur `Inventory` (`scripts/inventory.gd`) und `SaveGame` (`scripts/sav
 ## Architektur-Konventionen
 
 - **Inventar:** Mengen in `items: Dictionary[String, int]`, Schlüssel ist die `id` der Resource. API: `get_count`, `add_item`, `try_take_item`, `add_money`, `try_spend_money`. Signale `item_changed(id, amount)` und `money_changed(amount)`. Mengen ≤ 0 werden abgewiesen.
-- **Inhalte als Daten:** `HerbData` (id, display_name, growth_duration, harvest_amount) und `TeaData` (id, display_name, herb, herb_amount, brew_duration, price) werden als Listen per `@export` zugewiesen, jeweils in der Objekt-Szene (nicht pro Instanz). Neue Sorte = neue `.tres` in `data/` und in diese Listen eintragen: `herb_plot.tscn` (`herbs`), `tea_station.tscn` (`teas`), `order_counter.tscn` (`teas`), `world.tscn` → `HUD` (`herbs`/`teas`). Die erste Sorte jeder Liste ist der Standard für alte Spielstände (Minze bzw. Minztee).
-- **Sortenwahl:** Aktuelle Sorte = Getter-Property über `herbs[herb_index]` bzw. `teas[tea_index]`; Wechsel mit Aktion `cycle` (Q) nur im leeren/freien Zustand (Schutzabfrage in `select_next_*`). Gespeichert wird die `id`, beim Laden per `_find_*_index` zurück in den Index – vor dem Begrenzen der Restzeit.
-- **Interaktionsobjekte:** erben von der Klasse `Interactable` (`scripts/interactable.gd`, ein `Area3D` mit `InteractionLabel` als Label3D) und überschreiben `interact()` (E), `cycle()` (Q) und `update_interaction_label()`. Die Figur sucht über ihre `InteractionArea` das nächste `Interactable`, leitet E/Q nur an dieses weiter und blendet nur dessen Hinweis ein (`set_focused`). Meldungen (z. B. „Kein Tee dabei“) direkt in `interaction_label.text` schreiben; `update_interaction_label()` setzt den Standardtext. Zustände als `enum` (`EMPTY/GROWING/READY`, `IDLE/BREWING/READY`).
-- **Spielstand:** `user://savegame.json`, sicheres Schreiben über `.tmp`, vorheriger Stand als `.bak` (Fallback beim Laden). Nodes mit Zustand gehören zur Gruppe `persist` und liefern `get_save_data()` / `load_save_data(data)`. Der Schlüssel ist der Node-Pfad ab der Weltszene (z. B. `HerbPlot`) → Nodes in `world.tscn` nicht umbenennen, ohne an alte Spielstände zu denken. Zustände als Enum-Namen speichern, Werte beim Laden begrenzen (`clampf`). `SAVE_VERSION` wird noch nicht ausgewertet.
-- **Autosave:** nach Verkauf, nach Laternenkauf, beim Schließen des Fensters. Kein Offline-Fortschritt.
+- **Inhalte als Daten:** `HerbData` (id, display_name, growth_duration, harvest_amount) und `TeaData` (id, display_name, herb, herb_amount, brew_duration, price, cup_texture) werden als Listen per `@export` zugewiesen, jeweils in der Objekt-Szene (nicht pro Instanz). Neue Sorte = neue `.tres` in `data/` und in diese Listen eintragen: `herb_plot.tscn` (`herbs`), `tea_station.tscn` (`teas`), `order_board.tscn` (`teas`), `world.tscn` → `HUD` (`herbs`/`teas`). Die erste Sorte jeder Liste ist der Standard für alte Spielstände (Minze bzw. Minztee).
+- **Sortenwahl:** Aktuelle Sorte = Getter-Property über `herbs[herb_index]` bzw. `teas[tea_index]`. Beete wechseln mit Aktion `cycle` (Q) nur im leeren Zustand (Schutzabfrage in `select_next_*`); an der Teestation ergibt sich die Sorte aus dem angeklickten Kräuterglas. Gespeichert wird die `id`, beim Laden per `_find_*_index` zurück in den Index – vor dem Begrenzen der Restzeit.
+- **Interaktionsobjekte:** erben von der Klasse `Interactable` (`scripts/interactable.gd`, ein `Area3D` mit `InteractionLabel` als Label3D, `no_depth_test = true`, damit Gebäude den Text nicht verdecken) und überschreiben `interact()` (E), `cycle()` (Q) und `update_interaction_label()`. Die Figur sucht über ihre `InteractionArea` das nächste `Interactable`, leitet E/Q nur an dieses weiter und blendet nur dessen Hinweis ein (`set_focused`). Meldungen (z. B. „Kein Tee dabei“) direkt in `interaction_label.text` schreiben; `update_interaction_label()` setzt den Standardtext. Zustände als `enum` (`EMPTY/GROWING/READY`, `TeaStation.BrewState`, `EMPTY/CUP_PLACED`).
+- **Spielstand:** `user://savegame.json`, sicheres Schreiben über `.tmp`, vorheriger Stand als `.bak` (Fallback beim Laden). Nodes mit Zustand gehören zur Gruppe `persist` und liefern `get_save_data()` / `load_save_data(data)`. Der Schlüssel ist der Node-Pfad ab der Weltszene (z. B. `HerbPlot`) → Nodes in `world.tscn` nicht umbenennen, ohne an alte Spielstände zu denken. Zustände als Enum-Namen speichern, Werte beim Laden begrenzen (`clampf`). `SAVE_VERSION` ist 2. Passt ein gespeicherter Eintrag nach einem Umbau nicht mehr zur Welt, kommt sein Schlüssel in `OUTDATED_ENTRIES_BEFORE_VERSION` (`save_game.gd`) und `SAVE_VERSION` wird erhöht; der Node behält dann für ältere Stände seinen Startzustand aus der Szene (so seit M6d für `Player`).
+- **Bestellungen:** `OrderBoard` (`order_board.gd`, Gruppe `persist`) hält die aktive Bestellung (`TeaData` oder `null`) und meldet Wechsel per `active_order_changed`. Ablage und HUD erhalten das Brett per `@export`. Die Ablage merkt eine abgestellte Tasse nur vor; erst „Bestellung abgeben“ nimmt sie aus dem Inventar, zahlt `price` aus und ruft `complete_active_order()`. Danach ist keine Bestellung aktiv.
+- **Dekorationen:** `DecorationData` (id, display_name, price, icon) in `data/`. Jede Dekoration hat eine Szene `scenes/decoration_<id>.tscn` mit dem Skript `DecorationSpot` (Gruppe `persist`, speichert `owned`/`shown`; die Grafik ist der Kind-Node `%Graphic`). Ungekauft unsichtbar. Gekauft wird nur im `DecorationCatalog` (Taste C, Aktion `catalog`); er erhält die Plätze per `@export spots` und erzeugt seine Zeilen (`DecorationCatalogRow`) daraus. Neue Dekoration = neue `.tres` + neue Platz-Szene + in `world.tscn` platzieren und in `DecorationCatalog.spots` eintragen. Die Laterne heißt in der Welt weiter `LanternSpot` (alte Spielstände speichern `bought`).
+- **Fenster und Figur:** Fenster über der Welt erben von `GameWindow` (`open_window`/`close_window`, Signale `opened`/`closed`; Katalog und Nahansicht der Teestation). Solange eines offen ist, setzt `world.gd` `Player.input_enabled = false` (Freigabe verzögert, damit die Schließen-Taste nicht sofort wieder interagiert); es ist immer höchstens eines offen. Die Simulation läuft weiter. Escape schließt zuerst das offene Fenster (Fenster stehen in `world.tscn` nach `PauseMenu` und bekommen Eingaben deshalb vorher).
+- **Teestation:** `TeaStation` (`tea_station.gd`) hält Zustand (`BrewState`), Zeiten und Spielstand; jeder Handgriff ist eine Funktion (`fill_strainer`, `insert_strainer`, `start_heating`, `pour_water`, `remove_strainer`, `collect_tea`, `reset_brewing`). E an der Station meldet `close_up_requested`; die Nahansicht `TeaStationCloseUp` zeigt nur an und ruft diese Funktionen auf. Die Kräuterportion wird beim Befüllen des Siebs aus dem Inventar genommen; Zurücksetzen gibt sie zurück. Bilder für Glas/Sieb stehen in `HerbData`, empfohlene Temperatur und Tasse beim Ziehen in `TeaData`. Alte Zustandsnamen (`IDLE/BREWING/READY`) übersetzt `LEGACY_STATE_NAMES`.
+- **Autosave:** nach Verkauf, nach Dekokauf, nach Ein-/Ausblenden einer Dekoration, beim Schließen des Fensters. Kein Offline-Fortschritt.
 - **Pause:** Pausenmenü (Escape) hält die Simulation an.
 - Beim Verschieben von Skripten die zugehörige `.uid`-Datei mitnehmen (am besten im Godot-Dateisystem-Dock verschieben).
 
 ## Aktueller Stand
 
-Stand: 28.10.2026 · `main` (M6b inkl. Interaktions-Fix gemergt)
+Stand: 15.11.2026 · Branch `M6f` (M6 vollständig bestätigt; PRs #6/#7/#8 offen, M6f noch nicht committet)
 
 | Meilenstein | Ergebnis | Stand |
 | --- | --- | --- |
@@ -90,16 +95,17 @@ Stand: 28.10.2026 · `main` (M6b inkl. Interaktions-Fix gemergt)
 | M3 – Erste Tasse | Vereinfachte Teestation; fertiger Tee wird **aktiv abgeholt** (nicht automatisch ins Inventar) | bestätigt |
 | M4 – Erster Prototyp | Ablage nimmt Minztee an (+10 Münzen); Laterne für 10 Münzen kaufbar | bestätigt |
 | M5 – Spielstand | Speichern/Laden, Autosave, `.bak`-Fallback, Pausenmenü | bestätigt (28.09.) |
-| M6 – Inhalt und Ritual | 3 Kräuter/Rezepte, Handgriffe der Teestation, 5 Dekorationen | **in Arbeit** (M6a, M6b fertig; M6c als Nächstes) |
+| M6 – Inhalt und Ritual | 3 Kräuter/Rezepte, Handgriffe der Teestation, 5 Dekorationen | bestätigt (15.11.) |
 | M7 – Atmosphäre | Tag/Nacht, Regen, Gießen/Feuchtigkeit, Schlafen, Schlafbonus | offen |
 | M8 – Abschluss 0.1 | Hauptmenü, Audioeinstellungen, Sonderfälle, Windows-Export | offen |
 
-**M6-Aufteilung** (Vorschlag, jeder Schritt spielbar und speicherbar):
+**M6-Aufteilung** (jeder Schritt spielbar und speicherbar; alle abgeschlossen):
 1. M6a – Inventar verallgemeinern (abgeschlossen)
 2. M6b – Kamille und Lavendel (abgeschlossen)
-3. **M6c** – Bestellbrett: je eine Bestellung pro Sorte, aktive Bestellung wählen, Ablage prüft Sorte (Spec 8)
-4. M6d – Einrichtungskatalog: fünf Dekorationen, Laterne wird die erste (Spec 9)
-5. M6e – Nahansicht der Teestation mit Handgriffen (Spec 7)
+3. M6c – Bestellbrett: je eine Bestellung pro Sorte, aktive Bestellung wählen, Ablage prüft Sorte (Spec 8) (abgeschlossen)
+4. M6d – Hütte und See: größere Welt nach dem Vorbild der Asset-Demo, Teestation in der Hütte (Spec 5) (abgeschlossen)
+5. M6e – Einrichtungskatalog (Taste C): fünf Dekorationen, Laterne wird die erste (Spec 9) (abgeschlossen)
+6. M6f – Nahansicht der Teestation mit Handgriffen (Spec 7) (abgeschlossen)
 
 **M6a – abgeschlossen (29.09.2026):** Inventar als Dictionary mit `add_item`/`try_take_item`; Dateien in `scenes/`/`scripts/`; `HerbData`/`TeaData` mit `mint.tres`/`mint_tea.tres` für Beet, Station und Ablage; HUD erzeugt seine Zeilen aus den Listen `herbs`/`teas`, Speicherhinweis sitzt unten links. Minze-Ablauf, HUD und alte Spielstände per Spieltest bestätigt.
 
@@ -107,8 +113,16 @@ Stand: 28.10.2026 · `main` (M6b inkl. Interaktions-Fix gemergt)
 
 **Fix nach M6b – abgeschlossen (02.10.2026):** Überlappende Interaktionsbereiche der Beete behoben. Klasse `Interactable`; die Figur spricht immer nur das nächste Objekt an.
 
-**Nächster Schritt: M6c – Bestellbrett** (Spec 8). Ersetzt die Übergangslösung der Ablage.
+**M6c – abgeschlossen (14.11.2026):** Bestellbrett (`OrderBoard`) mit je einer Bestellung pro Teesorte; Q blättert, E nimmt an. HUD zeigt die aktive Bestellung. Ablage: E stellt die passende Tasse sichtbar ab (Tassenbild aus `TeaData.cup_texture`), E gibt ab, Q nimmt zurück; nach der Abgabe ist keine Bestellung aktiv. Aktive Bestellung wird gespeichert; alte Spielstände laden ohne. Ersetzt die Übergangslösung der Ablage. Per Spieltest bestätigt.
 
-**Bewusst vereinfacht, kommt später:** Hauptmenü (M8; bis dahin lädt die Welt automatisch). Spielstand wächst mit jedem System (aktive Bestellung, reservierte Zutaten, Feuchtigkeit, Uhrzeit, Wetter, Schlafbonus, Deko-Sichtbarkeit).
+**M6d – abgeschlossen (14.11.2026):** Welt 48 × 48 m mit Gelände, See (`LakeWater`, Uferkollision `LakeShore`), Steg, Natur und Teehütte (`TeaHut`, Dach/Vorderwand blenden sich innen aus, Figur in Gruppe `player`). Teestation steht in der Hütte; Beete, Bestellbrett, Ablage und Laterne an den Plätzen der Asset-Demo. Teppich und Wandbild der Hütte sind ausgeblendet (kaufbar ab M6e). Alte Spielstände laden, die Figur startet dann am Startpunkt. Nachbesserungen: eigene Holztöne (heller Dielenboden, dunkle Teestation), Tür unschattiert, Vorderwand geteilt – der untere Streifen bleibt innen sichtbar und zeigt den Ausgang. Per Spieltest bestätigt.
 
-**Aktuelle Testwerte** (Standardwerte in den Resources/Skripten, kürzer als die Arbeitswerte in Spec 11): Wachstum 5 s, Zubereitung 5 s, Ertrag 2, Verkaufspreis 10, Laterne 10 Münzen.
+**M6e – abgeschlossen (15.11.2026):** Einrichtungskatalog mit Taste C: fünf Dekorationen (Laterne 10, Blumentopf 20, Teppich 30, Bank 40, Wandbild 50), Kauf mit Bestätigungsdialog, gekaufte Dekorationen ein-/ausblendbar, ungekaufte in der Welt unsichtbar. Plätze: Laterne am Weg, Blumentopf neben der Hüttentür, Teppich und Wandbild in der Hütte, Bank am See. Die Laterne ist nur noch über den Katalog kaufbar; `lantern_spot.*` entfernt. HUD-Hinweis „C – Einrichtung“ unten rechts. Nachbesserung: Hinweistexte aller Interaktionsobjekte werden vor der Hütte gezeichnet (`no_depth_test`). Per Spieltest bestätigt.
+
+**M6f – abgeschlossen (15.11.2026):** E an der Teestation öffnet die Nahansicht (Maus): Kräuterglas → Sieb in die Tasse → Temperatur (80/90/100 °C, Empfehlung aus dem Rezept) und Wasserkocher → Wasserkocher, dann Tasse (eingießen) → Tee zieht und färbt sich → Sieb herausnehmen → Tasse mitnehmen. Sanduhr schaltet den Timer (einmaliger HUD-Hinweis, Ton ab M8), Zurücksetzen gibt die Kräuter zurück. Q an der Station entfällt. Alte Spielstände laden. Per Spieltest bestätigt.
+
+**Danach: M7 – Atmosphäre.**
+
+**Bewusst vereinfacht, kommt später:** Hauptmenü (M8; bis dahin lädt die Welt automatisch). Spielstand wächst mit jedem System (reservierte Zutaten, Feuchtigkeit, Uhrzeit, Wetter, Schlafbonus).
+
+**Aktuelle Testwerte** (Standardwerte in den Resources/Skripten, kürzer als die Arbeitswerte in Spec 11): Wachstum 5 s, Erhitzen 5 s, Ziehen 5 s, Ertrag 2, Verkaufspreis 10; Dekopreise wie Spec 11 (10/20/30/40/50).

@@ -2,10 +2,15 @@
 
 [ext_resource type="Resource" uid="uid://cf0hxx0k1sfgw" path="res://data/chamomile.tres" id="1_15uvi"]
 [ext_resource type="Script" uid="uid://c4glokguw7hmq" path="res://data_scripts/tea_data.gd" id="2_wsi0j"]
+[ext_resource type="Texture2D" uid="uid://dwbhbwyprcm2s" path="res://assets/hd2d/sprites/station/cup_chamomile.png" id="3_cup"]
+[ext_resource type="Texture2D" uid="uid://b8jytheki0wp2" path="res://assets/hd2d/sprites/station/cup_water_strainer_chamomile.png" id="4_steeping"]
 
 [resource]
 script = ExtResource("2_wsi0j")
 id = "chamomile_tea"
 display_name = "Kamillentee"
 herb = ExtResource("1_15uvi")
+cup_texture = ExtResource("3_cup")
+recommended_temperature = 90
+steeping_cup_texture = ExtResource("4_steeping")
 metadata/_custom_type_script = "uid://c4glokguw7hmq"

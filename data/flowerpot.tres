@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DecorationData" format=3]
+
+[ext_resource type="Script" path="res://data_scripts/decoration_data.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://b7ghweyicuk3" path="res://assets/hd2d/ui/icons/deco_flowerpot.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1_script")
+id = "flowerpot"
+display_name = "Blumentopf"
+price = 20
+icon = ExtResource("2_icon")
